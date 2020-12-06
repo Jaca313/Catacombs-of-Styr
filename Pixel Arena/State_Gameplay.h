@@ -40,10 +40,7 @@ private:
 	double* Z_Buffer; // (distance to the nearest wall in that pixel)
 	//Drawing
 	void CastRaysFloorCeil();
-	void CastRaysFloorCeil2();
-	void CastRaysFloorCeil3();
 	void CastRays3DWalls();
-	void CastRays3DWalls2();
 
 	void DrawUI();
 	void DrawEntities();
