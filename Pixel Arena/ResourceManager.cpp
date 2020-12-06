@@ -24,7 +24,7 @@ void ResourceManager::LoadTextures()
 	//6
 	LoadSingleTexture("Walls/redbrick5.jpg");
 	//7
-	LoadSingleTexture("");
+	LoadSingleTexture("Walls/cinder.tga");
 	//8
 	LoadSingleTexture("");
 	//9

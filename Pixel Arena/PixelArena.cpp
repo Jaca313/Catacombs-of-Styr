@@ -53,7 +53,6 @@ void PixelArena::MainLoop()
 
 		//Timing
 		m_fTime = m_cClock.Count();
-		//printf("%f\n", 1 / fTime);
 	}
 
 }
