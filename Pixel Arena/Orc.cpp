@@ -28,8 +28,9 @@ void Orc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	Resources->ClipEntity.setUniform("Z_Buffer", Resources->Z_BufferTex);
 	float DistanceToPlayer = static_cast<float>(distanceToPlayer);
 	Resources->ClipEntity.setUniform("distEntity", DistanceToPlayer);
-
+	Resources->ClipEntity.setUniform("screenresolution", sf::Vector2f(target.getSize().x,target.getSize().y));
 	Resources->ClipEntity.setUniform("obraz", sf::Shader::CurrentTexture);
+
 	states.shader = &Resources->ClipEntity;
 	target.draw(this->Object, states);
 
@@ -62,50 +63,19 @@ void Orc::UpdateAnimation(sf::RenderTarget& target, double* Z_Buffer)
 	Object.setPosition(xFinalPosition, m_winSizeY / 2.0 + Scale);
 
 
-	//Clipping Code
-
-
-	int shift_right = 0;
-	int shift_left = 0;
-	int norm_shift_right = 0;
-	int norm_shift_left = 0;
-
+	//Clipping Code just for reducing draw calls
 	int leftPos = int(xFinalPosition - Scale / 2.0) < 0 ? 0 : int(xFinalPosition - Scale / 2.0);
 	int centerleftPos = int(xFinalPosition - Scale / 4.0) < 0 ? 0 : int(xFinalPosition - Scale / 4.0);
 	int centerrightPos = int(xFinalPosition + Scale / 4.0) > m_winSizeX ? m_winSizeX : int(xFinalPosition + Scale / 4.0);
 	int rightPos = int(xFinalPosition + Scale / 2.0) > m_winSizeX ? m_winSizeX : int(xFinalPosition + Scale / 2.0);
 
-	//bool leftObscured = Z_Buffer[leftPos] < this->distanceToPlayer;
-	//bool centerLeftObscured = Z_Buffer[centerleftPos] < this->distanceToPlayer;
-	//bool centerRightObscured = Z_Buffer[centerrightPos] < this->distanceToPlayer;
-	//bool rightObscured = Z_Buffer[rightPos] < this->distanceToPlayer;
+	bool leftObscured = Z_Buffer[leftPos] < this->distanceToPlayer;
+	bool centerLeftObscured = Z_Buffer[centerleftPos] < this->distanceToPlayer;
+	bool centerRightObscured = Z_Buffer[centerrightPos] < this->distanceToPlayer;
+	bool rightObscured = Z_Buffer[rightPos] < this->distanceToPlayer;
 
-	//if (leftObscured && centerLeftObscured && centerRightObscured && rightObscured)m_bObscured = true;
-	//else m_bObscured = false;
+	if (leftObscured && centerLeftObscured && centerRightObscured && rightObscured)m_bObscured = true;
+	else m_bObscured = false;
 
-	//if (!m_bObscured) {
-	//while (Z_Buffer[leftPos + shift_right] >= this->distanceToPlayer && shift_right < Object.getSize().x) shift_right++;
-	//while (Z_Buffer[rightPos - shift_left] >= this->distanceToPlayer && shift_left < Object.getSize().x) shift_left++;
-
-	//norm_shift_right = shift_right / Object.getSize().x * Object.getTextureRect().width;
-	//norm_shift_left = shift_left / Object.getSize().x * Object.getTextureRect().width;
-	//}
-
-	//if (this->LookAngle == 2 || this->LookAngle == 3) {
-	//	int temp = shift_right;
-	//	shift_right = shift_left;
-	//	shift_left = temp;
-
-	//	temp = norm_shift_right;
-	//	norm_shift_right = norm_shift_left;
-	//	norm_shift_left = temp;
-
-
-	//}
-
-	//Object.setTextureRect(sf::IntRect(sf::Vector2i(AnimationState * AnimSizeX + norm_shift_right, AnimSizeY * LookAngle), sf::Vector2i(AnimSizeX - norm_shift_left - norm_shift_right, AnimSizeY)));
-	//Object.setSize(sf::Vector2f(setSize.x - (shift_left + shift_right), setSize.y));
-	//Object.setOrigin(setOrigin.x - (shift_right + shift_left)/2.0, setOrigin.y);
-	//Object.setPosition(xFinalPosition - (shift_right + shift_left)/2.0, m_winSizeY / 2.0 + Scale);
 
 }

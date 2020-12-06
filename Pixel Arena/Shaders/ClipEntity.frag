@@ -1,19 +1,16 @@
 uniform sampler2D obraz;
 uniform sampler2D Z_Buffer;
 uniform float distEntity;
+uniform vec2 screenresolution;
+
 void main()
 {
-	float maximum;
 	vec2 uv = vec2(gl_TexCoord[0].x,gl_TexCoord[0].y);	
 	vec4 tex = texture2D(obraz,uv.xy);
-	vec4 buf = texture2D(Z_Buffer,vec2(uv.x,0.0));
+	vec4 buf = texture2D(Z_Buffer,gl_FragCoord.xy/screenresolution.xy);
 
-	int distanceFromBuffer = (buf.r*256*256*256+buf.g*256*256+buf.b*256+buf.a);
-	//if(distEntity < 1.0)tex.r = 1.0;
-	//tex.r = distEntity/256.0;
-	//tex.r = buf.r*4*64*64;
-	//distanceFromBuffer = distanceFromBuffer;
-	gl_FragColor = tex;//vec4(distanceFromBuffer,distanceFromBuffer,distanceFromBuffer,1.0);
+	float distanceFromBuffer = (buf.r*256.0*256.0*256.0*256.0+buf.g*256.0*256.0*256.0+buf.b*256.0*256.0+buf.a*256.0);
+	if(distEntity > distanceFromBuffer)tex.a = 0.0;
+
+	gl_FragColor = tex;
 }
-
-//dont know what that striping is find out!!!!
