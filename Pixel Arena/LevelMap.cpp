@@ -1,17 +1,38 @@
 #include "LevelMap.h"
 
+const short LevelMap::getMapX() const
+{
+	return MapX;
+}
+
+const short LevelMap::getMapY() const
+{
+	return MapY;
+}
+
+const int LevelMap::getTileSize() const
+{
+	return TileSize;
+}
+
 LevelMap::LevelMap()
 {
 	//Default Values
 	MapX = 1;
 	MapY = 1;
 	Tiles = NULL;
-
+	TextureCeiling = 0;
+	TextureFloor = 0;
 }
 
-void LevelMap::LoadLevel(std::wstring LevelName)
+LevelMap::~LevelMap()
 {
-	std::ifstream ifs(LevelName);
+	if(Tiles)free(Tiles);
+}
+
+void LevelMap::LoadLevel(std::wstring _LevelName)
+{
+	std::ifstream ifs(_LevelName);
 	std::string line;
 	if (ifs){
 		ifs >> MapX >> MapY >> TextureCeiling >> TextureFloor;
@@ -28,12 +49,18 @@ void LevelMap::LoadLevel(std::wstring LevelName)
 
 }
 
-int LevelMap::getTexCeil() const
+const int LevelMap::getTexCeil() const
 {
 	return this->TextureCeiling;
 }
 
-int LevelMap::getTexFloor() const
+const int LevelMap::getTexFloor() const
 {
 	return this->TextureFloor;
+}
+
+char LevelMap::getTile(int _X) const
+{
+	if(_X < (MapX * MapY))return Tiles[_X];
+	else return '.';
 }

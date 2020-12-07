@@ -199,8 +199,8 @@ void State_Gameplay::CastRays3DWalls()
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
-			mp = my * Level.MapX + mx;
-			if (mp > 0 && mp < Level.MapX * Level.MapY && Level.Tiles[mp] >= '0' && Level.Tiles[mp] <= '9') {//hit 
+			mp = my * Level.getMapX() + mx;
+			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getTile(mp) >= '0' && Level.getTile(mp) <= '9') {//hit 
 				dof = maxdof;
 				disV = cos(LogManager::DegtoRad(rayAngle)) * (rx - px) - sin(LogManager::DegtoRad(rayAngle)) * (ry - py);
 			}
@@ -238,8 +238,8 @@ void State_Gameplay::CastRays3DWalls()
 		{
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
-			mp = my * Level.MapX + mx;
-			if (mp > 0 && mp < Level.MapX * Level.MapY && Level.Tiles[mp] >= '0' && Level.Tiles[mp] <= '9') { //hit
+			mp = my * Level.getMapX() + mx;
+			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getTile(mp) >= '0' && Level.getTile(mp) <= '9') { //hit
 				dof = maxdof;
 				disH = cos(LogManager::DegtoRad(rayAngle)) * (rx - px) - sin(LogManager::DegtoRad(rayAngle)) * (ry - py);
 			}
@@ -283,15 +283,15 @@ void State_Gameplay::CastRays3DWalls()
 		//Line[1].color = Kolor;
 		//Line[2].color = Kolor;
 		//Line[3].color = Kolor;
-		int HitCell = (int)(ry / 64.0) * Level.MapX + (int)(rx / 64.0);
-		int TexCall = Level.Tiles[HitCell] - '0';
+		int HitCell = (int)(ry / 64.0) * Level.getMapX() + (int)(rx / 64.0);
+		int TexCall = Level.getTile(HitCell) - '0';
 		TexCall = TexCall < 0 ? 0 : TexCall;
 		TexCall = TexCall > 9 ? 0 : TexCall;
 		double TexSizeX = Resources->Textures.at(TexCall).getSize().x; -1;
 		double TexSizeY = Resources->Textures.at(TexCall).getSize().y; -1;
 
 		if (HitSide == 1) { // Horizontal
-			rx /= Level.TileSize;// /64
+			rx /= Level.getTileSize();//64
 			double normX = (rx - (int)rx);
 			Line[0].texCoords.x = TexSizeX * normX;
 			Line[0].texCoords.y = TexSizeY;
@@ -306,7 +306,7 @@ void State_Gameplay::CastRays3DWalls()
 			Line[3].texCoords.y = TexSizeY;
 		}
 		else if (HitSide == 2) {//Vertical
-			ry /= Level.TileSize;// /64
+			ry /= Level.getTileSize();// /64
 			double normY = (ry - (int)ry);
 			Line[0].texCoords.x = TexSizeX * normY;
 			Line[0].texCoords.y = TexSizeY;
@@ -375,8 +375,8 @@ void State_Gameplay::CastRaysFloorCeil()
 	double WinW = Window->getSize().x;
 
 	//Get Player True tilemap position and view direction
-	double px = Butcher->x / Level.TileSize; 
-	double py = Butcher->y / Level.TileSize;
+	double px = Butcher->x / Level.getTileSize(); 
+	double py = Butcher->y / Level.getTileSize();
 	double pDeg = Butcher->DegAngle;//in Deg
 
 	//Camera Rays 

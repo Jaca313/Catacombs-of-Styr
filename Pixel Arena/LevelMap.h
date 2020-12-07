@@ -4,26 +4,28 @@
 #include "LogManager.h"
 class LevelMap
 {
-private:
-	LogManager& InfoTool = LogManager::getInstance();
-
-
-
 public:
-	const float TileSize = 64;
 	LevelMap();
-	void LoadLevel(std::wstring LevelName);
-	char* Tiles;
-	short MapX;
-	short MapY;
-
-
+	~LevelMap();
+private:
+	LogManager& InfoTool = LogManager::getInstance();///< Access to Internal Messages
+public:
+	void LoadLevel(std::wstring _LevelName);///< Load Level Data from File
 
 private:
-	int TextureCeiling;//make it load in constructor
-	int TextureFloor;
+	//Map properties
+	short MapX;///<Mapsize
+	short MapY;///<Map Size
+	int TextureCeiling;///< Texture used in Ceiling
+	int TextureFloor;///< Texture used in Floor
+	char* Tiles;
+	const float TileSize = 64;///< Tile Size map to world pos
 public:
-	int getTexCeil() const;
-	int getTexFloor() const;
+	const short getMapX() const;///< Returns Map X size
+	const short getMapY() const;///< Returns Map Y size
+	const int getTileSize() const;///< Returns Map TileSize
+	const int getTexCeil() const;///< Returns Ceiling Texture number
+	const int getTexFloor() const;///< Returns Floor Texture number
+	char getTile(int X) const;///< Returns Tile at X
 };
 

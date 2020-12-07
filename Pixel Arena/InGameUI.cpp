@@ -9,6 +9,7 @@ InGameUI::InGameUI()
 
 void InGameUI::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	//drawing of UI elements
 	target.draw(this->Background, states);
 	target.draw(this->Portrait, states);
 	target.draw(this->HealthBarBackground, states);

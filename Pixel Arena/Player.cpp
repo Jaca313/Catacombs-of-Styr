@@ -53,14 +53,14 @@ void Player::UpdatePosition(double fTime)
 	float dy = vy * (MaxSpeed + 100.f * Sprint);
 
 	//Enables Collision and Wall sliding
-	int TileX = (x + dx) / (float)Level->TileSize;//Player Will be there if we move
-	int TileY = (y + dy) / (float)Level->TileSize;
+	int TileX = (x + dx) / (float)Level->getTileSize();//Player Will be there if we move
+	int TileY = (y + dy) / (float)Level->getTileSize();
 
-	int TileX2 = (x) / (float)Level->TileSize;//Player Is now there
-	int TileY2 = (y) / (float)Level->TileSize;
+	int TileX2 = (x) / (float)Level->getTileSize();//Player Is now there
+	int TileY2 = (y) / (float)Level->getTileSize();
 
-	int C1 = Level->Tiles[TileX + Level->MapX * TileY2];
-	int C2 = Level->Tiles[TileX2 + Level->MapX * TileY];
+	int C1 = Level->getTile(TileX + Level->getMapX() * TileY2);
+	int C2 = Level->getTile(TileX2 + Level->getMapX() * TileY);
 	if (C1 < '0' || C1 >'9')
 		this->x += dx;
 	if (C2 < '0' || C2 > '9')
