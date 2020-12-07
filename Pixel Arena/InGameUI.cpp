@@ -17,23 +17,27 @@ void InGameUI::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void InGameUI::drawUI(Player* Butcher,sf::RenderTarget& target, sf::RenderStates states)
 {
+	//Gets size of target for proper scaling
 	this->sizeX = target.getSize().x / 3.0;
 	this->sizeY = target.getSize().y / 5.0;
 
 	this->PositionX = sizeX;
 	this->PositionY = target.getSize().y - sizeY;
 
+	//updates scaling and position
 	UpdateUIScale(Butcher);
 
+	//draws elements
 	draw(target, states);
 }
 
 void InGameUI::UpdateUIScale(Player* Butcher)
 {
-
+	//Background
 	Background.setPosition(PositionX, PositionY);
 	Background.setSize(sf::Vector2f(sizeX, sizeY));
 
+	//Health Bar and Health dependent Portrait
 	float Health = Butcher->getHealth() / 100.0;//read this from player
 	HealthBar.setPosition(PositionX + sizeX / 3.0, PositionY + 9 * sizeY / 10.0);
 	HealthBar.setSize(sf::Vector2f(Health * sizeX / 3.0, sizeY * 0.1));
@@ -56,6 +60,7 @@ void InGameUI::UpdateUIScale(Player* Butcher)
 
 void InGameUI::InitialSetup(int Face)
 {
+	
 	Background.setFillColor(sf::Color::Cyan);
 	Background.setOutlineColor(sf::Color::Black);
 	Background.setOutlineThickness(10.f);

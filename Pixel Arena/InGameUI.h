@@ -6,28 +6,30 @@ class InGameUI : public sf::Drawable
 public:
 	InGameUI();
 private:
-	float sizeX  = 0.f;
-	float sizeY = 0.f;
+	//Screen Properties
+	float sizeX  = 0.f;///< Property of Screen
+	float sizeY = 0.f;///< Property of Screen
 
-	float PositionX = 0.f;
-	float PositionY = 0.f;
+	float PositionX = 0.f;///< Property of Screen
+	float PositionY = 0.f;///< Property of Screen
 
-	ResourceManager& Resources = ResourceManager::getInstance();
+	//Resources
+	ResourceManager& Resources = ResourceManager::getInstance();///<Access to Resource Manager
 
-	sf::RectangleShape Background;
-	sf::RectangleShape Portrait;
+	//UI Elements
+	sf::RectangleShape Background;///< Box in mid-bottom for background UI
+	sf::RectangleShape Portrait;///< Portrait of Character
 
-	sf::RectangleShape HealthBarBackground;
-	sf::RectangleShape HealthBar;
+	sf::RectangleShape HealthBarBackground;///< Backing element for healthbard
+	sf::RectangleShape HealthBar;///< Healthbar for player
 
 public:
-	void drawUI(Player* Butcher, sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
-
+	void drawUI(Player* Butcher, sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);///< interface for updating UI and drawing
 private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const  override;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const  override;///< does only drawing
 	
-	void UpdateUIScale(Player* Butcher);
+	void UpdateUIScale(Player* Butcher);///< updates scaling position of UI elements
 
-	void InitialSetup(int Face);
+	void InitialSetup(int Face);///< Sets up nonchanging properties of UI elements
 };
 
