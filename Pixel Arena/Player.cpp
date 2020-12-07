@@ -34,6 +34,18 @@ void Player::SetSprint(bool condition)
 	this->Sprint = condition;
 }
 
+void Player::setHealth(float _Health)
+{
+	float fixedHealth = _Health > 100.f ? 100.f : _Health;
+	fixedHealth = fixedHealth < 0.f ? 0.f : fixedHealth;
+	this->Health = fixedHealth;
+}
+
+float Player::getHealth()
+{
+	return this->Health;
+}
+
 void Player::UpdatePosition(double fTime)
 {
 	CapSpeed();

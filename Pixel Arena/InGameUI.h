@@ -1,9 +1,10 @@
 #pragma once
 #include "ResourceManager.h"
+#include "Player.h"
 class InGameUI : public sf::Drawable
 {
 public:
-	InGameUI(int Face);
+	InGameUI();
 private:
 	float sizeX  = 0.f;
 	float sizeY = 0.f;
@@ -20,12 +21,12 @@ private:
 	sf::RectangleShape HealthBar;
 
 public:
-	void drawUI(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
+	void drawUI(Player* Butcher, sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const  override;
 	
-	void UpdateUIScale();
+	void UpdateUIScale(Player* Butcher);
 
 	void InitialSetup(int Face);
 };

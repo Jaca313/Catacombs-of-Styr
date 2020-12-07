@@ -10,7 +10,7 @@ void main()
 	vec4 buf = texture2D(Z_Buffer,gl_FragCoord.xy/screenresolution.xy);
 
 	float distanceFromBuffer = (buf.r*256.0*256.0*256.0*256.0+buf.g*256.0*256.0*256.0+buf.b*256.0*256.0+buf.a*256.0);
-	if(distEntity > distanceFromBuffer)tex.a = 0.0;
+	if(distEntity > distanceFromBuffer)discard;
 
 	gl_FragColor = tex;
 }

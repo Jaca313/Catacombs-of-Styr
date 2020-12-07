@@ -67,6 +67,14 @@ void State_Gameplay::Input(double fTime)
 		Butcher->DegAngle = (int)Butcher->DegAngleTemp;
 	}
 
+	//Debug
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
+		Butcher->setHealth(Butcher->getHealth() + fTime * 5);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
+		Butcher->setHealth(Butcher->getHealth() - fTime * 5);
+	}
+
 	//Mouse
 	//distance vector calc should feel better but i plan to add y axis later
 	//float sensitivity = 100000.f;
@@ -334,7 +342,7 @@ void State_Gameplay::CastRays3DWalls()
 
 void State_Gameplay::DrawUI() 
 {
-	UI.drawUI(*ScreenBuffer);
+	UI.drawUI(Butcher,*ScreenBuffer);
 }
 
 void State_Gameplay::DrawEntities()
@@ -349,11 +357,12 @@ void State_Gameplay::Fill_Z_Buffer()
 	unsigned winSize_X = Window->getSize().x;
 	Resources->Z_BufferImage.create(winSize_X, 1, sf::Color(0, 0, 0, 255));
 	for (int i = 0; i < winSize_X; i++) {
-		unsigned char CP1 = (int(Z_Buffer[i]) & 0xff000000UL) >> 24;
-		unsigned char CP2 = (int(Z_Buffer[i]) & 0x00ff0000UL) >> 16;
-		unsigned char CP3 = (int(Z_Buffer[i]) & 0x0000ff00UL) >> 8;
-		unsigned char CP4 = (int(Z_Buffer[i]) & 0x000000ffUL);
-		Resources->Z_BufferImage.setPixel(i, 0, sf::Color(CP1, CP2, CP3, CP4));
+		//unsigned char CP1 = (int(Z_Buffer[i]) & 0xff000000UL) >> 24;
+		//unsigned char CP2 = (int(Z_Buffer[i]) & 0x00ff0000UL) >> 16;
+		//unsigned char CP3 = (int(Z_Buffer[i]) & 0x0000ff00UL) >> 8;
+		//unsigned char CP4 = (int(Z_Buffer[i]) & 0x000000ffUL);
+		//Resources->Z_BufferImage.setPixel(i, 0, sf::Color(CP1, CP2, CP3, CP4));
+		Resources->Z_BufferImage.setPixel(i, 0, sf::Color(Z_Buffer[i]));
 	}
 	Resources->Z_BufferTex.loadFromImage(Resources->Z_BufferImage);
 

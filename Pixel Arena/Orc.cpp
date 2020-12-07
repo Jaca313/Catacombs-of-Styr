@@ -64,18 +64,18 @@ void Orc::UpdateAnimation(sf::RenderTarget& target, double* Z_Buffer)
 
 
 	//Clipping Code just for reducing draw calls
-	int leftPos = int(xFinalPosition - Scale / 2.0) < 0 ? 0 : int(xFinalPosition - Scale / 2.0);
-	int centerleftPos = int(xFinalPosition - Scale / 4.0) < 0 ? 0 : int(xFinalPosition - Scale / 4.0);
-	int centerrightPos = int(xFinalPosition + Scale / 4.0) > m_winSizeX ? m_winSizeX : int(xFinalPosition + Scale / 4.0);
-	int rightPos = int(xFinalPosition + Scale / 2.0) > m_winSizeX ? m_winSizeX : int(xFinalPosition + Scale / 2.0);
+	//int leftPos = int(xFinalPosition - Scale / 2.0) < 0 ? 0 : int(xFinalPosition - Scale / 2.0);
+	//int centerleftPos = int(xFinalPosition - Scale / 4.0) < 0 ? 0 : int(xFinalPosition - Scale / 4.0);
+	//int centerrightPos = int(xFinalPosition + Scale / 4.0) > m_winSizeX ? m_winSizeX : int(xFinalPosition + Scale / 4.0);
+	//int rightPos = int(xFinalPosition + Scale / 2.0) > m_winSizeX ? m_winSizeX : int(xFinalPosition + Scale / 2.0);
 
-	bool leftObscured = Z_Buffer[leftPos] < this->distanceToPlayer;
-	bool centerLeftObscured = Z_Buffer[centerleftPos] < this->distanceToPlayer;
-	bool centerRightObscured = Z_Buffer[centerrightPos] < this->distanceToPlayer;
-	bool rightObscured = Z_Buffer[rightPos] < this->distanceToPlayer;
+	//bool leftObscured = Z_Buffer[leftPos] < this->distanceToPlayer;
+	//bool centerLeftObscured = Z_Buffer[centerleftPos] < this->distanceToPlayer;
+	//bool centerRightObscured = Z_Buffer[centerrightPos] < this->distanceToPlayer;
+	//bool rightObscured = Z_Buffer[rightPos] < this->distanceToPlayer;
 
-	if (leftObscured && centerLeftObscured && centerRightObscured && rightObscured)m_bObscured = true;
-	else m_bObscured = false;
+	//if (leftObscured && centerLeftObscured && centerRightObscured && rightObscured)m_bObscured = true;
+	//else m_bObscured = false;
 
 
 }

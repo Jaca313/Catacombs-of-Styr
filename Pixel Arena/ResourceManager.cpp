@@ -24,7 +24,7 @@ void ResourceManager::LoadTextures()
 	//6
 	LoadSingleTexture("Walls/redbrick5.jpg");
 	//7
-	LoadSingleTexture("Walls/cinder.tga");
+	LoadSingleTexture("Walls/bwall.tga");
 	//8
 	LoadSingleTexture("");
 	//9
@@ -32,13 +32,13 @@ void ResourceManager::LoadTextures()
 
 	//10 - 29 Reserved for UI
 	//10
-	LoadSingleTexture("Faces/Face_Raza.png");
+	LoadSingleTexture("Faces/Face_Trog.png");
 	//11
-	LoadSingleTexture("Faces/Face_Lock.png");
+	LoadSingleTexture("");
 	//12
-	LoadSingleTexture("Faces/Face_Arian.png");
+	LoadSingleTexture("");
 	//13
-	LoadSingleTexture("Faces/Face_Senzo.png");
+	LoadSingleTexture("");
 	//14
 	LoadSingleTexture("");
 	//15

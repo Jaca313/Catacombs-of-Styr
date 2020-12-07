@@ -6,14 +6,11 @@ public:
 	Orc(sf::Vector2f pos,int Texture);
 private:
 	sf::RectangleShape Object;
-
 public:
 	void drawEntity(double* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const  override;
-
-
 
 	int AnimSizeX;//on construction
 	int AnimSizeY;

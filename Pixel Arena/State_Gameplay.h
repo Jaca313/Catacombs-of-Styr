@@ -32,7 +32,7 @@ private:
 	EntityManager& Entities = EntityManager::getInstance();
 	LogManager& Info = LogManager::getInstance();
 
-	InGameUI UI = InGameUI(11);//Twarz 10-13
+	InGameUI UI = InGameUI();
 	
 	//Camera Settings
 	double fov = c_Fov;//Optimized for 90 btw

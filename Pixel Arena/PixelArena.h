@@ -13,7 +13,6 @@ public:
 	PixelArena();
 	~PixelArena();
 public:
-
 	void Run();
 private:
 	//Drawing
