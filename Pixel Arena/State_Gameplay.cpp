@@ -16,7 +16,7 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 	this->Resources = _Resources;
 
 	//Calculate distance to screen from fov
-	this->distancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
+	this->m_cdistancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
 
 	//Create a Depth Buffer
 	Z_Buffer = new double[Window->getSize().x];
@@ -175,7 +175,7 @@ void State_Gameplay::CastRays3DWalls()
 	std::vector<double> WallRays;
 	double angle = 0;
 	for (int i = -m_winSizeX / 2; i < m_winSizeX/2; i++) {
-		angle = atan(i / distancetoProj);
+		angle = atan(i / m_cdistancetoProj);
 		WallRays.push_back(LogManager::RadtoDeg(angle));
 	}
 
@@ -434,7 +434,7 @@ void State_Gameplay::CastRaysFloorCeil()
 		p = WinH / 2.0 - y;
 
 		// Vertical position of the camera.
-		posZ = distancetoProj;//0.5 * WinH; assume 45 degrees
+		posZ = m_cdistancetoProj;//0.5 * WinH; assume 45 degrees
 
 		// Horizontal distance from the camera to the floor for the current row.
 		// 0.5 is the z position exactly in the middle between floor and ceiling.
