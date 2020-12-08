@@ -32,6 +32,7 @@ LevelMap::~LevelMap()
 
 void LevelMap::LoadLevel(std::wstring _LevelName)
 {
+	if (Tiles)free(Tiles);//Make sure we let go of the current memory
 	std::ifstream ifs(_LevelName);
 	std::string line;
 	if (ifs){

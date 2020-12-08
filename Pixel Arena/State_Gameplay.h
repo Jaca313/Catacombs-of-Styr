@@ -15,13 +15,13 @@ class State_Gameplay :
 public:
 	State_Gameplay(sf::RenderWindow* pWindow, ResourceManager* Resources );
 private:
-	sf::RenderWindow* Window;
-	sf::RenderTexture* ScreenBuffer;
+	sf::RenderWindow* Window;///< Final Output
+	sf::RenderTexture* ScreenBuffer;///< Intermediary Drawing target for shader use
 public:
-	void EventLoop();
-	void Input(double fTime);
-	void Update(double fTime);
-	void Draw(sf::RenderTexture* ScreenBuffer);
+	void EventLoop();///< Queries and resolves SFML events
+	void Input(double fTime);///< User Input (Keyboard and Mouse)
+	void Update(double fTime);///< Calculates Internal Resource Changes
+	void Draw(sf::RenderTexture* ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
 //Resources
 private:

@@ -17,11 +17,11 @@ private:
 	ResourceManager& Resources = ResourceManager::getInstance();///<Access to Resource Manager
 
 	//UI Elements
-	sf::RectangleShape Background;///< Box in mid-bottom for background UI
-	sf::RectangleShape Portrait;///< Portrait of Character
+	sf::RectangleShape m_sBackground;///< Box in mid-bottom for background UI
+	sf::RectangleShape m_sPortrait;///< Portrait of Character
 
-	sf::RectangleShape HealthBarBackground;///< Backing element for healthbard
-	sf::RectangleShape HealthBar;///< Healthbar for player
+	sf::RectangleShape m_sHealthBarBackground;///< Backing element for healthbard
+	sf::RectangleShape m_sHealthBar;///< Healthbar for player
 
 public:
 	void drawUI(Player* Butcher, sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);///< interface for updating UI and drawing

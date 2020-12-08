@@ -70,7 +70,7 @@ void ResourceManager::LoadTextures()
 	//28
 	LoadSingleTexture("");
 	//29
-	LoadSingleTexture("");
+	LoadSingleTexture("sword.png");
 
 	//30 - ? Reserved for Entities
 	//30
@@ -101,6 +101,12 @@ void ResourceManager::LoadTextures()
 	LoadSingleTexture("Orcs/orc_chief_green.png");
 	//43
 	LoadSingleTexture("Orcs/orc_chief_brown.png");
+	//44
+	LoadSingleTexture("Drops/gold.png");
+	//45
+	LoadSingleTexture("");
+	//46
+	LoadSingleTexture("");
 
 
 }
