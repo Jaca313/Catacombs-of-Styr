@@ -19,14 +19,14 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 	this->m_cdistancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
 
 	//Create a Depth Buffer
-	Z_Buffer = new double[Window->getSize().x];
+	m_sZ_Buffer = new double[Window->getSize().x];
 }
 
 State_Gameplay::~State_Gameplay()
 {
 	//Cleanup
 	delete Butcher;
-	delete[] Z_Buffer;
+	delete[] m_sZ_Buffer;
 }
 
 
@@ -46,8 +46,9 @@ void State_Gameplay::eventLoop()
 
 void State_Gameplay::input(double fTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->SetSprint(true);
-	else Butcher->SetSprint(false);
+	
+
+	
 	//Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
 		Butcher->VectorPlayer(+cos(LogManager::DegtoRad(Butcher->DegAngle)), -sin(LogManager::DegtoRad(Butcher->DegAngle)), fTime);
@@ -55,14 +56,14 @@ void State_Gameplay::input(double fTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
 		Butcher->VectorPlayer(-cos(LogManager::DegtoRad(Butcher->DegAngle)), +sin(LogManager::DegtoRad(Butcher->DegAngle)), fTime);
 	}
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
 		Butcher->VectorPlayer(+cos(LogManager::DegtoRad(Butcher->DegAngle+90)), -sin(LogManager::DegtoRad(Butcher->DegAngle+90)), fTime);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
 		Butcher->VectorPlayer(-cos(LogManager::DegtoRad(Butcher->DegAngle + 90)), +sin(LogManager::DegtoRad(Butcher->DegAngle + 90)), fTime);
 	}
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->SetSprint(true);
+	else Butcher->SetSprint(false);
 
 
 	//Rotation
@@ -100,16 +101,15 @@ void State_Gameplay::input(double fTime)
 
 void State_Gameplay::update(double fTime)
 {
-	Butcher->Update(fTime);
-	Entities.UpdateAll();
-	
+	Butcher->Update(fTime);//Update Player
+	Entities.UpdateAll();//Update Entities
 }
 
 void State_Gameplay::draw(sf::RenderTexture* ScreenBuffer)
 {
 	this->ScreenBuffer = ScreenBuffer;
 
-	this->ScreenBuffer->clear(sf::Color(120,120,120,255));
+	this->ScreenBuffer->clear(sf::Color(120,120,120,255));//Clear Buffer
 	
 	//Clear
 	//Draw Floor and Ceiling
@@ -137,7 +137,7 @@ void State_Gameplay::CastRays3DWalls()
 	int m_winSizeX = Window->getSize().x;
 	int m_winSizeY = Window->getSize().y;
 
-	int maxdof = 50;//How far to look for walls
+	int maxdof = 150;//How far to look for walls
 	double res = 12.0;//How many rays per 1 Deg of Fov
 
 	int mx;
@@ -271,6 +271,7 @@ void State_Gameplay::CastRays3DWalls()
 			HitSide = 2;//Horizontal
 		}
 
+		double DistanceCorrect = disH;
 
 		int ca = LogManager::FixAngle(Butcher->DegAngle - rayAngle); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
 		int lineH = (160 * m_winSizeY / 2) / (disH);
@@ -296,8 +297,8 @@ void State_Gameplay::CastRays3DWalls()
 		//Line[3].color = Kolor;
 		int HitCell = (int)(ry / 64.0) * Level.getMapX() + (int)(rx / 64.0);
 		int TexCall = Level.getTile(HitCell) - '0';
-		TexCall = TexCall < 0 ? 0 : TexCall;
-		TexCall = TexCall > 9 ? 0 : TexCall;
+		TexCall = TexCall < 0 ? 1 : TexCall;
+		TexCall = TexCall > 9 ? 1 : TexCall;
 		double TexSizeX = Resources->Textures.at(TexCall).getSize().x; -1;
 		double TexSizeY = Resources->Textures.at(TexCall).getSize().y; -1;
 
@@ -339,7 +340,7 @@ void State_Gameplay::CastRays3DWalls()
 		TexturedWall[TexCall].append(Line[3]);
 
 
-		Z_Buffer[r] = disH;
+		m_sZ_Buffer[r] = DistanceCorrect;
 	}
 
 
@@ -359,7 +360,7 @@ void State_Gameplay::DrawUI()
 void State_Gameplay::DrawEntities()
 {
 	for (auto E : *Entities.getEntities()) {
-		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(Z_Buffer,*ScreenBuffer);
+		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer,*ScreenBuffer);
 	}
 }
 
@@ -373,7 +374,7 @@ void State_Gameplay::Fill_Z_Buffer()
 		//unsigned char CP3 = (int(Z_Buffer[i]) & 0x0000ff00UL) >> 8;
 		//unsigned char CP4 = (int(Z_Buffer[i]) & 0x000000ffUL);
 		//Resources->Z_BufferImage.setPixel(i, 0, sf::Color(CP1, CP2, CP3, CP4));
-		Resources->Z_BufferImage.setPixel(i, 0, sf::Color(Z_Buffer[i]));
+		Resources->Z_BufferImage.setPixel(i, 0, sf::Color(unsigned int(m_sZ_Buffer[i])));
 	}
 	Resources->Z_BufferTex.loadFromImage(Resources->Z_BufferImage);
 

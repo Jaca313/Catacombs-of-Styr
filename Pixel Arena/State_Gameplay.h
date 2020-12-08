@@ -38,15 +38,15 @@ private:
 	//Camera Settings
 	double m_cFov = c_Fov;///< Previously changeable now permanently set to 90(deg)
 	double m_cdistancetoProj = 0;///< Distance from the camera to projected screen
-	double* Z_Buffer;///< Depth Buffer
+	double* m_sZ_Buffer;///< Depth Buffer
 	//Drawing
-	void CastRaysFloorCeil();
-	void CastRays3DWalls();
+	void CastRaysFloorCeil();///< Draws Affine Mapping of Floor and Ceiling
+	void CastRays3DWalls();///< Draws Raycasted screen projection from Camera
 
-	void DrawUI();
-	void DrawEntities();
+	void DrawUI();///< Draws Ingame UI
+	void DrawEntities();///< Draws Entities in GameWorld
 
-	void Fill_Z_Buffer();
+	void Fill_Z_Buffer();///< Codes values from depthbuffer onto Texture
 
 };
 

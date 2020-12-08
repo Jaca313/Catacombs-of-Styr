@@ -12,7 +12,7 @@ private:
 		Entities.push_back(new Orc(sf::Vector2f(80, 80), 30));
 		Entities.push_back(new Orc(sf::Vector2f(34*64, 6*64), 33));
 		Entities.push_back(new Orc(sf::Vector2f(25 * 64, 4 * 64), 34));
-		Entities.push_back(new Orc(sf::Vector2f(38 * 64, 6 * 64), 37));
+		Entities.push_back(new Orc(sf::Vector2f(3 * 64, 50 * 64), 37));
 		Entities.push_back(new Orc(sf::Vector2f(30 * 64, 2 * 64), 38));
 		Entities.push_back(new Orc(sf::Vector2f(150, 150), 41));
 		Entities.push_back(new Orc(sf::Vector2f(10 * 64, 3 * 64), 42));

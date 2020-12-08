@@ -12,6 +12,7 @@ public:
 
 	float rloopTime();
 	float rTotalTime();
+	float rClearTotalTime();
 private:
 	float ResetClock();
 };

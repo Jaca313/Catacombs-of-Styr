@@ -10,8 +10,8 @@ public:
 	void VectorPlayer(float Fx, float Fy,double fTime);
 	void SetSprint(bool condition);
 
-	void setHealth(float _Health);
-	float getHealth();
+	void setHealth(float _Health);///< Sets Player Health
+	float getHealth();///< Returns Player Health
 private:
 	float Health = 100.f;
 	bool Sprint = 0;

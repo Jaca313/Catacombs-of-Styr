@@ -37,3 +37,10 @@ float Timer::rTotalTime()
 {
 	return TotalTime;
 }
+
+float Timer::rClearTotalTime()
+{
+	float returnValue = TotalTime;
+	TotalTime = 0.f;
+	return returnValue;
+}
