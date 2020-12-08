@@ -46,24 +46,21 @@ void State_Gameplay::eventLoop()
 
 void State_Gameplay::input(double fTime)
 {
-	
-
-	
 	//Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		Butcher->VectorPlayer(+cos(LogManager::DegtoRad(Butcher->DegAngle)), -sin(LogManager::DegtoRad(Butcher->DegAngle)), fTime);
+		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		Butcher->VectorPlayer(-cos(LogManager::DegtoRad(Butcher->DegAngle)), +sin(LogManager::DegtoRad(Butcher->DegAngle)), fTime);
+		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-		Butcher->VectorPlayer(+cos(LogManager::DegtoRad(Butcher->DegAngle+90)), -sin(LogManager::DegtoRad(Butcher->DegAngle+90)), fTime);
+		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle+90)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle+90)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-		Butcher->VectorPlayer(-cos(LogManager::DegtoRad(Butcher->DegAngle + 90)), +sin(LogManager::DegtoRad(Butcher->DegAngle + 90)), fTime);
+		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime));
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->SetSprint(true);
-	else Butcher->SetSprint(false);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->setSprint(true);
+	else Butcher->setSprint(false);
 
 
 	//Rotation
@@ -101,7 +98,7 @@ void State_Gameplay::input(double fTime)
 
 void State_Gameplay::update(double fTime)
 {
-	Butcher->Update(fTime);//Update Player
+	Butcher->update(fTime);//Update Player
 	Entities.UpdateAll();//Update Entities
 }
 

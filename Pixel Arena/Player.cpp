@@ -12,45 +12,39 @@ Player::Player(float x, float y, LevelMap* level)
 	this->Level = level;
 }
 
-void Player::Update(double fTime)
+void Player::update(double fTime)
 {
-	UpdatePosition(fTime);
+	UpdatePosition();
 }
 
-void Player::ForceActOnPlayer(float Fx, float Fy)
+void Player::vectorPlayer(sf::Vector2f _dVec)
 {
-	this->vx += Fx;
-	this->vy += Fy;
+	this->vx += _dVec.x;
+	this->vy += _dVec.y;
 }
 
-void Player::VectorPlayer(float Fx, float Fy, double fTime)
+void Player::setSprint(bool _condition)
 {
-	this->vx += Fx * fTime;
-	this->vy += Fy * fTime;
-}
-
-void Player::SetSprint(bool condition)
-{
-	this->Sprint = condition;
+	this->m_bSprint = _condition;
 }
 
 void Player::setHealth(float _Health)
 {
 	float fixedHealth = _Health > 100.f ? 100.f : _Health;
 	fixedHealth = fixedHealth < 0.f ? 0.f : fixedHealth;
-	this->Health = fixedHealth;
+	this->m_fHealth = fixedHealth;
 }
 
 float Player::getHealth()
 {
-	return this->Health;
+	return this->m_fHealth;
 }
 
-void Player::UpdatePosition(double fTime)
+void Player::UpdatePosition()
 {
-	CapSpeed();
-	float dx = vx * (MaxSpeed + 100.f * Sprint);
-	float dy = vy * (MaxSpeed + 100.f * Sprint);
+	//CapSpeed();
+	float dx = vx * (MaxSpeed + SprintSpeed * m_bSprint);
+	float dy = vy * (MaxSpeed + SprintSpeed * m_bSprint);
 
 	//Enables Collision and Wall sliding
 	int TileX = (x + dx) / (float)Level->getTileSize();//Player Will be there if we move
@@ -66,22 +60,9 @@ void Player::UpdatePosition(double fTime)
 	if (C2 < '0' || C2 > '9')
 		this->y += dy;
 
-	StopVel(fTime);
-}
-
-void Player::CapSpeed()
-{
-	float factor = sqrt(vx * vx + vy * vy)/1.f;
-	if (factor > 1.f) {
-		vx /= factor;
-		vy /= factor;
-	}
-
+	this->vx /= 1.8;
+	this->vy /= 1.8;
 
 }
 
-void Player::StopVel(float fTime)
-{
-	if(abs(vx) > 0.f)vx += -vx * fTime * 100;//tenth of a second to stop
-	if (abs(vx) > 0.f)vy += -vy * fTime * 100;//tenth of a second to stop
-}
+
