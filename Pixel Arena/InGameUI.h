@@ -7,8 +7,8 @@ public:
 	InGameUI();
 private:
 	//Screen Properties
-	float sizeX  = 0.f;///< Property of Screen
-	float sizeY = 0.f;///< Property of Screen
+	float SizeX  = 0.f;///< Property of Screen
+	float SizeY = 0.f;///< Property of Screen
 
 	float PositionX = 0.f;///< Property of Screen
 	float PositionY = 0.f;///< Property of Screen
@@ -24,12 +24,12 @@ private:
 	sf::RectangleShape m_sHealthBar;///< Healthbar for player
 
 public:
-	void drawUI(Player* Butcher, sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);///< interface for updating UI and drawing
+	void drawUI(Player* _Butcher, sf::RenderTarget& _target, sf::RenderStates _states = sf::RenderStates::Default);///< interface for updating UI and drawing
 private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const  override;///< does only drawing
+	virtual void draw(sf::RenderTarget& _target, sf::RenderStates _states = sf::RenderStates::Default) const  override;///< does only drawing
 	
-	void UpdateUIScale(Player* Butcher);///< updates scaling position of UI elements
+	void UpdateUIScale(Player* _Butcher);///< updates scaling position of UI elements
 
-	void InitialSetup(int Face);///< Sets up nonchanging properties of UI elements
+	void InitialSetup(int _Face);///< Sets up nonchanging properties of UI elements
 };
 

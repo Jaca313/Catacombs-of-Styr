@@ -27,6 +27,7 @@ LevelMap::LevelMap()
 
 LevelMap::~LevelMap()
 {
+	//Cleanup
 	if(Tiles)free(Tiles);
 }
 

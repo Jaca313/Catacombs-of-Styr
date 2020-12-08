@@ -14,30 +14,31 @@ class State_Gameplay :
 {
 public:
 	State_Gameplay(sf::RenderWindow* pWindow, ResourceManager* Resources );
+	~State_Gameplay();
 private:
 	sf::RenderWindow* Window;///< Final Output
-	sf::RenderTexture* ScreenBuffer;///< Intermediary Drawing target for shader use
+	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use
 public:
-	void EventLoop();///< Queries and resolves SFML events
-	void Input(double fTime);///< User Input (Keyboard and Mouse)
-	void Update(double fTime);///< Calculates Internal Resource Changes
-	void Draw(sf::RenderTexture* ScreenBuffer);///< Outputs Elements to ScreenBuffer
+	void eventLoop();///< Queries and resolves SFML events
+	void input(double fTime);///< User Input (Keyboard and Mouse)
+	void update(double fTime);///< Calculates Internal Resource Changes
+	void draw(sf::RenderTexture* ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
 //Resources
 private:
-	LevelMap Level;
-	Player* Butcher;
+	LevelMap Level;///< Contains Level Data
+	Player* Butcher;///< Pointer to Player
 
-	ResourceManager* Resources;
-	EntityManager& Entities = EntityManager::getInstance();
-	LogManager& Info = LogManager::getInstance();
+	ResourceManager* Resources;///< Pointer to Resources
+	EntityManager& Entities = EntityManager::getInstance();///< Reference to Entities
+	LogManager& Info = LogManager::getInstance();///< Reference to Internal Messaging
 
-	InGameUI UI = InGameUI();
+	InGameUI UI = InGameUI();///< Ingame UI Elements
 	
 	//Camera Settings
-	double fov = c_Fov;//Optimized for 90 btw
-	double distancetoProj = 0;//Calculated at Construction
-	double* Z_Buffer; // (distance to the nearest wall in that pixel)
+	double m_cFov = c_Fov;///< Previously changeable now permanently set to 90(deg)
+	double m_cdistancetoProj = 0;///< Distance from the camera to projected screen
+	double* Z_Buffer;///< Depth Buffer
 	//Drawing
 	void CastRaysFloorCeil();
 	void CastRays3DWalls();

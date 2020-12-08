@@ -19,40 +19,41 @@ void InGameUI::draw(sf::RenderTarget& _target, sf::RenderStates _states) const
 void InGameUI::drawUI(Player* _Butcher,sf::RenderTarget& _target, sf::RenderStates _states)
 {
 	//Gets size of target for proper scaling
-	this->sizeX = _target.getSize().x / 3.0;
-	this->sizeY = _target.getSize().y / 5.0;
+	this->SizeX = _target.getSize().x / 3.0;
+	this->SizeY = _target.getSize().y / 5.0;
 
-	this->PositionX = sizeX;
-	this->PositionY = _target.getSize().y - sizeY;
+	this->PositionX = SizeX;
+	this->PositionY = _target.getSize().y - SizeY;
 
 	//updates scaling and position
 	UpdateUIScale(_Butcher);
 
 	//draws elements
 	draw(_target, _states);
+
 }
 
 void InGameUI::UpdateUIScale(Player* _Butcher)
 {
 	//Background
 	m_sBackground.setPosition(PositionX, PositionY);
-	m_sBackground.setSize(sf::Vector2f(sizeX, sizeY));
+	m_sBackground.setSize(sf::Vector2f(SizeX, SizeY));
 
 	//Health Bar and Health dependent Portrait
 	float Health = _Butcher->getHealth() / 100.0;//read this from player
-	m_sHealthBar.setPosition(PositionX + sizeX / 3.0, PositionY + 9 * sizeY / 10.0);
-	m_sHealthBar.setSize(sf::Vector2f(Health * sizeX / 3.0, sizeY * 0.1));
+	m_sHealthBar.setPosition(PositionX + SizeX / 3.0, PositionY + 9 * SizeY / 10.0);
+	m_sHealthBar.setSize(sf::Vector2f(Health * SizeX / 3.0, SizeY * 0.1));
 	int HealthFace = 7.0 - Health * 7.0;
 
 	m_sPortrait.setOrigin(sf::Vector2f(m_sPortrait.getSize().x / 2.0, 0.0));
-	m_sPortrait.setPosition(PositionX + sizeX/2.0, PositionY + sizeY/10.0);
+	m_sPortrait.setPosition(PositionX + SizeX/2.0, PositionY + SizeY/10.0);
 	float PortraitYtoXScale = (float)m_sPortrait.getTexture()->getSize().y / (float)m_sPortrait.getTexture()->getSize().x * 7.0;
-	float PortraitUIScale = 0.25 * sizeX;
+	float PortraitUIScale = 0.25 * SizeX;
 	m_sPortrait.setTextureRect(sf::IntRect(sf::Vector2i(HealthFace* m_sPortrait.getTexture()->getSize().x / 7.0+1.0,1.0), sf::Vector2i(m_sPortrait.getTexture()->getSize().x/7.0-1.0, m_sPortrait.getTexture()->getSize().y - 1.0)));
 	m_sPortrait.setSize(sf::Vector2f(PortraitUIScale, PortraitUIScale * PortraitYtoXScale));
 
-	m_sHealthBarBackground.setPosition(PositionX + sizeX / 3.0, PositionY + 9 * sizeY / 10.0);
-	m_sHealthBarBackground.setSize(sf::Vector2f(sizeX/3.0, sizeY * 0.1));
+	m_sHealthBarBackground.setPosition(PositionX + SizeX / 3.0, PositionY + 9 * SizeY / 10.0);
+	m_sHealthBarBackground.setSize(sf::Vector2f(SizeX/3.0, SizeY * 0.1));
 
 
 

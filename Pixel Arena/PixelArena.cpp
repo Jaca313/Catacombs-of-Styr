@@ -4,19 +4,20 @@ PixelArena::PixelArena()
 {
 	LoadSettings();
 
-	this->Window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName);
-	Window->setVerticalSyncEnabled(false);
+	this->m_window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName);
+	m_window->setVerticalSyncEnabled(false);
 
 	InitTextures();
 }
 
 PixelArena::~PixelArena()
 {
+	delete m_window;
 }
 
 void PixelArena::Run()
 {
-	m_executionStack.push(new State_Gameplay(Window,&Resources));
+	m_executionStack.push(new State_Gameplay(m_window,&Resources));
 	MainLoop();
 }
 
@@ -41,15 +42,15 @@ void PixelArena::LoadSettings()
 
 void PixelArena::MainLoop()
 {
-	while (Window->isOpen()) {
+	while (m_window->isOpen()) {
 
-		m_executionStack.top()->EventLoop();
-		m_executionStack.top()->Input(m_fTime);
-		m_executionStack.top()->Update(m_fTime);
-		m_executionStack.top()->Draw(&m_screenBuffer);
+		m_executionStack.top()->eventLoop();
+		m_executionStack.top()->input(m_fTime);
+		m_executionStack.top()->update(m_fTime);
+		m_executionStack.top()->draw(&m_screenBuffer);
 		//Display
-		Window->draw(sf::Sprite(m_screenBuffer.getTexture()),&Resources.m_sFlipScreen);
-		Window->display();
+		m_window->draw(sf::Sprite(m_screenBuffer.getTexture()),&Resources.m_sFlipScreen);
+		m_window->display();
 
 		//Timing
 		m_fTime = m_cClock.Count();

@@ -1,24 +1,36 @@
 #include "State_Gameplay.h"
 
-State_Gameplay::State_Gameplay(sf::RenderWindow* pWindow, ResourceManager* Resources)
+State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Resources)
 {
+	//Basic Setup
 	this->ID = 100;
-	this->Window = pWindow;
-
-	Level.LoadLevel(L"M1.jac");
-	Butcher = new Player(128.f, 128.f,&Level);
-	Entities.setPlayerPointer(Butcher);
+	this->Window = _Window;
 	Window->setMouseCursorVisible(false);
 	Window->setVerticalSyncEnabled(true);
+	//Load Level
+	Level.LoadLevel(L"M1.jac");
+	//Create player
+	Butcher = new Player(128.f, 128.f,&Level);
+	//Link Resources
+	Entities.setPlayerPointer(Butcher);
+	this->Resources = _Resources;
 
-	this->Resources = Resources;
+	//Calculate distance to screen from fov
+	this->distancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
 
-	this->distancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(fov / 2.0));
+	//Create a Depth Buffer
 	Z_Buffer = new double[Window->getSize().x];
 }
 
+State_Gameplay::~State_Gameplay()
+{
+	//Cleanup
+	delete Butcher;
+	delete[] Z_Buffer;
+}
 
-void State_Gameplay::EventLoop()
+
+void State_Gameplay::eventLoop()
 {
 	sf::Event event;
 	while (this->Window->pollEvent(event))
@@ -32,10 +44,9 @@ void State_Gameplay::EventLoop()
 	}
 }
 
-void State_Gameplay::Input(double fTime)
+void State_Gameplay::input(double fTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))
-		Butcher->SetSprint(true);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->SetSprint(true);
 	else Butcher->SetSprint(false);
 	//Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
@@ -87,14 +98,14 @@ void State_Gameplay::Input(double fTime)
 
 }
 
-void State_Gameplay::Update(double fTime)
+void State_Gameplay::update(double fTime)
 {
 	Butcher->Update(fTime);
 	Entities.UpdateAll();
 	
 }
 
-void State_Gameplay::Draw(sf::RenderTexture* ScreenBuffer)
+void State_Gameplay::draw(sf::RenderTexture* ScreenBuffer)
 {
 	this->ScreenBuffer = ScreenBuffer;
 
@@ -140,7 +151,7 @@ void State_Gameplay::CastRays3DWalls()
 	double rx;
 	double ry;
 
-	double rayAngle = LogManager::FixAngle(Butcher->DegAngle + fov/2); //ra
+	double rayAngle = LogManager::FixAngle(Butcher->DegAngle + m_cFov/2); //ra
 
 	double xo;
 	double yo;
@@ -348,7 +359,7 @@ void State_Gameplay::DrawUI()
 void State_Gameplay::DrawEntities()
 {
 	for (auto E : *Entities.getEntities()) {
-		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, fov))E->drawEntity(Z_Buffer,*ScreenBuffer);
+		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(Z_Buffer,*ScreenBuffer);
 	}
 }
 
@@ -414,10 +425,10 @@ void State_Gameplay::CastRaysFloorCeil()
 	{
 		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
 		//-sin is due to Y being flipped
-		rayDirX0 = cos(LogManager::DegtoRad(pDeg + fov / 2.0));
-		rayDirY0 = -sin(LogManager::DegtoRad(pDeg + fov / 2.0));
-		rayDirX1 = cos(LogManager::DegtoRad(pDeg - fov / 2.0));
-		rayDirY1 = -sin(LogManager::DegtoRad(pDeg - fov / 2.0));
+		rayDirX0 = cos(LogManager::DegtoRad(pDeg + m_cFov / 2.0));
+		rayDirY0 = -sin(LogManager::DegtoRad(pDeg + m_cFov / 2.0));
+		rayDirX1 = cos(LogManager::DegtoRad(pDeg - m_cFov / 2.0));
+		rayDirY1 = -sin(LogManager::DegtoRad(pDeg - m_cFov / 2.0));
 
 		// Current y position compared to the center of the screen (the horizon) ergo scanline height
 		p = WinH / 2.0 - y;

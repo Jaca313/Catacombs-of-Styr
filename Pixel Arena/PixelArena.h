@@ -20,7 +20,7 @@ private:
 	std::wstring m_winName;///< Window Title from window.ini
 	int m_winWidth;///< Window Width from window.ini
 	int m_winHeight;///< Window Height from window.ini
-	sf::RenderWindow* Window;///< Window to be drawn to
+	sf::RenderWindow* m_window;///< Window to be drawn to
 
 	sf::RenderTexture m_screenBuffer;///< Intermediary buffer to be drawn to (used  for intermediary shader use)
 	void InitTextures();///< Used to initialize m_screenBuffer
