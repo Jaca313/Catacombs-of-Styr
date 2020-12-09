@@ -12,8 +12,8 @@ Orc::Orc(sf::Vector2f pos, int Texture)
 	Object.setPosition(600.0,600.0);
 	Object.setSize(sf::Vector2f(100, 100));
 
-	AnimSizeX = AnimationMap->getSize().x / 3.0;
-	AnimSizeY = AnimationMap->getSize().y / 4.0;
+	AnimSizeX = int(AnimationMap->getSize().x / 3.0);
+	AnimSizeY = int(AnimationMap->getSize().y / 4.0);
 }
 
 void Orc::drawEntity(double* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states)
@@ -26,9 +26,8 @@ void Orc::drawEntity(double* Z_Buffer,sf::RenderTarget& target, sf::RenderStates
 void Orc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	Resources->ClipEntity.setUniform("Z_Buffer", Resources->Z_BufferTex);
-	float DistanceToPlayer = static_cast<float>(distanceToPlayer);
-	Resources->ClipEntity.setUniform("distEntity", DistanceToPlayer);
-	Resources->ClipEntity.setUniform("screenresolution", sf::Vector2f(target.getSize().x,target.getSize().y));
+	Resources->ClipEntity.setUniform("distEntity", distanceToPlayer);
+	Resources->ClipEntity.setUniform("screenresolution", sf::Vector2f((float)target.getSize().x, (float)target.getSize().y));
 	Resources->ClipEntity.setUniform("obraz", sf::Shader::CurrentTexture);
 
 	states.shader = &Resources->ClipEntity;
@@ -42,13 +41,13 @@ void Orc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Orc::UpdateAnimation(sf::RenderTarget& target, double* Z_Buffer)
 {
 	Object.setTextureRect(sf::IntRect(sf::Vector2i(AnimationState * AnimSizeX, AnimSizeY * LookAngle), sf::Vector2i(AnimSizeX, AnimSizeY)));
-	float m_winSizeX = target.getSize().x;
-	float m_winSizeY = target.getSize().y;
+	float m_winSizeX = float(target.getSize().x);
+	float m_winSizeY = float(target.getSize().y);
 
-	float Scale = (128.0 * m_winSizeY / 2) / this->distanceToPlayer;
+	float Scale = (128.f * m_winSizeY / 2) / this->distanceToPlayer;
 	sf::Vector2f setSize = sf::Vector2f(Scale, 2 * Scale);
 	Object.setSize(setSize);
-	sf::Vector2f setOrigin = sf::Vector2f(Object.getSize().x / 2.0, Object.getSize().y);
+	sf::Vector2f setOrigin = sf::Vector2f(Object.getSize().x / 2.f, Object.getSize().y);
 	Object.setOrigin(setOrigin.x, setOrigin.y);
 
 	//Not correct at distance but it will have to do

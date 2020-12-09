@@ -8,50 +8,50 @@ Entity::Entity()
 	this->vx = 0.f;
 	this->vy = 0.f;
 	this->DegAngle = 0;
-	this->DegAngleTemp = DegAngle;
+	this->DegAngleTemp = float(DegAngle);
 
 
 }
 
-bool Entity::InView(sf::Vector2f View, double ViewAngle,double fov)
+bool Entity::InView(sf::Vector2f View, float ViewAngle, float fov)
 {
 	bool ReturnValue = 0;
 
 	//Calculate the Vector between View and 
-	double dX = this->x - View.x;
-	double dY = -(this->y - View.y);
+	float dX = this->x - View.x;
+	float dY = -(this->y - View.y);
 
-	double AngletoEntity = LogManager::FixAngle(LogManager::RadtoDeg(std::atan2f(dY, dX)));
-	double RightView = LogManager::FixAngle(ViewAngle - fov / 2.0);
-	double LeftView = LogManager::FixAngle(ViewAngle + fov / 2.0);
+	float AngletoEntity = LogManager::FixAngle(LogManager::RadtoDeg(std::atan2f(dY, dX)));
+	float RightView = LogManager::FixAngle(ViewAngle - fov / 2.f);
+	float LeftView = LogManager::FixAngle(ViewAngle + fov / 2.f);
 
 
 	//Check if in View
 	if (RightView < LeftView) {
 		ReturnValue = RightView <= AngletoEntity && AngletoEntity <= LeftView;
-		AngletoScreen = 1.0 - (AngletoEntity - RightView) / (LeftView - RightView);
+		AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);
 	}
 	else {
 		if (RightView <= AngletoEntity) { // < 360 if crossing 360 line
 			ReturnValue = true;
 			LeftView = RightView + fov;
-			AngletoScreen = 1.0 - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
+			AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
 
 		}
 		else if (AngletoEntity <= LeftView) { // > 0 if crossing 360 line
 			ReturnValue = true;
 			RightView = LeftView - fov;
-			AngletoScreen = 1.0 - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
+			AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
 		}	
 	}
 
 	//AngletoEntity vs entity view angle
 	if (ReturnValue) {
-		double radEntity = LogManager::DegtoRad(this->DegAngle);
-		double radRotEntity = 0;//rotated entity angle as reference vector
-		double radRotToEntity = LogManager::DegtoRad(AngletoEntity) - radEntity;
+		float radEntity = LogManager::DegtoRad(float(this->DegAngle));
+		float radRotEntity = 0;//rotated entity angle as reference vector
+		float radRotToEntity = LogManager::DegtoRad(AngletoEntity) - radEntity;
 		//skip flipping due to -y in sfml
-		double degAngleBetween = LogManager::RadtoDeg(atan2f(sin(radRotToEntity),cos(radRotToEntity)));
+		float degAngleBetween = LogManager::RadtoDeg(atan2f(sin(radRotToEntity),cos(radRotToEntity)));
 
 		int dPAVE = int(degAngleBetween + 180); // degPlayerAngleVsEntity
 
@@ -85,7 +85,7 @@ sf::Vector2f Entity::getPosition() const
 	return sf::Vector2f(x,y);
 }
 
-void Entity::drawEntity(double* Z_Buffer, sf::RenderTarget& target, sf::RenderStates states)
+void Entity::drawEntity(float* Z_Buffer, sf::RenderTarget& target, sf::RenderStates states)
 {
 }
 

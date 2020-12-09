@@ -7,7 +7,7 @@ Player::Player(float x, float y, LevelMap* level)
 	this->vx = 0.f;
 	this->vy = 0.f;
 	this->DegAngle = 0;
-	this->DegAngleTemp = DegAngle;
+	this->DegAngleTemp = float(DegAngle);
 
 	this->Level = level;
 }
@@ -47,11 +47,11 @@ void Player::UpdatePosition()
 	float dy = vy * (MaxSpeed + SprintSpeed * m_bSprint);
 
 	//Enables Collision and Wall sliding
-	int TileX = (x + dx) / (float)Level->getTileSize();//Player Will be there if we move
-	int TileY = (y + dy) / (float)Level->getTileSize();
+	int TileX = int((x + dx) / (float)Level->getTileSize());//Player Will be there if we move
+	int TileY = int((y + dy) / (float)Level->getTileSize());
 
-	int TileX2 = (x) / (float)Level->getTileSize();//Player Is now there
-	int TileY2 = (y) / (float)Level->getTileSize();
+	int TileX2 = int((x) / (float)Level->getTileSize());//Player Is now there
+	int TileY2 = int((y) / (float)Level->getTileSize());
 
 	int C1 = Level->getTile(TileX + Level->getMapX() * TileY2);
 	int C2 = Level->getTile(TileX2 + Level->getMapX() * TileY);
@@ -60,8 +60,8 @@ void Player::UpdatePosition()
 	if (C2 < '0' || C2 > '9')
 		this->y += dy;
 
-	this->vx /= 1.8;
-	this->vy /= 1.8;
+	this->vx /= 1.8f;
+	this->vy /= 1.8f;
 
 }
 
