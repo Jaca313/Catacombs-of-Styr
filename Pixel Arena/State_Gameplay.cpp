@@ -128,72 +128,58 @@ void State_Gameplay::draw(sf::RenderTexture* ScreenBuffer)
 
 void State_Gameplay::CastRays3DWalls()
 {
-	//To compensate for angle discrepancies when projecting to flat screen from a camera behind it
-
 	//Window size
-	int m_winSizeX = Window->getSize().x;
-	int m_winSizeY = Window->getSize().y;
+	int winSizeX = Window->getSize().x;
+	int winSizeY = Window->getSize().y;
 
 	int maxdof = 150;//How far to look for walls
-	double res = 12.0;//How many rays per 1 Deg of Fov
 
-	int mx;
-	int my;
-	int mp = 0;
-	int dof;//current distance by tiles
+	int mx;//Tile X
+	int my;//Tile Y
+	int mp = 0;//Current tile
+	int dof;//Current distance by tiles
 
 	double vx;
 	double vy;
 
-	double rx;
-	double ry;
+	double ra = LogManager::FixAngle(Butcher->DegAngle + m_cFov/2);//ray angle in deg
+	double rx;//ray vector x
+	double ry;//ray vector y
 
-	double rayAngle = LogManager::FixAngle(Butcher->DegAngle + m_cFov/2); //ra
-
-	double xo;
-	double yo;
+	double xo;//step of whole tile in X of Vector
+	double yo;//step of whole tile in Y of Vector
 
 	//Player position in 64*Tiles
 	double px = Butcher->x;
 	double py = Butcher->y;
 
-	//To compensate for angle discrepancies when projecting to flat screen from a camera behind it
-
-	/*
-	tan( ang ) = opp / adj
-	ang = atan( opp / adj )
-	ang = atan( ( pixel x coord - half screen width ) / dist to projection surface )
-	*/
-
 	//Made to group Vertices By Wall Type (drawing is done by wall type)
 	sf::VertexArray TexturedWall[10];
 
-
+	//To compensate for angle discrepancies when projecting to flat screen from a camera behind it
 	std::vector<double> WallRays;
 	double angle = 0;
-	for (int i = -m_winSizeX / 2; i < m_winSizeX/2; i++) {
+	for (int i = -winSizeX / 2; i < winSizeX/2; i++) {
 		angle = atan(i / m_cdistancetoProj);
 		WallRays.push_back(LogManager::RadtoDeg(angle));
 	}
 
-
 	//Left to Right (Rays = fov * res -> across the screen)
-	for (int r = 0; r < m_winSizeX;++r) {
-		rayAngle = LogManager::FixAngle(Butcher->DegAngle - WallRays.at(r));
+	for (int r = 0; r < winSizeX;++r) {
+		ra = LogManager::FixAngle(Butcher->DegAngle - WallRays.at(r));
 
 		//Vertical Line
 		dof = 0;
 		double disV = FLT_MAX;
-		//float Tan = tan(DegtoRad(rayAngle));
-		float Tan = tan(LogManager::DegtoRad(rayAngle));
+		float Tan = tan(LogManager::DegtoRad(ra));
 
-		if (cos(LogManager::DegtoRad(rayAngle)) > 0.001) { //looking left
+		if (cos(LogManager::DegtoRad(ra)) > 0.001) { //looking left
 			rx = (((int)px >> 6) << 6) + 64;
 			ry = (px - rx) * Tan + py;
 			xo = 64;
 			yo = -xo * Tan;
 		}
-		else if (cos(LogManager::DegtoRad(rayAngle)) < -0.001) { //looking right
+		else if (cos(LogManager::DegtoRad(ra)) < -0.001) { //looking right
 			rx = (((int)px >> 6) << 6) - 0.0001;
 			ry = (px - rx) * Tan + py; xo = -64;
 			yo = -xo * Tan;
@@ -210,7 +196,7 @@ void State_Gameplay::CastRays3DWalls()
 			mp = my * Level.getMapX() + mx;
 			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getTile(mp) >= '0' && Level.getTile(mp) <= '9') {//hit 
 				dof = maxdof;
-				disV = cos(LogManager::DegtoRad(rayAngle)) * (rx - px) - sin(LogManager::DegtoRad(rayAngle)) * (ry - py);
+				disV = cos(LogManager::DegtoRad(ra)) * (rx - px) - sin(LogManager::DegtoRad(ra)) * (ry - py);
 			}
 			else { //check next horizontal
 				rx += xo;
@@ -226,12 +212,12 @@ void State_Gameplay::CastRays3DWalls()
 		dof = 0;
 		double disH = FLT_MAX;
 		Tan = 1.0 / Tan;
-		if (sin(LogManager::DegtoRad(rayAngle)) > 0.001) { //looking up 
+		if (sin(LogManager::DegtoRad(ra)) > 0.001) { //looking up 
 			ry = (((int)py >> 6) << 6) - 0.0001;
 			rx = (py - ry) * Tan + px; yo = -64;
 			xo = -yo * Tan;
 		}
-		else if (sin(LogManager::DegtoRad(rayAngle)) < -0.001) { //looking down
+		else if (sin(LogManager::DegtoRad(ra)) < -0.001) { //looking down
 			ry = (((int)py >> 6) << 6) + 64;
 			rx = (py - ry) * Tan + px; yo = 64;
 			xo = -yo * Tan;
@@ -249,7 +235,7 @@ void State_Gameplay::CastRays3DWalls()
 			mp = my * Level.getMapX() + mx;
 			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getTile(mp) >= '0' && Level.getTile(mp) <= '9') { //hit
 				dof = maxdof;
-				disH = cos(LogManager::DegtoRad(rayAngle)) * (rx - px) - sin(LogManager::DegtoRad(rayAngle)) * (ry - py);
+				disH = cos(LogManager::DegtoRad(ra)) * (rx - px) - sin(LogManager::DegtoRad(ra)) * (ry - py);
 			}
 			else { //check next horizontal
 				rx += xo;
@@ -270,22 +256,22 @@ void State_Gameplay::CastRays3DWalls()
 
 		double DistanceCorrect = disH;
 
-		int ca = LogManager::FixAngle(Butcher->DegAngle - rayAngle); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
-		int lineH = (160 * m_winSizeY / 2) / (disH);
+		int ca = LogManager::FixAngle(Butcher->DegAngle - ra); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
+		int lineH = (160 * winSizeY / 2) / (disH);
 
-		if (lineH > m_winSizeY * 50) { lineH = m_winSizeY * 50; }//line height and limit
-		int lineOff = m_winSizeY / 2 - (lineH >> 1);      //line offset
+		if (lineH > winSizeY * 50) { lineH = winSizeY * 50; }//line height and limit
+		int lineOff = winSizeY / 2 - (lineH >> 1);      //line offset
 
 
 		sf::Vertex Line[4];
 		Line[0].position.x = r;
-		Line[0].position.y = m_winSizeY - lineOff;
+		Line[0].position.y = winSizeY - lineOff;
 		Line[1].position.x = r;
-		Line[1].position.y = m_winSizeY - (lineOff + lineH);
+		Line[1].position.y = winSizeY - (lineOff + lineH);
 		Line[2].position.x = (r + 1);
-		Line[2].position.y = m_winSizeY - (lineOff + lineH);
+		Line[2].position.y = winSizeY - (lineOff + lineH);
 		Line[3].position.x = (r + 1);
-		Line[3].position.y = m_winSizeY - lineOff;
+		Line[3].position.y = winSizeY - lineOff;
 
 		//Uniform Color
 		//Line[0].color = Kolor;
@@ -356,6 +342,7 @@ void State_Gameplay::DrawUI()
 
 void State_Gameplay::DrawEntities()
 {
+	//draw only if in view
 	for (auto E : *Entities.getEntities()) {
 		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer,*ScreenBuffer);
 	}
