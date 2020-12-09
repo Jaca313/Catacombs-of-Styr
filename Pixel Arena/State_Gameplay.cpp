@@ -89,6 +89,9 @@ void State_Gameplay::input(float _fTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
 		Butcher->setHealth(Butcher->getHealth() - _fTime * 5);
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
+		m_bWantsQuit = true;
+	}
 
 	//Mouse
 	//distance vector calc should feel better but i plan to add y axis later
@@ -142,7 +145,7 @@ void State_Gameplay::CastRays3DWalls()
 
 	int mx;//Tile X
 	int my;//Tile Y
-	int mp = 0;//Current tile
+	int mp;//Current tile
 	int dof;//Current distance by tiles
 
 	float vx;
@@ -180,14 +183,15 @@ void State_Gameplay::CastRays3DWalls()
 		float Tan = tan(LogManager::DegtoRad(ra));
 
 		if (cos(LogManager::DegtoRad(ra)) > 0.001f) { //looking left
-			rx = (((int)px >> 6) << 6) + 64;
+			rx = (((int)px >> 6) << 6) + 64.f;
 			ry = (px - rx) * Tan + py;
-			xo = 64;
+			xo = 64.f;
 			yo = -xo * Tan;
 		}
 		else if (cos(LogManager::DegtoRad(ra)) < -0.001f) { //looking right
 			rx = (((int)px >> 6) << 6) - 0.0001f;
-			ry = (px - rx) * Tan + py; xo = -64;
+			ry = (px - rx) * Tan + py;
+			xo = -64.f;
 			yo = -xo * Tan;
 		}
 		else {  //looking up or down. no hit  
@@ -224,8 +228,8 @@ void State_Gameplay::CastRays3DWalls()
 			xo = -yo * Tan;
 		}
 		else if (sin(LogManager::DegtoRad(ra)) < -0.001f) { //looking down
-			ry = (((int)py >> 6) << 6) + 64;
-			rx = (py - ry) * Tan + px; yo = 64;
+			ry = (((int)py >> 6) << 6) + 64.f;
+			rx = (py - ry) * Tan + px; yo = 64.f;
 			xo = -yo * Tan;
 		}
 		else {//looking straight left or right
@@ -262,22 +266,22 @@ void State_Gameplay::CastRays3DWalls()
 
 		float DistanceCorrect = disH;
 
-		int ca = LogManager::FixAngle(Butcher->DegAngle - ra); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
-		int lineH = (160 * winSizeY / 2) / (disH);
+		float ca = LogManager::FixAngle((float)Butcher->DegAngle - ra); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
+		int lineH = int((160 * winSizeY / 2) / (disH));
 
 		if (lineH > winSizeY * 50) { lineH = winSizeY * 50; }//line height and limit
 		int lineOff = winSizeY / 2 - (lineH >> 1);      //line offset
 
 
 		sf::Vertex Line[4];
-		Line[0].position.x = r;
-		Line[0].position.y = winSizeY - lineOff;
-		Line[1].position.x = r;
-		Line[1].position.y = winSizeY - (lineOff + lineH);
-		Line[2].position.x = (r + 1);
-		Line[2].position.y = winSizeY - (lineOff + lineH);
-		Line[3].position.x = (r + 1);
-		Line[3].position.y = winSizeY - lineOff;
+		Line[0].position.x = float(r);
+		Line[0].position.y = float(winSizeY - lineOff);
+		Line[1].position.x = float(r);
+		Line[1].position.y = float(winSizeY - (lineOff + lineH));
+		Line[2].position.x = float((r + 1));
+		Line[2].position.y = float(winSizeY - (lineOff + lineH));
+		Line[3].position.x = float((r + 1));
+		Line[3].position.y = float(winSizeY - lineOff);
 
 		//Uniform Color
 		//Line[0].color = Kolor;
@@ -288,8 +292,8 @@ void State_Gameplay::CastRays3DWalls()
 		int TexCall = Level.getTile(HitCell) - '0';
 		TexCall = TexCall < 0 ? 1 : TexCall;
 		TexCall = TexCall > 9 ? 1 : TexCall;
-		float TexSizeX = Resources->Textures.at(TexCall).getSize().x;
-		float TexSizeY = Resources->Textures.at(TexCall).getSize().y;
+		float TexSizeX = (float)Resources->Textures.at(TexCall).getSize().x;
+		float TexSizeY = (float)Resources->Textures.at(TexCall).getSize().y;
 
 		if (HitSide == 1) { // Horizontal
 			rx /= Level.getTileSize();//64
@@ -350,7 +354,7 @@ void State_Gameplay::DrawEntities()
 {
 	//draw only if in view
 	for (auto E : *Entities.getEntities()) {
-		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer, *ScreenBuffer);
+		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), (float)Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer, *ScreenBuffer);
 	}
 }
 
@@ -358,7 +362,7 @@ void State_Gameplay::Fill_Z_Buffer()
 {
 	unsigned winSize_X = Window->getSize().x;
 	Resources->Z_BufferImage.create(winSize_X, 1, sf::Color(0, 0, 0, 255));
-	for (int i = 0; i < winSize_X; i++) {
+	for (unsigned int i = 0; i < winSize_X; i++) {
 		//unsigned char CP1 = (int(Z_Buffer[i]) & 0xff000000UL) >> 24;
 		//unsigned char CP2 = (int(Z_Buffer[i]) & 0x00ff0000UL) >> 16;
 		//unsigned char CP3 = (int(Z_Buffer[i]) & 0x0000ff00UL) >> 8;
@@ -373,13 +377,13 @@ void State_Gameplay::Fill_Z_Buffer()
 void State_Gameplay::CastRaysFloorCeil()
 {
 	//Get Window Size
-	float WinH = Window->getSize().y;
-	float WinW = Window->getSize().x;
+	float WinH = (float)Window->getSize().y;
+	float WinW = (float)Window->getSize().x;
 
 	//Get Player True tilemap position and view direction
 	float px = Butcher->x / Level.getTileSize();
 	float py = Butcher->y / Level.getTileSize();
-	float pDeg = Butcher->DegAngle;//in Deg
+	float pDeg = (float)Butcher->DegAngle;//in Deg
 
 	//Camera Rays 
 	float rayDirX0;//Leftmost Camera Ray

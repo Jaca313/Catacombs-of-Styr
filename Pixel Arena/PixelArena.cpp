@@ -13,6 +13,11 @@ PixelArena::PixelArena()
 PixelArena::~PixelArena()
 {
 	delete m_window;
+
+	while (!m_executionStack.empty()) {
+		delete m_executionStack.top();
+		m_executionStack.pop();
+	}
 }
 
 void PixelArena::Run()
@@ -42,20 +47,53 @@ void PixelArena::LoadSettings()
 
 void PixelArena::MainLoop()
 {
-	while (m_window->isOpen()) {
+	while (m_window->isOpen() && !m_executionStack.empty()) {
 
 		m_executionStack.top()->eventLoop();
 		m_executionStack.top()->input(m_fTime);
 		m_executionStack.top()->update(m_fTime);
 		m_executionStack.top()->draw(&m_screenBuffer);
 		//Display
-		m_window->draw(sf::Sprite(m_screenBuffer.getTexture()),&Resources.m_sFlipScreen);
+		m_window->draw(sf::Sprite(m_screenBuffer.getTexture()), &Resources.m_sFlipScreen);
 		m_window->display();
 
 		//Timing
 		m_fTime = m_cClock.Count();
+
+		//GameState Controller
+		if (m_executionStack.top()->m_iRequestState != 0)PushState(m_executionStack.top()->requestState());//Check if push state
+		if (m_executionStack.top()->quitState())PopState();//Check if pop State
 	}
 
+
+	ExitGame();
+}
+
+void PixelArena::PopState()
+{
+	m_executionStack.top()->endState();
+	delete m_executionStack.top();
+	m_executionStack.pop();
+}
+
+void PixelArena::PushState(int _requestedState)
+{
+	switch (_requestedState) {
+	case eGameplay:
+		m_executionStack.push(new State_Gameplay(m_window, &Resources));
+		break;
+	case eMenu:
+		m_executionStack.push(new State_Gameplay(m_window, &Resources));
+		break;
+	default:
+		break;
+	}
+}
+
+void PixelArena::ExitGame()
+{
+	//do stuff that i need before i close
+	m_window->close();
 }
 
 void PixelArena::InitTextures()

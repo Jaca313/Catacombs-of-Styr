@@ -6,7 +6,10 @@
 #include <string>
 
 #include "ResourceManager.h"
-
+enum States {
+	eGameplay = 100,
+	eMenu = 200
+};
 class PixelArena
 {
 public:
@@ -37,7 +40,9 @@ private:
 	Timer m_cClock;///Calculates frametime
 	float m_fTime = 1/60.f;/// Time between frames
 
+	void PopState();///< Lets the State finish and removes it from stack
+	void PushState(int _requestedState);///< Lets a state push a new Gamestate to stack
 
-
+	void ExitGame();///< Closes Window
 };
 
