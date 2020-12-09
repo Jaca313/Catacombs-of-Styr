@@ -8,7 +8,7 @@ Entity::Entity()
 	this->vx = 0.f;
 	this->vy = 0.f;
 	this->DegAngle = 0;
-	this->DegAngleTemp = DegAngle;
+	this->DegAngleTemp = (float)DegAngle;
 
 
 }
@@ -47,7 +47,7 @@ bool Entity::InView(sf::Vector2f View, float ViewAngle, float fov)
 
 	//AngletoEntity vs entity view angle
 	if (ReturnValue) {
-		float radEntity = LogManager::DegtoRad(this->DegAngle);
+		float radEntity = LogManager::DegtoRad((float)this->DegAngle);
 		float radRotEntity = 0;//rotated entity angle as reference vector
 		float radRotToEntity = LogManager::DegtoRad(AngletoEntity) - radEntity;
 		//skip flipping due to -y in sfml

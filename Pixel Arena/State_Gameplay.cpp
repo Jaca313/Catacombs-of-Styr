@@ -16,7 +16,7 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 	this->Resources = _Resources;
 
 	//Calculate distance to screen from fov
-	this->m_cdistancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
+	this->m_cdistancetoProj = (Window->getSize().x / 2.f) / tan(LogManager::DegtoRad(m_cFov / 2.f));
 
 	//Create a Depth Buffer
 	m_sZ_Buffer = new float[Window->getSize().x];
@@ -44,20 +44,26 @@ void State_Gameplay::eventLoop()
 	}
 }
 
-void State_Gameplay::input(float fTime)
+void State_Gameplay::input(float _fTime)
 {
 	//Movement
+	float cos0 = float(+cos(LogManager::DegtoRad(float(Butcher->DegAngle)))) * _fTime;
+	float sin0 = float(+sin(LogManager::DegtoRad(float(Butcher->DegAngle)))) * _fTime;
+
+	float cos90 = float(+cos(LogManager::DegtoRad(float(Butcher->DegAngle + 90)))) * _fTime;
+	float sin90 = float(+sin(LogManager::DegtoRad(float(Butcher->DegAngle + 90)))) * _fTime;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
+		Butcher->vectorPlayer(sf::Vector2f(+cos0, -sin0));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
+		Butcher->vectorPlayer(sf::Vector2f(-cos0, +sin0));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime));
+		Butcher->vectorPlayer(sf::Vector2f(+cos90, -sin90));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime));
+		Butcher->vectorPlayer(sf::Vector2f(-cos90, +sin90));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->setSprint(true);
 	else Butcher->setSprint(false);
@@ -65,23 +71,23 @@ void State_Gameplay::input(float fTime)
 
 	//Rotation
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-		Butcher->DegAngleTemp += 90 * fTime;
+		Butcher->DegAngleTemp += 90 * _fTime;
 		Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
 		Butcher->DegAngle = (int)Butcher->DegAngleTemp;
 		printf("%f,%f:%d\n", Butcher->x / 64, Butcher->y / 64, Butcher->DegAngle);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-		Butcher->DegAngleTemp -= 90 * fTime;
+		Butcher->DegAngleTemp -= 90 * _fTime;
 		Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
 		Butcher->DegAngle = (int)Butcher->DegAngleTemp;
 	}
 
 	//Debug
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
-		Butcher->setHealth(Butcher->getHealth() + fTime * 5);
+		Butcher->setHealth(Butcher->getHealth() + _fTime * 5);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
-		Butcher->setHealth(Butcher->getHealth() - fTime * 5);
+		Butcher->setHealth(Butcher->getHealth() - _fTime * 5);
 	}
 
 	//Mouse
@@ -96,15 +102,15 @@ void State_Gameplay::input(float fTime)
 
 }
 
-void State_Gameplay::update(float fTime)
+void State_Gameplay::update(float _fTime)
 {
-	Butcher->update(fTime);//Update Player
+	Butcher->update(_fTime);//Update Player
 	Entities.UpdateAll();//Update Entities
 }
 
-void State_Gameplay::draw(sf::RenderTexture* ScreenBuffer)
+void State_Gameplay::draw(sf::RenderTexture* _ScreenBuffer)
 {
-	this->ScreenBuffer = ScreenBuffer;
+	this->ScreenBuffer = _ScreenBuffer;
 
 	this->ScreenBuffer->clear(sf::Color(120, 120, 120, 255));//Clear Buffer
 
@@ -466,10 +472,10 @@ void State_Gameplay::CastRaysFloorCeil()
 
 		sf::Vertex HCeil[4];
 
-		HCeil[0].position = sf::Vector2f(0, y);
-		HCeil[1].position = sf::Vector2f(0, y + 1);
-		HCeil[2].position = sf::Vector2f(WinW, y + 1);
-		HCeil[3].position = sf::Vector2f(WinW, y);
+		HCeil[0].position = sf::Vector2f(0, (float)y);
+		HCeil[1].position = sf::Vector2f(0, y + 1.f);
+		HCeil[2].position = sf::Vector2f(WinW, y + 1.f);
+		HCeil[3].position = sf::Vector2f(WinW, (float)y);
 
 		HCeil[0].texCoords = sf::Vector2f(tx, ty);
 		HCeil[1].texCoords = sf::Vector2f(tx, ty - 1.f / WinH);

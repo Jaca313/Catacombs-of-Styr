@@ -12,8 +12,8 @@ Orc::Orc(sf::Vector2f pos, int Texture)
 	Object.setPosition(600.f,600.f);
 	Object.setSize(sf::Vector2f(100.f, 100.f));
 
-	AnimSizeX = AnimationMap->getSize().x / 3.f;
-	AnimSizeY = AnimationMap->getSize().y / 4.f;
+	AnimSizeX = int(AnimationMap->getSize().x / 3.f);
+	AnimSizeY = int(AnimationMap->getSize().y / 4.f);
 }
 
 void Orc::drawEntity(float* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states)
@@ -42,8 +42,8 @@ void Orc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Orc::UpdateAnimation(sf::RenderTarget& target, float* Z_Buffer)
 {
 	Object.setTextureRect(sf::IntRect(sf::Vector2i(AnimationState * AnimSizeX, AnimSizeY * LookAngle), sf::Vector2i(AnimSizeX, AnimSizeY)));
-	float m_winSizeX = target.getSize().x;
-	float m_winSizeY = target.getSize().y;
+	float m_winSizeX = float(target.getSize().x);
+	float m_winSizeY = float(target.getSize().y);
 
 	float Scale = (128.f * m_winSizeY / 2) / this->distanceToPlayer;
 	sf::Vector2f setSize = sf::Vector2f(Scale, 2 * Scale);

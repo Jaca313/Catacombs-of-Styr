@@ -23,7 +23,7 @@ private:
 public:
 	const short getMapX() const;///< Returns Map X size
 	const short getMapY() const;///< Returns Map Y size
-	const int getTileSize() const;///< Returns Map TileSize
+	const float getTileSize() const;///< Returns Map TileSize
 	const int getTexCeil() const;///< Returns Ceiling Texture number
 	const int getTexFloor() const;///< Returns Floor Texture number
 	char getTile(int X) const;///< Returns Tile at X

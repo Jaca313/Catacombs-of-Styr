@@ -20,9 +20,9 @@ private:
 	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use
 public:
 	void eventLoop();///< Queries and resolves SFML events
-	void input(float fTime);///< User Input (Keyboard and Mouse)
-	void update(float fTime);///< Calculates Internal Resource Changes
-	void draw(sf::RenderTexture* ScreenBuffer);///< Outputs Elements to ScreenBuffer
+	void input(float _fTime);///< User Input (Keyboard and Mouse)
+	void update(float _fTime);///< Calculates Internal Resource Changes
+	void draw(sf::RenderTexture* _ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
 //Resources
 private:

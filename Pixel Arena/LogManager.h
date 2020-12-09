@@ -5,7 +5,7 @@
 #include <chrono>
 #include <ctime>
 
-#define C_PI 3.1415923565
+#define C_PI 3.1415923565f
 
 const float c_Fov = 90.f;
 

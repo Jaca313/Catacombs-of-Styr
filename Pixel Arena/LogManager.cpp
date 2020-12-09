@@ -36,7 +36,7 @@ float LogManager::FixAngle(float Ang)
 
 float LogManager::DegtoRad(float Deg)
 {
-	return (float)Deg * C_PI / 180.f;
+	return (float)Deg * C_PI  / 180.f;
 }
 
 float LogManager::RadtoDeg(float Rad)

@@ -26,8 +26,6 @@ float Timer::Count()
 	return loopTime;
 }
 
-
-
 float Timer::rloopTime()
 {
 	return loopTime;
