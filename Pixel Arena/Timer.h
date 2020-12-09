@@ -3,8 +3,8 @@
 class Timer
 {
 	sf::Clock* clock;
-	double TotalTime;
-	double loopTime;
+	float TotalTime;
+	float loopTime;
 public:
 	Timer();
 	Timer(bool randomize);

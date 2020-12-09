@@ -20,8 +20,8 @@ private:
 	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use
 public:
 	void eventLoop();///< Queries and resolves SFML events
-	void input(double fTime);///< User Input (Keyboard and Mouse)
-	void update(double fTime);///< Calculates Internal Resource Changes
+	void input(float fTime);///< User Input (Keyboard and Mouse)
+	void update(float fTime);///< Calculates Internal Resource Changes
 	void draw(sf::RenderTexture* ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
 //Resources
@@ -36,9 +36,9 @@ private:
 	InGameUI UI = InGameUI();///< Ingame UI Elements
 	
 	//Camera Settings
-	double m_cFov = c_Fov;///< Previously changeable now permanently set to 90(deg)
-	double m_cdistancetoProj = 0;///< Distance from the camera to projected screen
-	double* m_sZ_Buffer;///< Depth Buffer
+	float m_cFov = c_Fov;///< Previously changeable now permanently set to 90(deg)
+	float m_cdistancetoProj = 0;///< Distance from the camera to projected screen
+	float* m_sZ_Buffer;///< Depth Buffer
 	//Drawing
 	void CastRaysFloorCeil();///< Draws Affine Mapping of Floor and Ceiling
 	void CastRays3DWalls();///< Draws Raycasted screen projection from Camera

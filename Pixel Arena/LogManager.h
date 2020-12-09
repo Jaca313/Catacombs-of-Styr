@@ -7,7 +7,7 @@
 
 #define C_PI 3.1415923565
 
-const double c_Fov = 90.f;
+const float c_Fov = 90.f;
 
 class LogManager
 {
@@ -54,9 +54,9 @@ public:
 
 
 	//Helpers
-	static double FixAngle(double Ang);
-	static double DegtoRad(double Deg);
-	static double RadtoDeg(double Rad);
+	static float FixAngle(float Ang);
+	static float DegtoRad(float Deg);
+	static float RadtoDeg(float Rad);
 
 
 };

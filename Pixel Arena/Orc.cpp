@@ -16,7 +16,7 @@ Orc::Orc(sf::Vector2f pos, int Texture)
 	AnimSizeY = AnimationMap->getSize().y / 4.0;
 }
 
-void Orc::drawEntity(double* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states)
+void Orc::drawEntity(float* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states)
 {
 	UpdateAnimation(target,Z_Buffer);
 	if(!m_bObscured)
@@ -39,7 +39,7 @@ void Orc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	//target.draw(ASD,states);
 }
 
-void Orc::UpdateAnimation(sf::RenderTarget& target, double* Z_Buffer)
+void Orc::UpdateAnimation(sf::RenderTarget& target, float* Z_Buffer)
 {
 	Object.setTextureRect(sf::IntRect(sf::Vector2i(AnimationState * AnimSizeX, AnimSizeY * LookAngle), sf::Vector2i(AnimSizeX, AnimSizeY)));
 	float m_winSizeX = target.getSize().x;
@@ -58,8 +58,8 @@ void Orc::UpdateAnimation(sf::RenderTarget& target, double* Z_Buffer)
 
 	//Looks ok
 	m_dDistanceToProj = (target.getSize().x / 2.0) / tan(LogManager::DegtoRad(c_Fov / 2.0));// for fov(90)
-	double NewAngle = LogManager::DegtoRad((AngletoScreen - 0.5) * 90);
-	double xFinalPosition = m_winSizeX / 2.0 + tan(NewAngle) * m_dDistanceToProj;
+	float NewAngle = LogManager::DegtoRad((AngletoScreen - 0.5) * 90);
+	float xFinalPosition = m_winSizeX / 2.0 + tan(NewAngle) * m_dDistanceToProj;
 	Object.setPosition(xFinalPosition, m_winSizeY / 2.0 + Scale);
 
 

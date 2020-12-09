@@ -12,7 +12,7 @@ Player::Player(float x, float y, LevelMap* level)
 	this->Level = level;
 }
 
-void Player::update(double fTime)
+void Player::update(float fTime)
 {
 	UpdatePosition();
 }

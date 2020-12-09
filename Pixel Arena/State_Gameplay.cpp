@@ -19,7 +19,7 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 	this->m_cdistancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
 
 	//Create a Depth Buffer
-	m_sZ_Buffer = new double[Window->getSize().x];
+	m_sZ_Buffer = new float[Window->getSize().x];
 }
 
 State_Gameplay::~State_Gameplay()
@@ -44,7 +44,7 @@ void State_Gameplay::eventLoop()
 	}
 }
 
-void State_Gameplay::input(double fTime)
+void State_Gameplay::input(float fTime)
 {
 	//Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
@@ -54,7 +54,7 @@ void State_Gameplay::input(double fTime)
 		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle+90)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle+90)) * fTime));
+		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
 		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime));
@@ -96,7 +96,7 @@ void State_Gameplay::input(double fTime)
 
 }
 
-void State_Gameplay::update(double fTime)
+void State_Gameplay::update(float fTime)
 {
 	Butcher->update(fTime);//Update Player
 	Entities.UpdateAll();//Update Entities
@@ -106,8 +106,8 @@ void State_Gameplay::draw(sf::RenderTexture* ScreenBuffer)
 {
 	this->ScreenBuffer = ScreenBuffer;
 
-	this->ScreenBuffer->clear(sf::Color(120,120,120,255));//Clear Buffer
-	
+	this->ScreenBuffer->clear(sf::Color(120, 120, 120, 255));//Clear Buffer
+
 	//Clear
 	//Draw Floor and Ceiling
 	//Draw Walls 
@@ -139,38 +139,38 @@ void State_Gameplay::CastRays3DWalls()
 	int mp = 0;//Current tile
 	int dof;//Current distance by tiles
 
-	double vx;
-	double vy;
+	float vx;
+	float vy;
 
-	double ra = LogManager::FixAngle(Butcher->DegAngle + m_cFov/2);//ray angle in deg
-	double rx;//ray vector x
-	double ry;//ray vector y
+	float ra = LogManager::FixAngle(Butcher->DegAngle + m_cFov / 2);//ray angle in deg
+	float rx;//ray vector x
+	float ry;//ray vector y
 
-	double xo;//step of whole tile in X of Vector
-	double yo;//step of whole tile in Y of Vector
+	float xo;//step of whole tile in X of Vector
+	float yo;//step of whole tile in Y of Vector
 
 	//Player position in 64*Tiles
-	double px = Butcher->x;
-	double py = Butcher->y;
+	float px = Butcher->x;
+	float py = Butcher->y;
 
 	//Made to group Vertices By Wall Type (drawing is done by wall type)
 	sf::VertexArray TexturedWall[10];
 
 	//To compensate for angle discrepancies when projecting to flat screen from a camera behind it
-	std::vector<double> WallRays;
-	double angle = 0;
-	for (int i = -winSizeX / 2; i < winSizeX/2; i++) {
+	std::vector<float> WallRays;
+	float angle = 0;
+	for (int i = -winSizeX / 2; i < winSizeX / 2; i++) {
 		angle = atan(i / m_cdistancetoProj);
 		WallRays.push_back(LogManager::RadtoDeg(angle));
 	}
 
 	//Left to Right (Rays = fov * res -> across the screen)
-	for (int r = 0; r < winSizeX;++r) {
+	for (int r = 0; r < winSizeX; ++r) {
 		ra = LogManager::FixAngle(Butcher->DegAngle - WallRays.at(r));
 
 		//Vertical Line
 		dof = 0;
-		double disV = FLT_MAX;
+		float disV = FLT_MAX;
 		float Tan = tan(LogManager::DegtoRad(ra));
 
 		if (cos(LogManager::DegtoRad(ra)) > 0.001) { //looking left
@@ -210,7 +210,7 @@ void State_Gameplay::CastRays3DWalls()
 
 		//Horizontal Line
 		dof = 0;
-		double disH = FLT_MAX;
+		float disH = FLT_MAX;
 		Tan = 1.0 / Tan;
 		if (sin(LogManager::DegtoRad(ra)) > 0.001) { //looking up 
 			ry = (((int)py >> 6) << 6) - 0.0001;
@@ -254,7 +254,7 @@ void State_Gameplay::CastRays3DWalls()
 			HitSide = 2;//Horizontal
 		}
 
-		double DistanceCorrect = disH;
+		float DistanceCorrect = disH;
 
 		int ca = LogManager::FixAngle(Butcher->DegAngle - ra); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
 		int lineH = (160 * winSizeY / 2) / (disH);
@@ -282,12 +282,12 @@ void State_Gameplay::CastRays3DWalls()
 		int TexCall = Level.getTile(HitCell) - '0';
 		TexCall = TexCall < 0 ? 1 : TexCall;
 		TexCall = TexCall > 9 ? 1 : TexCall;
-		double TexSizeX = Resources->Textures.at(TexCall).getSize().x; -1;
-		double TexSizeY = Resources->Textures.at(TexCall).getSize().y; -1;
+		float TexSizeX = Resources->Textures.at(TexCall).getSize().x; -1;
+		float TexSizeY = Resources->Textures.at(TexCall).getSize().y; -1;
 
 		if (HitSide == 1) { // Horizontal
 			rx /= Level.getTileSize();//64
-			double normX = (rx - (int)rx);
+			float normX = (rx - (int)rx);
 			Line[0].texCoords.x = TexSizeX * normX;
 			Line[0].texCoords.y = TexSizeY;
 
@@ -302,7 +302,7 @@ void State_Gameplay::CastRays3DWalls()
 		}
 		else if (HitSide == 2) {//Vertical
 			ry /= Level.getTileSize();// /64
-			double normY = (ry - (int)ry);
+			float normY = (ry - (int)ry);
 			Line[0].texCoords.x = TexSizeX * normY;
 			Line[0].texCoords.y = TexSizeY;
 
@@ -335,16 +335,16 @@ void State_Gameplay::CastRays3DWalls()
 
 }
 
-void State_Gameplay::DrawUI() 
+void State_Gameplay::DrawUI()
 {
-	UI.drawUI(Butcher,*ScreenBuffer);
+	UI.drawUI(Butcher, *ScreenBuffer);
 }
 
 void State_Gameplay::DrawEntities()
 {
 	//draw only if in view
 	for (auto E : *Entities.getEntities()) {
-		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer,*ScreenBuffer);
+		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer, *ScreenBuffer);
 	}
 }
 
@@ -367,13 +367,13 @@ void State_Gameplay::Fill_Z_Buffer()
 void State_Gameplay::CastRaysFloorCeil()
 {
 	//Get Window Size
-	double WinH = Window->getSize().y;
-	double WinW = Window->getSize().x;
+	float WinH = Window->getSize().y;
+	float WinW = Window->getSize().x;
 
 	//Get Player True tilemap position and view direction
-	double px = Butcher->x / Level.getTileSize(); 
-	double py = Butcher->y / Level.getTileSize();
-	double pDeg = Butcher->DegAngle;//in Deg
+	float px = Butcher->x / Level.getTileSize();
+	float py = Butcher->y / Level.getTileSize();
+	float pDeg = Butcher->DegAngle;//in Deg
 
 	//Camera Rays 
 	float rayDirX0;//Leftmost Camera Ray
@@ -382,9 +382,9 @@ void State_Gameplay::CastRaysFloorCeil()
 	float rayDirY1;
 
 
-	double p;
-	double posZ;
-	double rowDistance = -1.f;
+	float p;
+	float posZ;
+	float rowDistance = -1.f;
 
 	//Leftmost and Rightmost Coordinates in Tiles hit when screencasting
 	float floorX;
@@ -406,7 +406,7 @@ void State_Gameplay::CastRaysFloorCeil()
 
 	//FLOOR CASTING
 	//Goes middle ->bottom for floor also tiles ceiling by inverting coordinates
-	for (int y = 0; y < WinH/2.0; y++)
+	for (int y = 0; y < WinH / 2.0; y++)
 	{
 		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
 		//-sin is due to Y being flipped
@@ -432,23 +432,23 @@ void State_Gameplay::CastRaysFloorCeil()
 		floorX2 = (px + rowDistance * rayDirX1);
 		floorY2 = (py + rowDistance * rayDirY1);
 
-		double dX = floorX2 - floorX;
-		double dY = floorY2 - floorY;
+		float dX = floorX2 - floorX;
+		float dY = floorY2 - floorY;
 
 
 		// the cell coord is simply got from the integer parts of floorX and floorY
 		int cellX = (int)(floorX);
 		int cellY = (int)(floorY);
 
-		double fX = floorX - cellX;
-		double fY = floorY - cellY;
+		float fX = floorX - cellX;
+		float fY = floorY - cellY;
 
 		// get the texture coordinate from the fractional part
-		double tx = texWidth * fX;
-		double tx2 = texWidth * (fX + dX);
+		float tx = texWidth * fX;
+		float tx2 = texWidth * (fX + dX);
 
-		double ty = texHeight * (fY);
-		double ty2 = texHeight * (fY + dY);
+		float ty = texHeight * (fY);
+		float ty2 = texHeight * (fY + dY);
 
 
 		// floor

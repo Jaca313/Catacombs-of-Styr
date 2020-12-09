@@ -6,7 +6,7 @@ class Player : public Entity
 public:
 	Player(float x,float y,LevelMap* level);
 
-	void update(double fTime);///< Updates Player position & other properties
+	void update(float fTime);///< Updates Player position & other properties
 
 	void vectorPlayer(sf::Vector2f _dVec);///< Changes Player Movement Vector
 
