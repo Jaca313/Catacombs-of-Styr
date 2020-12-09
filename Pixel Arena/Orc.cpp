@@ -9,11 +9,11 @@ Orc::Orc(sf::Vector2f pos, int Texture)
 	this->AnimationMap = Resources->getTex(Texture);
 
 	Object.setTexture(AnimationMap);
-	Object.setPosition(600.0,600.0);
-	Object.setSize(sf::Vector2f(100, 100));
+	Object.setPosition(600.f,600.f);
+	Object.setSize(sf::Vector2f(100.f, 100.f));
 
-	AnimSizeX = AnimationMap->getSize().x / 3.0;
-	AnimSizeY = AnimationMap->getSize().y / 4.0;
+	AnimSizeX = AnimationMap->getSize().x / 3.f;
+	AnimSizeY = AnimationMap->getSize().y / 4.f;
 }
 
 void Orc::drawEntity(float* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states)
@@ -45,10 +45,10 @@ void Orc::UpdateAnimation(sf::RenderTarget& target, float* Z_Buffer)
 	float m_winSizeX = target.getSize().x;
 	float m_winSizeY = target.getSize().y;
 
-	float Scale = (128.0 * m_winSizeY / 2) / this->distanceToPlayer;
+	float Scale = (128.f * m_winSizeY / 2) / this->distanceToPlayer;
 	sf::Vector2f setSize = sf::Vector2f(Scale, 2 * Scale);
 	Object.setSize(setSize);
-	sf::Vector2f setOrigin = sf::Vector2f(Object.getSize().x / 2.0, Object.getSize().y);
+	sf::Vector2f setOrigin = sf::Vector2f(Object.getSize().x / 2.f, Object.getSize().y);
 	Object.setOrigin(setOrigin.x, setOrigin.y);
 
 	//Not correct at distance but it will have to do
@@ -57,10 +57,10 @@ void Orc::UpdateAnimation(sf::RenderTarget& target, float* Z_Buffer)
 
 
 	//Looks ok
-	m_dDistanceToProj = (target.getSize().x / 2.0) / tan(LogManager::DegtoRad(c_Fov / 2.0));// for fov(90)
-	float NewAngle = LogManager::DegtoRad((AngletoScreen - 0.5) * 90);
-	float xFinalPosition = m_winSizeX / 2.0 + tan(NewAngle) * m_dDistanceToProj;
-	Object.setPosition(xFinalPosition, m_winSizeY / 2.0 + Scale);
+	m_dDistanceToProj = (target.getSize().x / 2.f) / tan(LogManager::DegtoRad(c_Fov / 2.f));// for fov(90)
+	float NewAngle = LogManager::DegtoRad((AngletoScreen - 0.5f) * 90);
+	float xFinalPosition = m_winSizeX / 2.f + tan(NewAngle) * m_dDistanceToProj;
+	Object.setPosition(xFinalPosition, m_winSizeY / 2.f + Scale);
 
 
 	//Clipping Code just for reducing draw calls

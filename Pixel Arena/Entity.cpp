@@ -22,26 +22,26 @@ bool Entity::InView(sf::Vector2f View, float ViewAngle, float fov)
 	float dY = -(this->y - View.y);
 
 	float AngletoEntity = LogManager::FixAngle(LogManager::RadtoDeg(std::atan2f(dY, dX)));
-	float RightView = LogManager::FixAngle(ViewAngle - fov / 2.0);
-	float LeftView = LogManager::FixAngle(ViewAngle + fov / 2.0);
+	float RightView = LogManager::FixAngle(ViewAngle - fov / 2.f);
+	float LeftView = LogManager::FixAngle(ViewAngle + fov / 2.f);
 
 
 	//Check if in View
 	if (RightView < LeftView) {
 		ReturnValue = RightView <= AngletoEntity && AngletoEntity <= LeftView;
-		AngletoScreen = 1.0 - (AngletoEntity - RightView) / (LeftView - RightView);
+		AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);
 	}
 	else {
 		if (RightView <= AngletoEntity) { // < 360 if crossing 360 line
 			ReturnValue = true;
 			LeftView = RightView + fov;
-			AngletoScreen = 1.0 - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
+			AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
 
 		}
 		else if (AngletoEntity <= LeftView) { // > 0 if crossing 360 line
 			ReturnValue = true;
 			RightView = LeftView - fov;
-			AngletoScreen = 1.0 - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
+			AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);//not sure
 		}	
 	}
 

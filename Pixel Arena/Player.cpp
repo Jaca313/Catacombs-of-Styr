@@ -60,8 +60,8 @@ void Player::UpdatePosition()
 	if (C2 < '0' || C2 > '9')
 		this->y += dy;
 
-	this->vx /= 1.8;
-	this->vy /= 1.8;
+	this->vx /= 1.8f;
+	this->vy /= 1.8f;
 
 }
 

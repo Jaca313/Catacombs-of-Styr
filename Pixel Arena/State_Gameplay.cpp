@@ -173,14 +173,14 @@ void State_Gameplay::CastRays3DWalls()
 		float disV = FLT_MAX;
 		float Tan = tan(LogManager::DegtoRad(ra));
 
-		if (cos(LogManager::DegtoRad(ra)) > 0.001) { //looking left
+		if (cos(LogManager::DegtoRad(ra)) > 0.001f) { //looking left
 			rx = (((int)px >> 6) << 6) + 64;
 			ry = (px - rx) * Tan + py;
 			xo = 64;
 			yo = -xo * Tan;
 		}
-		else if (cos(LogManager::DegtoRad(ra)) < -0.001) { //looking right
-			rx = (((int)px >> 6) << 6) - 0.0001;
+		else if (cos(LogManager::DegtoRad(ra)) < -0.001f) { //looking right
+			rx = (((int)px >> 6) << 6) - 0.0001f;
 			ry = (px - rx) * Tan + py; xo = -64;
 			yo = -xo * Tan;
 		}
@@ -211,13 +211,13 @@ void State_Gameplay::CastRays3DWalls()
 		//Horizontal Line
 		dof = 0;
 		float disH = FLT_MAX;
-		Tan = 1.0 / Tan;
-		if (sin(LogManager::DegtoRad(ra)) > 0.001) { //looking up 
-			ry = (((int)py >> 6) << 6) - 0.0001;
+		Tan = 1.f / Tan;
+		if (sin(LogManager::DegtoRad(ra)) > 0.001f) { //looking up 
+			ry = (((int)py >> 6) << 6) - 0.0001f;
 			rx = (py - ry) * Tan + px; yo = -64;
 			xo = -yo * Tan;
 		}
-		else if (sin(LogManager::DegtoRad(ra)) < -0.001) { //looking down
+		else if (sin(LogManager::DegtoRad(ra)) < -0.001f) { //looking down
 			ry = (((int)py >> 6) << 6) + 64;
 			rx = (py - ry) * Tan + px; yo = 64;
 			xo = -yo * Tan;
@@ -278,12 +278,12 @@ void State_Gameplay::CastRays3DWalls()
 		//Line[1].color = Kolor;
 		//Line[2].color = Kolor;
 		//Line[3].color = Kolor;
-		int HitCell = (int)(ry / 64.0) * Level.getMapX() + (int)(rx / 64.0);
+		int HitCell = (int)(ry / 64.f) * Level.getMapX() + (int)(rx / 64.f);
 		int TexCall = Level.getTile(HitCell) - '0';
 		TexCall = TexCall < 0 ? 1 : TexCall;
 		TexCall = TexCall > 9 ? 1 : TexCall;
-		float TexSizeX = Resources->Textures.at(TexCall).getSize().x; -1;
-		float TexSizeY = Resources->Textures.at(TexCall).getSize().y; -1;
+		float TexSizeX = Resources->Textures.at(TexCall).getSize().x;
+		float TexSizeY = Resources->Textures.at(TexCall).getSize().y;
 
 		if (HitSide == 1) { // Horizontal
 			rx /= Level.getTileSize();//64
@@ -406,17 +406,17 @@ void State_Gameplay::CastRaysFloorCeil()
 
 	//FLOOR CASTING
 	//Goes middle ->bottom for floor also tiles ceiling by inverting coordinates
-	for (int y = 0; y < WinH / 2.0; y++)
+	for (int y = 0; y < WinH / 2.f; y++)
 	{
 		// rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
 		//-sin is due to Y being flipped
-		rayDirX0 = cos(LogManager::DegtoRad(pDeg + m_cFov / 2.0));
-		rayDirY0 = -sin(LogManager::DegtoRad(pDeg + m_cFov / 2.0));
-		rayDirX1 = cos(LogManager::DegtoRad(pDeg - m_cFov / 2.0));
-		rayDirY1 = -sin(LogManager::DegtoRad(pDeg - m_cFov / 2.0));
+		rayDirX0 = cos(LogManager::DegtoRad(pDeg + m_cFov / 2.f));
+		rayDirY0 = -sin(LogManager::DegtoRad(pDeg + m_cFov / 2.f));
+		rayDirX1 = cos(LogManager::DegtoRad(pDeg - m_cFov / 2.f));
+		rayDirY1 = -sin(LogManager::DegtoRad(pDeg - m_cFov / 2.f));
 
 		// Current y position compared to the center of the screen (the horizon) ergo scanline height
-		p = WinH / 2.0 - y;
+		p = WinH / 2.f - y;
 
 		// Vertical position of the camera.
 		posZ = m_cdistancetoProj;//0.5 * WinH; assume 45 degrees
@@ -460,8 +460,8 @@ void State_Gameplay::CastRaysFloorCeil()
 		HFloor[3].position = sf::Vector2f(WinW, WinH - y);
 
 		HFloor[0].texCoords = sf::Vector2f(tx, ty);
-		HFloor[1].texCoords = sf::Vector2f(tx, ty + 1.0 / WinH);
-		HFloor[2].texCoords = sf::Vector2f(tx2, ty2 + 1.0 / WinH);
+		HFloor[1].texCoords = sf::Vector2f(tx, ty + 1.f / WinH);
+		HFloor[2].texCoords = sf::Vector2f(tx2, ty2 + 1.f / WinH);
 		HFloor[3].texCoords = sf::Vector2f(tx2, ty2);
 
 		sf::Vertex HCeil[4];
@@ -472,8 +472,8 @@ void State_Gameplay::CastRaysFloorCeil()
 		HCeil[3].position = sf::Vector2f(WinW, y);
 
 		HCeil[0].texCoords = sf::Vector2f(tx, ty);
-		HCeil[1].texCoords = sf::Vector2f(tx, ty - 1.0 / WinH);
-		HCeil[2].texCoords = sf::Vector2f(tx2, ty2 - 1.0 / WinH);
+		HCeil[1].texCoords = sf::Vector2f(tx, ty - 1.f / WinH);
+		HCeil[2].texCoords = sf::Vector2f(tx2, ty2 - 1.f / WinH);
 		HCeil[3].texCoords = sf::Vector2f(tx2, ty2);
 
 		Floor.append(HFloor[0]);
