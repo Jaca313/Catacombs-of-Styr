@@ -173,7 +173,7 @@ void State_Gameplay::CastRays3DWalls()
 		WallRays.push_back(LogManager::RadtoDeg(angle));
 	}
 
-	//Left to Right (Rays = fov * res -> across the screen)
+	//Left to Right -> across the screen)
 	for (int r = 0; r < winSizeX; ++r) {
 		ra = LogManager::FixAngle(Butcher->DegAngle - WallRays.at(r));
 
