@@ -54,9 +54,9 @@ public:
 
 
 	//Helpers
-	static float FixAngle(float Ang);
-	static float DegtoRad(float Deg);
-	static float RadtoDeg(float Rad);
+	static double FixAngle(double Ang);
+	static double DegtoRad(double Deg);
+	static double RadtoDeg(double Rad);
 
 
 };

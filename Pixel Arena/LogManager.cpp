@@ -27,19 +27,19 @@ void LogManager::ERR(int level, std::string error)
 	}
 }
 
-float LogManager::FixAngle(float Ang)
+double LogManager::FixAngle(double Ang)
 {
 	if (Ang > 359)Ang -= 360;
 	if (Ang < 0)Ang += 360;
 	return Ang;
 }
 
-float LogManager::DegtoRad(float Deg)
+double LogManager::DegtoRad(double Deg)
 {
-	return float(Deg * C_PI / 180.f);
+	return (double)Deg * C_PI / 180.f;
 }
 
-float LogManager::RadtoDeg(float Rad)
+double LogManager::RadtoDeg(double Rad)
 {
-	return float(Rad * 180 / C_PI);
+	return double(Rad * 180 / C_PI);
 }

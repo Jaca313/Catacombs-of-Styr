@@ -16,10 +16,10 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 	this->Resources = _Resources;
 
 	//Calculate distance to screen from fov
-	this->m_cdistancetoProj = (Window->getSize().x / 2.f) / tan(LogManager::DegtoRad(m_cFov / 2.f));
+	this->m_cdistancetoProj = (Window->getSize().x / 2.0) / tan(LogManager::DegtoRad(m_cFov / 2.0));
 
 	//Create a Depth Buffer
-	m_sZ_Buffer = new float[Window->getSize().x];
+	m_sZ_Buffer = new double[Window->getSize().x];
 }
 
 State_Gameplay::~State_Gameplay()
@@ -44,26 +44,20 @@ void State_Gameplay::eventLoop()
 	}
 }
 
-void State_Gameplay::input(float _fTime)
+void State_Gameplay::input(double fTime)
 {
 	//Movement
-	float cos0 = float(+cos(LogManager::DegtoRad(float(Butcher->DegAngle)))) * _fTime;
-	float sin0 = float(+sin(LogManager::DegtoRad(float(Butcher->DegAngle)))) * _fTime;
-
-	float cos90 = float(+cos(LogManager::DegtoRad(float(Butcher->DegAngle+90)))) * _fTime;
-	float sin90 = float(+sin(LogManager::DegtoRad(float(Butcher->DegAngle+90)))) * _fTime;
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		Butcher->vectorPlayer(sf::Vector2f(cos0, -sin0));
+		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		Butcher->vectorPlayer(sf::Vector2f(-cos0, sin0));
+		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-		Butcher->vectorPlayer(sf::Vector2f(cos90, -sin90));
+		Butcher->vectorPlayer(sf::Vector2f(+cos(LogManager::DegtoRad(Butcher->DegAngle+90)) * fTime, -sin(LogManager::DegtoRad(Butcher->DegAngle+90)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-		Butcher->vectorPlayer(sf::Vector2f(-cos90, sin90));
+		Butcher->vectorPlayer(sf::Vector2f(-cos(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime, +sin(LogManager::DegtoRad(Butcher->DegAngle + 90)) * fTime));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->setSprint(true);
 	else Butcher->setSprint(false);
@@ -71,23 +65,23 @@ void State_Gameplay::input(float _fTime)
 
 	//Rotation
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-		Butcher->DegAngleTemp += 90 * _fTime;
+		Butcher->DegAngleTemp += 90 * fTime;
 		Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
 		Butcher->DegAngle = (int)Butcher->DegAngleTemp;
 		printf("%f,%f:%d\n", Butcher->x / 64, Butcher->y / 64, Butcher->DegAngle);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-		Butcher->DegAngleTemp -= 90 * _fTime;
+		Butcher->DegAngleTemp -= 90 * fTime;
 		Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
 		Butcher->DegAngle = (int)Butcher->DegAngleTemp;
 	}
 
 	//Debug
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
-		Butcher->setHealth(Butcher->getHealth() + _fTime * 5);
+		Butcher->setHealth(Butcher->getHealth() + fTime * 5);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
-		Butcher->setHealth(Butcher->getHealth() - _fTime * 5);
+		Butcher->setHealth(Butcher->getHealth() - fTime * 5);
 	}
 
 	//Mouse
@@ -95,22 +89,22 @@ void State_Gameplay::input(float _fTime)
 	//float sensitivity = 100000.f;
 	//sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
 	//sf::Vector2u WSize = Window->getSize();
-	//Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * _fTime * sensitivity; 
+	//Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * fTime * sensitivity; 
 	//Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
 	//Butcher->DegAngle = (int)Butcher->DegAngleTemp;
 	//sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
 
 }
 
-void State_Gameplay::update(float _fTime)
+void State_Gameplay::update(double fTime)
 {
-	Butcher->update(_fTime);//Update Player
+	Butcher->update(fTime);//Update Player
 	Entities.UpdateAll();//Update Entities
 }
 
-void State_Gameplay::draw(sf::RenderTexture* _ScreenBuffer)
+void State_Gameplay::draw(sf::RenderTexture* ScreenBuffer)
 {
-	this->ScreenBuffer = _ScreenBuffer;
+	this->ScreenBuffer = ScreenBuffer;
 
 	this->ScreenBuffer->clear(sf::Color(120,120,120,255));//Clear Buffer
 	
@@ -145,19 +139,19 @@ void State_Gameplay::CastRays3DWalls()
 	int mp = 0;//Current tile
 	int dof;//Current distance by tiles
 
-	float vx;
-	float vy;
+	double vx;
+	double vy;
 
-	float ra = LogManager::FixAngle(Butcher->DegAngle + m_cFov/2);//ray angle in deg
-	float rx;//ray vector x
-	float ry;//ray vector y
+	double ra = LogManager::FixAngle(Butcher->DegAngle + m_cFov/2);//ray angle in deg
+	double rx;//ray vector x
+	double ry;//ray vector y
 
-	float xo;//step of whole tile in X of Vector
-	float yo;//step of whole tile in Y of Vector
+	double xo;//step of whole tile in X of Vector
+	double yo;//step of whole tile in Y of Vector
 
 	//Player position in 64*Tiles
-	float px = Butcher->x;
-	float py = Butcher->y;
+	double px = Butcher->x;
+	double py = Butcher->y;
 
 	//Made to group Vertices By Wall Type (drawing is done by wall type)
 	sf::VertexArray TexturedWall[10];
@@ -288,8 +282,8 @@ void State_Gameplay::CastRays3DWalls()
 		int TexCall = Level.getTile(HitCell) - '0';
 		TexCall = TexCall < 0 ? 1 : TexCall;
 		TexCall = TexCall > 9 ? 1 : TexCall;
-		float TexSizeX = Resources->Textures.at(TexCall).getSize().x;
-		float TexSizeY = Resources->Textures.at(TexCall).getSize().y;
+		double TexSizeX = Resources->Textures.at(TexCall).getSize().x; -1;
+		double TexSizeY = Resources->Textures.at(TexCall).getSize().y; -1;
 
 		if (HitSide == 1) { // Horizontal
 			rx /= Level.getTileSize();//64
@@ -373,13 +367,13 @@ void State_Gameplay::Fill_Z_Buffer()
 void State_Gameplay::CastRaysFloorCeil()
 {
 	//Get Window Size
-	float WinH = float(Window->getSize().y);
-	float WinW = float( Window->getSize().x);
+	double WinH = Window->getSize().y;
+	double WinW = Window->getSize().x;
 
 	//Get Player True tilemap position and view direction
-	float px = Butcher->x / Level.getTileSize();
-	float py = Butcher->y / Level.getTileSize();
-	float pDeg = Butcher->DegAngle;//in Deg
+	double px = Butcher->x / Level.getTileSize(); 
+	double py = Butcher->y / Level.getTileSize();
+	double pDeg = Butcher->DegAngle;//in Deg
 
 	//Camera Rays 
 	float rayDirX0;//Leftmost Camera Ray
@@ -388,9 +382,9 @@ void State_Gameplay::CastRaysFloorCeil()
 	float rayDirY1;
 
 
-	float p;
-	float posZ;
-	float rowDistance = -1.f;
+	double p;
+	double posZ;
+	double rowDistance = -1.f;
 
 	//Leftmost and Rightmost Coordinates in Tiles hit when screencasting
 	float floorX;
@@ -438,23 +432,23 @@ void State_Gameplay::CastRaysFloorCeil()
 		floorX2 = (px + rowDistance * rayDirX1);
 		floorY2 = (py + rowDistance * rayDirY1);
 
-		float dX = floorX2 - floorX;
-		float dY = floorY2 - floorY;
+		double dX = floorX2 - floorX;
+		double dY = floorY2 - floorY;
 
 
 		// the cell coord is simply got from the integer parts of floorX and floorY
 		int cellX = (int)(floorX);
 		int cellY = (int)(floorY);
 
-		float fX = floorX - cellX;
-		float fY = floorY - cellY;
+		double fX = floorX - cellX;
+		double fY = floorY - cellY;
 
 		// get the texture coordinate from the fractional part
-		float tx = texWidth * fX;
-		float tx2 = texWidth * (fX + dX);
+		double tx = texWidth * fX;
+		double tx2 = texWidth * (fX + dX);
 
-		float ty = texHeight * (fY);
-		float ty2 = texHeight * (fY + dY);
+		double ty = texHeight * (fY);
+		double ty2 = texHeight * (fY + dY);
 
 
 		// floor
@@ -466,8 +460,8 @@ void State_Gameplay::CastRaysFloorCeil()
 		HFloor[3].position = sf::Vector2f(WinW, WinH - y);
 
 		HFloor[0].texCoords = sf::Vector2f(tx, ty);
-		HFloor[1].texCoords = sf::Vector2f(tx, ty + 1.f / WinH);
-		HFloor[2].texCoords = sf::Vector2f(tx2, ty2 + 1.f / WinH);
+		HFloor[1].texCoords = sf::Vector2f(tx, ty + 1.0 / WinH);
+		HFloor[2].texCoords = sf::Vector2f(tx2, ty2 + 1.0 / WinH);
 		HFloor[3].texCoords = sf::Vector2f(tx2, ty2);
 
 		sf::Vertex HCeil[4];
@@ -478,8 +472,8 @@ void State_Gameplay::CastRaysFloorCeil()
 		HCeil[3].position = sf::Vector2f(WinW, y);
 
 		HCeil[0].texCoords = sf::Vector2f(tx, ty);
-		HCeil[1].texCoords = sf::Vector2f(tx, ty - 1.f / WinH);
-		HCeil[2].texCoords = sf::Vector2f(tx2, ty2 - 1.f / WinH);
+		HCeil[1].texCoords = sf::Vector2f(tx, ty - 1.0 / WinH);
+		HCeil[2].texCoords = sf::Vector2f(tx2, ty2 - 1.0 / WinH);
 		HCeil[3].texCoords = sf::Vector2f(tx2, ty2);
 
 		Floor.append(HFloor[0]);

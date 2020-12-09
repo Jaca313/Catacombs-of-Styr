@@ -11,7 +11,7 @@ Timer::Timer(bool randomize)
 {
 	clock = new sf::Clock();
 	loopTime = 0.f;
-	TotalTime = randomize ? (rand() % 3) * 1.f/3.f : 0.f;
+	TotalTime = randomize ? (rand() % 3) * 1.0/3.0 : 0.f;
 }
 
 float Timer::ResetClock()

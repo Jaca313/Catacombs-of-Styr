@@ -19,7 +19,7 @@ public:
 	float AnimationSpeed = 1/3.f;
 
 	int AnimationRotation = 0;
-	bool InView(sf::Vector2f View, float ViewAngle, float fov);
+	bool InView(sf::Vector2f View, double ViewAngle, double fov);
 
 	Timer InternalClock = Timer(1);
 
@@ -29,12 +29,12 @@ public:
 
 
 
-	virtual void drawEntity(float* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
+	virtual void drawEntity(double* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
 
 
-	float distanceToPlayer = FLT_MAX;
-	float AngletoScreen = 0.0; // normalized is the measure of left to right screen span
-	float m_dDistanceToProj = 0.0;// 
+	double distanceToPlayer = FLT_MAX;
+	double AngletoScreen = 0.0; // normalized is the measure of left to right screen span
+	double m_dDistanceToProj = 0.0;// 
 	//0 forward looking orc
 	//1 left
 	//2 right

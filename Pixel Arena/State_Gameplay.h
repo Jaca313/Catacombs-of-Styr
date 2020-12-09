@@ -13,16 +13,16 @@ class State_Gameplay :
 	public GameState
 {
 public:
-	State_Gameplay(sf::RenderWindow* _pWindow, ResourceManager* _Resources );
+	State_Gameplay(sf::RenderWindow* pWindow, ResourceManager* Resources );
 	~State_Gameplay();
 private:
 	sf::RenderWindow* Window;///< Final Output
 	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use
 public:
 	void eventLoop();///< Queries and resolves SFML events
-	void input(float _fTime);///< User Input (Keyboard and Mouse)
-	void update(float _fTime);///< Calculates Internal Resource Changes
-	void draw(sf::RenderTexture* _ScreenBuffer);///< Outputs Elements to ScreenBuffer
+	void input(double fTime);///< User Input (Keyboard and Mouse)
+	void update(double fTime);///< Calculates Internal Resource Changes
+	void draw(sf::RenderTexture* ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
 //Resources
 private:
@@ -36,9 +36,9 @@ private:
 	InGameUI UI = InGameUI();///< Ingame UI Elements
 	
 	//Camera Settings
-	float m_cFov = c_Fov;///< Previously changeable now permanently set to 90(deg)
-	float m_cdistancetoProj = 0;///< Distance from the camera to projected screen
-	float* m_sZ_Buffer;///< Depth Buffer
+	double m_cFov = c_Fov;///< Previously changeable now permanently set to 90(deg)
+	double m_cdistancetoProj = 0;///< Distance from the camera to projected screen
+	double* m_sZ_Buffer;///< Depth Buffer
 	//Drawing
 	void CastRaysFloorCeil();///< Draws Affine Mapping of Floor and Ceiling
 	void CastRays3DWalls();///< Draws Raycasted screen projection from Camera

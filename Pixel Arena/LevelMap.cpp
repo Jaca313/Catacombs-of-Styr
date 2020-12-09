@@ -10,7 +10,7 @@ const short LevelMap::getMapY() const
 	return MapY;
 }
 
-const float LevelMap::getTileSize() const
+const int LevelMap::getTileSize() const
 {
 	return TileSize;
 }

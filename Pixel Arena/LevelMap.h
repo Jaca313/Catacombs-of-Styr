@@ -14,8 +14,8 @@ public:
 
 private:
 	//Map properties
-	int MapX;///<Mapsize
-	int MapY;///<Map Size
+	short MapX;///<Mapsize
+	short MapY;///<Map Size
 	int TextureCeiling;///< Texture used in Ceiling
 	int TextureFloor;///< Texture used in Floor
 	char* Tiles;
@@ -23,7 +23,7 @@ private:
 public:
 	const short getMapX() const;///< Returns Map X size
 	const short getMapY() const;///< Returns Map Y size
-	const float getTileSize() const;///< Returns Map TileSize
+	const int getTileSize() const;///< Returns Map TileSize
 	const int getTexCeil() const;///< Returns Ceiling Texture number
 	const int getTexFloor() const;///< Returns Floor Texture number
 	char getTile(int X) const;///< Returns Tile at X
