@@ -24,6 +24,9 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{948452cf-fff9-4f4b-aaa4-eecab09e9b9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{53f8c38a-d6e5-4e05-8d4f-46dec1ce346d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,9 +36,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="State_Gameplay.cpp">
@@ -53,14 +53,8 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InGameUI.cpp">
       <Filter>UI and Menu</Filter>
@@ -74,6 +68,15 @@
     <ClCompile Include="Button.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="LogManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -83,9 +86,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LevelMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="State_Gameplay.h">
@@ -103,14 +103,8 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InGameUI.h">
       <Filter>UI and Menu</Filter>
@@ -123,6 +117,15 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="LogManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

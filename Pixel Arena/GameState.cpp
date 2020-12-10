@@ -9,7 +9,13 @@ int GameState::requestState()
 {
 	int returnValue = m_iRequestState;
 	m_iRequestState = 0;
+	m_bResume = 1;
 	return returnValue;
+}
+
+void GameState::resumeState()
+{
+	m_bResume = false;
 }
 
 void GameState::endState()

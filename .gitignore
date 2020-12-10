@@ -351,3 +351,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+*.blend
+*.opdownload
+*.svn-base
+*.u1conflict
+*.svn-work
+*.gz
+*.txt

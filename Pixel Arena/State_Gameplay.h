@@ -13,7 +13,7 @@ class State_Gameplay :
 	public GameState
 {
 public:
-	State_Gameplay(sf::RenderWindow* pWindow, ResourceManager* Resources );
+	State_Gameplay(sf::RenderWindow* _pWindow, ResourceManager* _Resources );
 	~State_Gameplay();
 private:
 	sf::RenderWindow* Window;///< Final Output
@@ -24,6 +24,7 @@ public:
 	void update(float _fTime);///< Calculates Internal Resource Changes
 	void draw(sf::RenderTexture* _ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
+	void resumeState();///< When a state is resumed
 //Resources
 private:
 	LevelMap Level;///< Contains Level Data

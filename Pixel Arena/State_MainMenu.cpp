@@ -6,11 +6,16 @@ State_MainMenu::State_MainMenu(sf::RenderWindow* _Window, ResourceManager* _Reso
 	//Basic Setup
 	this->ID = 200;
 	this->Window = _Window;
-	//Window->setMouseCursorVisible(false);
+	Window->setMouseCursorVisible(true);
 	Window->setVerticalSyncEnabled(true);
 	//Link Resources
 	this->Resources = _Resources;
 
+
+
+
+
+	SetupBackground();
 }
 
 State_MainMenu::~State_MainMenu()
@@ -54,6 +59,20 @@ void State_MainMenu::draw(sf::RenderTexture* _ScreenBuffer)
 
 	this->ScreenBuffer->clear(sf::Color(120, 120, 120, 255));//Clear Buffer
 
+	ScreenBuffer->draw(m_sBackground,m_sBackground.getTexture());
 
+}
+
+void State_MainMenu::resumeState()
+{
+	m_bResume = false;
+	Window->setMouseCursorVisible(true);
+}
+
+void State_MainMenu::SetupBackground()
+{
+	m_sBackground.setPosition(0.f, 0.f);
+	m_sBackground.setSize(sf::Vector2f((float)Window->getSize().x, (float)Window->getSize().y));
+	m_sBackground.setTexture(Resources->getTex(29));//Main Menu Background
 }
 

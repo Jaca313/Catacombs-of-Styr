@@ -70,7 +70,7 @@ void ResourceManager::LoadTextures()
 	//28
 	LoadSingleTexture("");
 	//29
-	LoadSingleTexture("sword.png");
+	LoadSingleTexture("GUI/MainMenuBack.png");
 
 	//30 - ? Reserved for Entities
 	//30

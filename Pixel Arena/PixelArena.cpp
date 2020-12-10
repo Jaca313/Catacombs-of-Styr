@@ -4,7 +4,7 @@ PixelArena::PixelArena()
 {
 	LoadSettings();
 
-	this->m_window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName);
+	this->m_window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName, sf::Style::Titlebar | sf::Style::Close);
 	m_window->setVerticalSyncEnabled(false);
 
 	InitTextures();
@@ -49,6 +49,8 @@ void PixelArena::LoadSettings()
 void PixelArena::MainLoop()
 {
 	while (m_window->isOpen() && !m_executionStack.empty()) {
+
+		if (m_executionStack.top()->m_bResume)m_executionStack.top()->resumeState();
 
 		m_executionStack.top()->eventLoop();
 		m_executionStack.top()->input(m_fTime);

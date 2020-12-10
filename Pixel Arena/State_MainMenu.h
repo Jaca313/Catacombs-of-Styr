@@ -15,13 +15,16 @@ public:
 	void update(float _fTime);///< Calculates Internal Resource Changes
 	void draw(sf::RenderTexture* _ScreenBuffer);///< Outputs Elements to ScreenBuffer
 
+	void resumeState();///< When a state is resumed
+
 private:
-	sf::RectangleShape Background;
+	sf::RectangleShape m_sBackground;
 
 //Resources
 private:
 	ResourceManager* Resources;///< Pointer to Resources
 	LogManager& Info = LogManager::getInstance();///< Reference to Internal Messaging
 
+	void SetupBackground();
 };
 

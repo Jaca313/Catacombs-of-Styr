@@ -95,13 +95,14 @@ void State_Gameplay::input(float _fTime)
 
 	//Mouse
 	//distance vector calc should feel better but i plan to add y axis later
-	float sensitivity = 100000.f;
-	sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
-	sf::Vector2u WSize = Window->getSize();
-	Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * _fTime * sensitivity;
-	Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
-	Butcher->DegAngle = (int)Butcher->DegAngleTemp;
-	sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
+
+	//float sensitivity = 100000.f;
+	//sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
+	//sf::Vector2u WSize = Window->getSize();
+	//Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * _fTime * sensitivity;
+	//Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
+	//Butcher->DegAngle = (int)Butcher->DegAngleTemp;
+	//sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
 
 }
 
@@ -135,6 +136,22 @@ void State_Gameplay::draw(sf::RenderTexture* _ScreenBuffer)
 	Fill_Z_Buffer();
 	DrawEntities();
 	DrawUI();
+}
+
+void State_Gameplay::resumeState()
+{
+	m_bResume = false;
+
+	Window->setMouseCursorVisible(false);
+
+	//if Window size changes in meantime
+
+	//Calculate distance to screen from fov
+	this->m_cdistancetoProj = (Window->getSize().x / 2.f) / tan(LogManager::DegtoRad(m_cFov / 2.f));
+
+	//Recreate Depth Buffer
+	delete[] m_sZ_Buffer;
+	m_sZ_Buffer = new float[Window->getSize().x];
 }
 
 void State_Gameplay::CastRays3DWalls()
@@ -337,7 +354,7 @@ void State_Gameplay::CastRays3DWalls()
 		TexturedWall[TexCall].append(Line[3]);
 
 
-		m_sZ_Buffer[r] = DistanceCorrect;
+		m_sZ_Buffer[r] = static_cast<float>(DistanceCorrect);
 	}
 
 
