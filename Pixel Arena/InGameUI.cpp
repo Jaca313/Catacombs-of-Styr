@@ -43,7 +43,7 @@ void InGameUI::UpdateUIScale(Player* _Butcher)
 	float Health = _Butcher->getHealth() / 100.f;//read this from player
 	m_sHealthBar.setPosition(PositionX + SizeX / 3.f, PositionY + 9 * SizeY / 10.f);
 	m_sHealthBar.setSize(sf::Vector2f(Health * SizeX / 3.f, SizeY * 0.1f));
-	int HealthFace = int(7.f - Health * 7.f);
+	int HealthFace = int(6.99f - Health * 7.f);
 
 	m_sPortrait.setOrigin(sf::Vector2f(m_sPortrait.getSize().x / 2.f, 0.f));
 	m_sPortrait.setPosition(PositionX + SizeX/2.f, PositionY + SizeY/10.f);
