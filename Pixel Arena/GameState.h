@@ -16,5 +16,10 @@ public:
 
 	virtual void endState();
 
+	sf::Vector2i m_vMousePosGlobal;///<Mouse position in relation to Screen
+	sf::Vector2i m_vMousePosWindow;///<Mouse position in relation to window
+	sf::Vector2f m_vMousePosView;///<Mouse position in relation to view
+
+	void updateMousePos(sf::RenderWindow* _Window);///< updates mouse position
 };
 

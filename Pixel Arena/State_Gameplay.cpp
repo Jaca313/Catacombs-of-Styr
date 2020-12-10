@@ -95,18 +95,20 @@ void State_Gameplay::input(float _fTime)
 
 	//Mouse
 	//distance vector calc should feel better but i plan to add y axis later
-	//float sensitivity = 100000.f;
-	//sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
-	//sf::Vector2u WSize = Window->getSize();
-	//Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * fTime * sensitivity; 
-	//Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
-	//Butcher->DegAngle = (int)Butcher->DegAngleTemp;
-	//sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
+	float sensitivity = 100000.f;
+	sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
+	sf::Vector2u WSize = Window->getSize();
+	Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * _fTime * sensitivity;
+	Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
+	Butcher->DegAngle = (int)Butcher->DegAngleTemp;
+	sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
 
 }
 
 void State_Gameplay::update(float _fTime)
 {
+	updateMousePos(Window);//Grab mouse position from window
+
 	Butcher->update(_fTime);//Update Player
 	Entities.UpdateAll();//Update Entities
 }

@@ -69,7 +69,10 @@
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="State_MainMenu.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +119,10 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="State_MainMenu.h">
-      <Filter>Header Files</Filter>
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

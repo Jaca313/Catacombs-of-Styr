@@ -15,3 +15,10 @@ int GameState::requestState()
 void GameState::endState()
 {
 }
+
+void GameState::updateMousePos(sf::RenderWindow* _Window)
+{
+	m_vMousePosGlobal = sf::Mouse::getPosition();
+	m_vMousePosWindow = sf::Mouse::getPosition(*_Window);
+	m_vMousePosView = _Window->mapPixelToCoords(sf::Mouse::getPosition(*_Window));
+}

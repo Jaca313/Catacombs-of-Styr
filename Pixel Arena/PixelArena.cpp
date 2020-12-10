@@ -22,7 +22,8 @@ PixelArena::~PixelArena()
 
 void PixelArena::Run()
 {
-	m_executionStack.push(new State_Gameplay(m_window,&Resources));
+	//m_executionStack.push(new State_Gameplay(m_window,&Resources));
+	m_executionStack.push(new State_MainMenu(m_window, &Resources));
 	MainLoop();
 }
 

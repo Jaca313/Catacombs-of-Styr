@@ -1,15 +1,13 @@
 #pragma once
 #include "State_Gameplay.h"
+#include "State_MainMenu.h"
 #include <iostream>
 #include <stack>
 #include <fstream>
 #include <string>
 
 #include "ResourceManager.h"
-enum States {
-	eGameplay = 100,
-	eMenu = 200
-};
+
 class PixelArena
 {
 public:
