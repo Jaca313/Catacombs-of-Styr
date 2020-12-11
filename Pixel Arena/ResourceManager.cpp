@@ -66,9 +66,9 @@ void ResourceManager::LoadTextures()
 	//26
 	LoadSingleTexture("");
 	//27
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/LifeProgressBar.png");
 	//28
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/PopUpMenu.png");
 	//29
 	LoadSingleTexture("GUI/MainMenuBack.png");
 

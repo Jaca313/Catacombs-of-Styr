@@ -34,7 +34,8 @@ LevelMap::~LevelMap()
 void LevelMap::LoadLevel(std::wstring _LevelName)
 {
 	if (Tiles)free(Tiles);//Make sure we let go of the current memory
-	std::ifstream ifs(_LevelName);
+	std::wstring Path = L"Levels\\" + _LevelName;
+	std::ifstream ifs(Path);
 	std::string line;
 	if (ifs){
 		ifs >> MapX >> MapY >> TextureCeiling >> TextureFloor;

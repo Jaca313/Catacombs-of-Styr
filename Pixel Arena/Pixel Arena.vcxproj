@@ -184,6 +184,7 @@
     <ClCompile Include="PixelArena.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="State_Gameplay.cpp" />
     <ClCompile Include="State_MainMenu.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -207,6 +208,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="State_Gameplay.h" />
     <ClInclude Include="State_MainMenu.h" />
     <ClInclude Include="stdafx.h" />
