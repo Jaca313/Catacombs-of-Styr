@@ -7,6 +7,13 @@ PixelArena::PixelArena()
 	this->m_window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName, sf::Style::Titlebar | sf::Style::Close);
 	m_window->setVerticalSyncEnabled(false);
 
+	//Icon is copied no need for it to hang around
+	sf::Image icon;
+	icon.loadFromFile("Textures/GUI/Icon.png");;
+	m_window->setIcon(icon.getSize().x,icon.getSize().y,icon.getPixelsPtr());
+	
+
+
 	InitTextures();
 }
 

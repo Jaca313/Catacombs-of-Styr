@@ -1,3 +1,4 @@
+//#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #include "PixelArena.h"
 int main()
 {

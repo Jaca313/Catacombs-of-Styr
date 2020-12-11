@@ -78,7 +78,7 @@ void InGameUI::InitialSetup(int _Face)
 	m_sHealthBarBackground.setFillColor(sf::Color(120, 120, 120, 255));
 	m_sHealthBarBackground.setOutlineColor(sf::Color(194, 194, 194, 255));
 	m_sHealthBarBackground.setOutlineThickness(10.f);
-	m_sHealthBarBackground.setTexture(Resources.getTex(27));;
+	m_sHealthBarBackground.setTexture(Resources.getTex(27));
 	//m_sHealthBar.setFillColor(sf::Color::Red);
 	m_sHealthBar.setTexture(Resources.getTex(27));
 
