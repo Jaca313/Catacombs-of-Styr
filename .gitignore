@@ -359,3 +359,5 @@ healthchecksdb
 *.gz
 *.txt
 *.ttf
+*.db
+*.rar

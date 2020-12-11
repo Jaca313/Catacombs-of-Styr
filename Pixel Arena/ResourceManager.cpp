@@ -10,23 +10,23 @@ void ResourceManager::LoadTextures()
 {
 	//0 - 9 Reserved for Walls
 	//0
-	LoadSingleTexture("Walls/purplestone.png");
+	LoadSingleTexture("Walls/Wall Door.bmp");//Reserved for some kind of door?
 	//1
-	LoadSingleTexture("Walls/redbrick4.png");
+	LoadSingleTexture("Walls/Handwall.png");
 	//2
-	LoadSingleTexture("Walls/greystone.png");
+	LoadSingleTexture("Walls/bonewall.png");
 	//3
-	LoadSingleTexture("Walls/mossy.png");
+	LoadSingleTexture("Walls/dirtybrick.jpg");
 	//4
-	LoadSingleTexture("Walls/wood.png");
+	LoadSingleTexture("Walls/");
 	//5
-	LoadSingleTexture("Walls/redbrick6.jpg");
+	LoadSingleTexture("Walls/");
 	//6
-	LoadSingleTexture("Walls/redbrick5.jpg");
+	LoadSingleTexture("Walls/");
 	//7
-	LoadSingleTexture("Walls/bwall.tga");
+	LoadSingleTexture("Walls/");
 	//8
-	LoadSingleTexture("");
+	LoadSingleTexture("Walls/");
 	//9
 	LoadSingleTexture("");
 
@@ -72,7 +72,7 @@ void ResourceManager::LoadTextures()
 	//29
 	LoadSingleTexture("GUI/MainMenuBack.png");
 
-	//30 - ? Reserved for Entities
+	//30 - 59 Reserved for Entities (Enemies)
 	//30
 	LoadSingleTexture("Orcs/orc_green.png");
 	//31
@@ -107,6 +107,57 @@ void ResourceManager::LoadTextures()
 	LoadSingleTexture("");
 	//46
 	LoadSingleTexture("");
+	//47
+	LoadSingleTexture("");
+	//48
+	LoadSingleTexture("");
+	//49
+	LoadSingleTexture("");
+	//50
+	LoadSingleTexture("");
+	//51
+	LoadSingleTexture("");
+	//52
+	LoadSingleTexture("");
+	//53
+	LoadSingleTexture("");
+	//54
+	LoadSingleTexture("");
+	//55
+	LoadSingleTexture("");
+	//56
+	LoadSingleTexture("");
+	//57
+	LoadSingleTexture("");
+	//58
+	LoadSingleTexture("");
+	//59
+	LoadSingleTexture("");
+
+	//60 - 69 Reserved for Ceiling and Floor Textures
+	//60
+	LoadSingleTexture("FloorNCeiling/Floor_00.bmp");
+	//61
+	LoadSingleTexture("FloorNCeiling/Floor_02.bmp");
+	//62
+	LoadSingleTexture("");
+	//63
+	LoadSingleTexture("");
+	//64
+	LoadSingleTexture("");
+	//65
+	LoadSingleTexture("");
+	//66
+	LoadSingleTexture("");
+	//67
+	LoadSingleTexture("");
+	//68
+	LoadSingleTexture("");
+	//69
+	LoadSingleTexture("");
+
+	//69
+	LoadSingleTexture("");
 
 
 }
@@ -124,15 +175,18 @@ void ResourceManager::LoadShaders()
 
 }
 
-void ResourceManager::LoadSingleTexture(std::string filename)
+void ResourceManager::LoadSingleTexture(std::string _filename)
 {
 	Textures.push_back(sf::Texture());
-	std::string path = "Textures/" + filename;
-	if (!Textures.back().loadFromFile(path)) {
-		std::string Error = "Texture " + filename + " failed to load";
-		InfoTool.ERR(4, Error);
+	if (_filename != "") {
+		std::string path = "Textures/" + _filename;
+		if (!Textures.back().loadFromFile(path)) {
+			std::string Error = "Texture " + _filename + " failed to load";
+			InfoTool.ERR(4, Error);
+		}
+
+		Textures.back().setRepeated(true);
+		Textures.back().setSmooth(true);
 	}
 
-	Textures.back().setRepeated(true);
-	Textures.back().setSmooth(true);
 }
