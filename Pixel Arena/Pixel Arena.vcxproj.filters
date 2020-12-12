@@ -18,17 +18,17 @@
     <Filter Include="PCH">
       <UniqueIdentifier>{37acaeed-bc84-4692-ac16-16a4e81c48ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UI and Menu">
-      <UniqueIdentifier>{5420417a-f0d2-4701-9d73-b674d5ed5a4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{948452cf-fff9-4f4b-aaa4-eecab09e9b9c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Managers">
       <UniqueIdentifier>{53f8c38a-d6e5-4e05-8d4f-46dec1ce346d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
+    <Filter Include="GUI\Scenes">
       <UniqueIdentifier>{18fe1624-1123-4345-83a3-d59f2ffd9640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\HUD">
+      <UniqueIdentifier>{5420417a-f0d2-4701-9d73-b674d5ed5a4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +60,7 @@
       <Filter>PCH</Filter>
     </ClCompile>
     <ClCompile Include="InGameUI.cpp">
-      <Filter>UI and Menu</Filter>
+      <Filter>GUI\HUD</Filter>
     </ClCompile>
     <ClCompile Include="Orc.cpp">
       <Filter>Entities</Filter>
@@ -81,7 +81,10 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>GUI\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_MainMenu.cpp">
+      <Filter>GUI\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,7 +116,7 @@
       <Filter>PCH</Filter>
     </ClInclude>
     <ClInclude Include="InGameUI.h">
-      <Filter>UI and Menu</Filter>
+      <Filter>GUI\HUD</Filter>
     </ClInclude>
     <ClInclude Include="Orc.h">
       <Filter>Entities</Filter>
@@ -134,7 +137,10 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Scenes</Filter>
+      <Filter>GUI\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_MainMenu.h">
+      <Filter>GUI\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

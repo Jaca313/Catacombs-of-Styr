@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "ResourceManager.h"
+#include "Scene_MainMenu.h"
 class State_MainMenu :	public GameState
 {
 public:
@@ -26,5 +27,8 @@ private:
 	LogManager& Info = LogManager::getInstance();///< Reference to Internal Messaging
 
 	void SetupBackground();
+
+	std::map<std::string, Scene*> Scenes;
+	Scene* CurrentScene = nullptr;
 };
 

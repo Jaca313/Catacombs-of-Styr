@@ -16,11 +16,18 @@ State_MainMenu::State_MainMenu(sf::RenderWindow* _Window, ResourceManager* _Reso
 
 
 	SetupBackground();
+
+
+	Scenes.insert(std::pair<std::string, Scene*>(std::string("Main_Menu"), (Scene*)new Scene_MainMenu()));
+	CurrentScene = Scenes.at("Main_Menu");
 }
 
 State_MainMenu::~State_MainMenu()
 {
 	//Cleanup
+	for (auto Sc : Scenes) {
+		delete Sc.second;
+	}
 
 }
 
@@ -61,6 +68,7 @@ void State_MainMenu::draw(sf::RenderTexture* _ScreenBuffer)
 
 	ScreenBuffer->draw(m_sBackground,m_sBackground.getTexture());
 
+	CurrentScene->drawScene(*_ScreenBuffer);
 }
 
 void State_MainMenu::resumeState()
