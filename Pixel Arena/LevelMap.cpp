@@ -67,3 +67,16 @@ char LevelMap::getTile(int _X) const
 	if(_X < (MapX * MapY))return Tiles[_X];
 	else return '.';
 }
+
+bool LevelMap::openDoor(int _X)
+{
+	//Check if on map and if door('0') if then remove the door
+ 	if (_X < (MapX * MapY)) {
+		if (Tiles[_X] == '0') {
+			Tiles[_X] = '.';
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+}

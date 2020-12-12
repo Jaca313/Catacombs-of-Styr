@@ -28,6 +28,16 @@ void Player::setSprint(bool _condition)
 	this->m_bSprint = _condition;
 }
 
+void Player::tryOpenDoor()
+{
+	int realX = int(x / 64.0);
+	int realY = int(y / 64.0);
+	if (DegAngle < 45 && DegAngle >= 0 || DegAngle < 360 && DegAngle >= 315)Level->openDoor(realX + 1 + realY * Level->getMapX());//right
+	else if (DegAngle >= 45 && DegAngle < 135)Level->openDoor(realX + (realY - 1) * Level->getMapX());//up
+	else if (DegAngle >= 135 && DegAngle < 225)Level->openDoor(realX - 1 + realY * Level->getMapX());//left
+	else if (DegAngle >= 225 && DegAngle < 315)Level->openDoor(realX + (realY + 1) * Level->getMapX());//down
+}
+
 void Player::setHealth(float _Health)
 {
 	float fixedHealth = _Health > 100.f ? 100.f : _Health;

@@ -26,6 +26,7 @@ public:
 	const float getTileSize() const;///< Returns Map TileSize
 	const int getTexCeil() const;///< Returns Ceiling Texture number
 	const int getTexFloor() const;///< Returns Floor Texture number
-	char getTile(int X) const;///< Returns Tile at X
+	char getTile(int _X) const;///< Returns Tile at X
+	bool openDoor(int _X);///< removes door from map
 };
 

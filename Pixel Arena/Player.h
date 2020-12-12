@@ -14,6 +14,8 @@ public:
 	float getHealth();///< Returns Player Health
 
 	void setSprint(bool _condition);///< sets bool (changes Player speed)
+
+	void tryOpenDoor();///< Try to open door in front
 private:
 	float m_fHealth = 100.f;///< Current player health
 	bool m_bSprint = 0;///< Is player sprinting
