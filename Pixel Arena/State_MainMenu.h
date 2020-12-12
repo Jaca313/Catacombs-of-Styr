@@ -2,6 +2,8 @@
 #include "GameState.h"
 #include "ResourceManager.h"
 #include "Scene_MainMenu.h"
+#include "Scene_Help.h"
+#include "Scene_Options.h"
 class State_MainMenu :	public GameState
 {
 public:
@@ -29,8 +31,8 @@ private:
 	void SetupBackground();
 
 	std::map<std::string, Scene*> Scenes;
-	Scene* CurrentScene = nullptr;
-
+	Scene* pCurrentScene = nullptr;
+	int eCurrentScene = 0;
 	void SetupCursor();
 };
 

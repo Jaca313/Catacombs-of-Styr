@@ -48,7 +48,7 @@ void ResourceManager::LoadTextures()
 	//17
 	LoadSingleTexture("");
 	//18
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/Background.png");
 	//19
 	LoadSingleTexture("GUI/MapBack.png");
 	//20

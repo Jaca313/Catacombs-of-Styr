@@ -19,7 +19,11 @@ State_MainMenu::State_MainMenu(sf::RenderWindow* _Window, ResourceManager* _Reso
 
 
 	Scenes.insert(std::pair<std::string, Scene*>(std::string("Main_Menu"), (Scene*)new Scene_MainMenu()));
-	CurrentScene = Scenes.at("Main_Menu");
+	Scenes.insert(std::pair<std::string, Scene*>(std::string("Options"), (Scene*)new Scene_Options()));
+	Scenes.insert(std::pair<std::string, Scene*>(std::string("Help"), (Scene*)new Scene_Help()));
+
+	pCurrentScene = Scenes.at("Main_Menu");
+	eCurrentScene = Scenes::Main_Menu;
 }
 
 State_MainMenu::~State_MainMenu()
@@ -60,18 +64,44 @@ void State_MainMenu::input(float _fTime)
 	//}
 
 	//CHeck what scene it is switch or something then
-	if (Scenes.at("Main_Menu")->Buttons.at("Quit").isReleased()) {
-		m_bWantsQuit = true;
+
+	switch (eCurrentScene) {
+		case Scenes::Main_Menu: {
+			if (Scenes.at("Main_Menu")->Buttons.at("Start").isReleased()) {
+				m_iRequestState = eGameplay;
+			}
+			if (Scenes.at("Main_Menu")->Buttons.at("Options").isReleased()) {
+				eCurrentScene = Scenes::Options;
+				pCurrentScene = Scenes.at("Options");
+			}
+			if (Scenes.at("Main_Menu")->Buttons.at("Help").isReleased()) {
+				eCurrentScene = Scenes::Help;
+				pCurrentScene = Scenes.at("Help");
+			}
+			if (Scenes.at("Main_Menu")->Buttons.at("Quit").isReleased()) {
+				m_bWantsQuit = true;
+			}
+			break;
+		}
+		case Scenes::Help: {
+			if (Scenes.at("Help")->Buttons.at("Return").isReleased()) {
+				eCurrentScene = Scenes::Main_Menu;
+				pCurrentScene = Scenes.at("Main_Menu");
+			}
+			break;
+		}
+		case Scenes::Options: {
+
+			break;
+		}
 	}
-	if (Scenes.at("Main_Menu")->Buttons.at("Start").isReleased()) {
-		m_iRequestState = eGameplay;
-	}
+
 }
 
 void State_MainMenu::update(float _fTime)
 {
 	updateMousePos(Window);
-	CurrentScene->updateButtons(m_vMousePosView);
+	pCurrentScene->updateButtons(m_vMousePosView);
 }
 
 void State_MainMenu::draw(sf::RenderTexture* _ScreenBuffer)
@@ -82,7 +112,7 @@ void State_MainMenu::draw(sf::RenderTexture* _ScreenBuffer)
 
 	ScreenBuffer->draw(m_sBackground,m_sBackground.getTexture());
 
-	CurrentScene->drawScene(*_ScreenBuffer);
+	pCurrentScene->drawScene(*_ScreenBuffer);
 }
 
 void State_MainMenu::resumeState()

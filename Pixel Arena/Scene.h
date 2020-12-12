@@ -2,6 +2,11 @@
 #include "Button.h"
 #include "ResourceManager.h"
 #include <map>
+enum Scenes {
+	Main_Menu,
+	Help,
+	Options
+};
 class Scene
 {
 public:
