@@ -40,24 +40,38 @@ void State_MainMenu::eventLoop()
 		//Close Window
 		if (event.type == sf::Event::Closed)
 			this->Window->close();
-		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-			this->Window->close();
+		//if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+		//	this->Window->close();
+
+		if (event.type == sf::Event::MouseEntered) {
+			SetupCursor();
+		}
+
 	}
 }
 
 void State_MainMenu::input(float _fTime)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N)) {
-		m_iRequestState = eGameplay;;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N)) {
+	//	m_iRequestState = eGameplay;;
+	//}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
+	//	m_bWantsQuit = true;
+	//}
+
+	//CHeck what scene it is switch or something then
+	if (Scenes.at("Main_Menu")->Buttons.at("Quit").isReleased()) {
 		m_bWantsQuit = true;
+	}
+	if (Scenes.at("Main_Menu")->Buttons.at("Start").isReleased()) {
+		m_iRequestState = eGameplay;
 	}
 }
 
 void State_MainMenu::update(float _fTime)
 {
-
+	updateMousePos(Window);
+	CurrentScene->updateButtons(m_vMousePosView);
 }
 
 void State_MainMenu::draw(sf::RenderTexture* _ScreenBuffer)
@@ -75,6 +89,9 @@ void State_MainMenu::resumeState()
 {
 	m_bResume = false;
 	Window->setMouseCursorVisible(true);
+
+	//Cursor is copied
+	SetupCursor();
 }
 
 void State_MainMenu::SetupBackground()
@@ -82,5 +99,15 @@ void State_MainMenu::SetupBackground()
 	m_sBackground.setPosition(0.f, 0.f);
 	m_sBackground.setSize(sf::Vector2f((float)Window->getSize().x, (float)Window->getSize().y));
 	m_sBackground.setTexture(Resources->getTex(29));//Main Menu Background
+}
+
+void State_MainMenu::SetupCursor()
+{
+	//Cursor is copied
+	sf::Image im_cursor;
+	im_cursor.loadFromFile("Textures/GUI/Cursor.png");;
+	sf::Cursor Cursor;
+	Cursor.loadFromPixels(im_cursor.getPixelsPtr(), sf::Vector2u(im_cursor.getSize().x, im_cursor.getSize().y), sf::Vector2u(18, 15));
+	Window->setMouseCursor(Cursor);
 }
 

@@ -6,4 +6,5 @@
 #include <SFML/Graphics.hpp>
 #include <algorithm> 
 #include <functional>
+#include <iostream>
 #include "LogManager.h"

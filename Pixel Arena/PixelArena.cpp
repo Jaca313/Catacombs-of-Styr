@@ -4,14 +4,19 @@ PixelArena::PixelArena()
 {
 	LoadSettings();
 
-	this->m_window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName, sf::Style::Titlebar | sf::Style::Close);
+	this->m_window = new sf::RenderWindow(sf::VideoMode(m_winWidth, m_winHeight), m_winName, sf::Style::Titlebar | sf::Style::Close );
 	m_window->setVerticalSyncEnabled(false);
 
 	//Icon is copied no need for it to hang around
 	sf::Image icon;
 	icon.loadFromFile("Textures/GUI/Icon.png");;
 	m_window->setIcon(icon.getSize().x,icon.getSize().y,icon.getPixelsPtr());
-	
+	//Cursor is copied
+	sf::Image im_cursor;
+	im_cursor.loadFromFile("Textures/GUI/Cursor.png");;
+	sf::Cursor Cursor;
+	Cursor.loadFromPixels(im_cursor.getPixelsPtr(), sf::Vector2u(im_cursor.getSize().x, im_cursor.getSize().y), sf::Vector2u(0.0, 0.0));
+	m_window->setMouseCursor(Cursor);
 
 
 	InitTextures();

@@ -30,5 +30,7 @@ private:
 
 	std::map<std::string, Scene*> Scenes;
 	Scene* CurrentScene = nullptr;
+
+	void SetupCursor();
 };
 

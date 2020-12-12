@@ -39,7 +39,7 @@ void State_Gameplay::eventLoop()
 		if (event.type == sf::Event::Closed)
 			this->Window->close();
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-			this->Window->close();
+			m_bWantsQuit = true;;
 
 	}
 }

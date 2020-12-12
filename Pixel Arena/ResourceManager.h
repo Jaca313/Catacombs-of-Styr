@@ -9,6 +9,7 @@ private:
 	ResourceManager(){
 		LoadTextures();
 		LoadShaders();
+		LoadFonts();
 	}
 	~ResourceManager() {
 
@@ -27,10 +28,12 @@ public:
 	sf::Shader m_sFlipScreen;
 	sf::Image Z_BufferImage;
 	sf::Texture Z_BufferTex;
+
+	sf::Font m_sFontLanger;
 private:
 	void LoadTextures();
 	void LoadShaders();
-
+	void LoadFonts();
 	void LoadSingleTexture(std::string filename);
 
 };

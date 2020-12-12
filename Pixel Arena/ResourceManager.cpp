@@ -18,17 +18,17 @@ void ResourceManager::LoadTextures()
 	//3
 	LoadSingleTexture("Walls/dirtybrick.jpg");
 	//4
-	LoadSingleTexture("Walls/");
+	LoadSingleTexture("Walls/Handwall.png");////////////////////////Empty
 	//5
-	LoadSingleTexture("Walls/");
+	LoadSingleTexture("Walls/Handwall.png");
 	//6
-	LoadSingleTexture("Walls/");
+	LoadSingleTexture("Walls/Handwall.png");
 	//7
-	LoadSingleTexture("Walls/");
+	LoadSingleTexture("Walls/Handwall.png");
 	//8
-	LoadSingleTexture("Walls/");
+	LoadSingleTexture("Walls/Handwall.png");
 	//9
-	LoadSingleTexture("");
+	LoadSingleTexture("Walls/Handwall.png");
 
 	//10 - 29 Reserved for UI
 	//10
@@ -50,17 +50,17 @@ void ResourceManager::LoadTextures()
 	//18
 	LoadSingleTexture("");
 	//19
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/MapBack.png");
 	//20
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/MenuButton.png");
 	//21
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/MenuButtonInactive.png");
 	//22
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/MenuButtonHover.png");
 	//23
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/MenuButtonPressed.png");
 	//24
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/MenuButtonQuit.png");
 	//25
 	LoadSingleTexture("GUI/MenuWindow.png");
 	//26
@@ -173,6 +173,15 @@ void ResourceManager::LoadShaders()
 		InfoTool.ERR(4, Error);
 	}
 
+}
+
+void ResourceManager::LoadFonts()
+{
+	std::string path = "Fonts/" + std::string("Langar.ttf");
+	if (!m_sFontLanger.loadFromFile(path)) {
+		std::string Error = "Font " + std::string("Langar.ttf") + " failed to load";
+		InfoTool.ERR(4, Error);
+	}
 }
 
 void ResourceManager::LoadSingleTexture(std::string _filename)
