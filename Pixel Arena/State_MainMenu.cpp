@@ -91,7 +91,14 @@ void State_MainMenu::input(float _fTime)
 			break;
 		}
 		case Scenes::Options: {
-
+			if (Scenes.at("Options")->Buttons.at("1_Return").isReleased()) {
+				eCurrentScene = Scenes::Main_Menu;
+				pCurrentScene = Scenes.at("Main_Menu");
+			}
+			if (Scenes.at("Options")->Buttons.at("2_Apply").isReleased()) {
+				eCurrentScene = Scenes::Main_Menu;
+				pCurrentScene = Scenes.at("Main_Menu");
+			}
 			break;
 		}
 	}
