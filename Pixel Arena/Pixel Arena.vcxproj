@@ -236,6 +236,8 @@
   <ItemGroup>
     <None Include="Config\Window.ini" />
     <None Include="Levels\M1.jac" />
+    <None Include="Levels\M2.jac" />
+    <None Include="Levels\M3.jac" />
     <None Include="Shaders\ClipEntity.frag" />
     <None Include="Shaders\FlipScreen.frag" />
   </ItemGroup>

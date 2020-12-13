@@ -198,5 +198,11 @@
     <None Include="Shaders\FlipScreen.frag">
       <Filter>External\Shaders</Filter>
     </None>
+    <None Include="Levels\M2.jac">
+      <Filter>External\Levels</Filter>
+    </None>
+    <None Include="Levels\M3.jac">
+      <Filter>External\Levels</Filter>
+    </None>
   </ItemGroup>
 </Project>

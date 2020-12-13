@@ -14,7 +14,7 @@ public:
 
 private:
 	//Map properties
-	short MapX;///<Mapsize
+	short MapX;///<Map size
 	short MapY;///<Map Size
 	int TextureCeiling;///< Texture used in Ceiling
 	int TextureFloor;///< Texture used in Floor
