@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Scene_Help.h"
 
 Scene_Help::Scene_Help()
@@ -13,6 +13,12 @@ Scene_Help::Scene_Help()
 
 	Button Return(&Resources.m_sFontLanger, "Return", 30, Resources.getTex(21), Resources.getTex(22), Resources.getTex(23));
 	Buttons.insert(std::pair<std::string, Button>("Return", Return));
+
+	std::string sHelpText =("Controls: \n W - Forward ::: S- Backwards \n A - Left ::: D - Right \n Q - Rotate Left ::: E - Rotate Right \n" +
+				std::string(" Mouse - Rotation Left-Right \n Left Mouse Button - Attack \n Right Mouse Button - Open Door/Activate")   
+																					);
+	Button Help_Text(&Resources.m_sFontLanger, sHelpText, 22, sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
+	Buttons.insert(std::pair<std::string, Button>("HelpText", Help_Text));
 }
 
 void Scene_Help::drawScene(sf::RenderTarget& _target, sf::RenderStates _states)
@@ -47,6 +53,22 @@ void Scene_Help::drawScene(sf::RenderTarget& _target, sf::RenderStates _states)
 	Buttons.at("Return").m_ssText.setFillColor(sf::Color(235, 183, 52, 200));
 	Buttons.at("Return").m_ssText.setOutlineColor(sf::Color(0, 0, 0, 200));
 	Buttons.at("Return").m_ssText.setOutlineThickness(1.5f);
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Help Text
+	Buttons.at("HelpText").m_sButton.setSize(sf::Vector2f(Backgrounds.at("Banner").getSize().x * 0.9f, Backgrounds.at("Banner").getSize().y * 0.9f));
+	Buttons.at("HelpText").m_sButton.setOrigin(Buttons.at("HelpText").m_sButton.getSize().x / 2.f, 0.f);
+	Buttons.at("HelpText").m_sButton.setPosition(sf::Vector2f(Backgrounds.at("Banner").getPosition().x,
+		Backgrounds.at("Banner").getPosition().y + Backgrounds.at("Banner").getSize().x / 7.f));
+
+	Buttons.at("HelpText").m_ssText.setPosition(
+		Buttons.at("HelpText").m_sButton.getPosition().x - Buttons.at("HelpText").m_ssText.getGlobalBounds().width / 2.f,
+		Buttons.at("HelpText").m_sButton.getPosition().y + Buttons.at("HelpText").m_ssText.getGlobalBounds().height / 2.f
+	);
+
+	Buttons.at("HelpText").m_ssText.setFillColor(sf::Color(235, 183, 52, 200));
+	Buttons.at("HelpText").m_ssText.setOutlineColor(sf::Color(0, 0, 0, 200));
+	Buttons.at("HelpText").m_ssText.setOutlineThickness(1.5f);
 
 
 	draw(_target, _states);

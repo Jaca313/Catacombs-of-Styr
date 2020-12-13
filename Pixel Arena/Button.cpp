@@ -69,6 +69,23 @@ Button::Button(sf::Font* _font, std::string _text,int _charSize,
 	m_ssText.setCharacterSize(_charSize);
 }
 
+Button::Button(sf::Font* _font, std::string _text, int _charSize, sf::Color _idleCol, sf::Color _hoverCol, sf::Color _activeCol)
+{
+	m_sFont = _font;
+	m_ssText.setFont(*m_sFont);
+	m_ssText.setString(_text);
+	m_ssText.setFillColor(sf::Color::Red);
+	m_ssText.setOutlineColor(sf::Color::White);
+
+	m_sIdleColor = _idleCol;
+	m_sHoverColor = _hoverCol;
+	m_sActiveColor = _activeCol;
+
+	m_sButton.setFillColor(m_sIdleColor);
+
+	m_ssText.setCharacterSize(_charSize);
+}
+
 
 
 Button::~Button()

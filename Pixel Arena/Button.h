@@ -6,6 +6,10 @@ class Button : public sf::Drawable
 public:
 	Button(sf::Font* _font, std::string _text, int _charSize,
 		sf::Texture* _idleTex, sf::Texture* _hoverTex, sf::Texture* _activeTex);
+
+	Button(sf::Font* _font, std::string _text, int _charSize,
+		sf::Color _idleCol, sf::Color _hoverCol, sf::Color _activeCol);
+
 	Button(sf::Vector2f _pos, sf::Vector2f _size, int _charSize,
 		sf::Font* _font, std::string _text,
 		sf::Texture* _idleTex, sf::Texture* _hoverTex, sf::Texture* _activeTex);

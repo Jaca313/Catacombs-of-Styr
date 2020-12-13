@@ -134,29 +134,46 @@ void ResourceManager::LoadTextures()
 	//59
 	LoadSingleTexture("");
 
-	//60 - 69 Reserved for Ceiling and Floor Textures
+	//60 - 79 Reserved for Ceiling and Floor Textures
 	//60
 	LoadSingleTexture("FloorNCeiling/Floor_00.bmp");
 	//61
-	LoadSingleTexture("FloorNCeiling/Floor_02.bmp");
+	LoadSingleTexture("FloorNCeiling/Floor_01.bmp");
 	//62
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_02.bmp");
 	//63
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_03.bmp");
 	//64
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_04.bmp");
 	//65
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_05.bmp");
 	//66
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_06.bmp");
 	//67
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_07.bmp");
 	//68
-	LoadSingleTexture("");
+	LoadSingleTexture("FloorNCeiling/Floor_08.bmp");
 	//69
+	LoadSingleTexture("FloorNCeiling/Floor_09.bmp");
+	//70
+	LoadSingleTexture("FloorNCeiling/Floor_10.bmp");
+	//71
+	LoadSingleTexture("FloorNCeiling/ceiling_01.bmp");
+	//72
 	LoadSingleTexture("");
-
-	//69
+	//73
+	LoadSingleTexture("");
+	//74
+	LoadSingleTexture("");
+	//75
+	LoadSingleTexture("");
+	//76
+	LoadSingleTexture("");
+	//77
+	LoadSingleTexture("");
+	//78
+	LoadSingleTexture("");
+	//79
 	LoadSingleTexture("");
 
 

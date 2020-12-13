@@ -16,6 +16,7 @@ private:
 		Entities.push_back(new Orc(sf::Vector2f(30 * 64, 2 * 64), 38));
 		Entities.push_back(new Orc(sf::Vector2f(150, 150), 41));
 		Entities.push_back(new Orc(sf::Vector2f(10 * 64, 3 * 64), 42));
+		Entities.push_back(new Orc(sf::Vector2f(30 * 64, 30 * 64), 43));
 	}
 	~EntityManager() {
 

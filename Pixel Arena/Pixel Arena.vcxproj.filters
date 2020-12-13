@@ -30,6 +30,18 @@
     <Filter Include="GUI\HUD">
       <UniqueIdentifier>{5420417a-f0d2-4701-9d73-b674d5ed5a4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{7239a133-658c-4bdb-948b-f327c9d22440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Levels">
+      <UniqueIdentifier>{0a010f51-884b-4964-9bd9-867ee4a621fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Config">
+      <UniqueIdentifier>{113b1e49-02eb-42e0-b49f-b92462020987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\Shaders">
+      <UniqueIdentifier>{9417d2dd-ff02-444d-947e-332e2e681718}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -166,5 +178,19 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\GUI\Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Levels\M1.jac">
+      <Filter>External\Levels</Filter>
+    </None>
+    <None Include="Config\Window.ini">
+      <Filter>External\Config</Filter>
+    </None>
+    <None Include="Shaders\ClipEntity.frag">
+      <Filter>External\Shaders</Filter>
+    </None>
+    <None Include="Shaders\FlipScreen.frag">
+      <Filter>External\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

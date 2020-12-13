@@ -231,6 +231,12 @@
   <ItemGroup>
     <Image Include="Textures\GUI\Icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Config\Window.ini" />
+    <None Include="Levels\M1.jac" />
+    <None Include="Shaders\ClipEntity.frag" />
+    <None Include="Shaders\FlipScreen.frag" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
