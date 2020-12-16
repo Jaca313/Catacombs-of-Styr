@@ -99,13 +99,13 @@ void State_Gameplay::input(float _fTime)
 	//Mouse
 	//distance vector calc should feel better but i plan to add y axis later
 
-	//float sensitivity = 100000.f;
-	//sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
-	//sf::Vector2u WSize = Window->getSize();
-	//Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * _fTime * sensitivity;
-	//Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
-	//Butcher->DegAngle = (int)Butcher->DegAngleTemp;
-	//sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
+	float sensitivity = 100000.f;
+	sf::Vector2i MPos = sf::Mouse::getPosition(*Window);
+	sf::Vector2u WSize = Window->getSize();
+	Butcher->DegAngleTemp -= (MPos.x - WSize.x / 2.f) / WSize.x/2.f * _fTime * sensitivity;
+	Butcher->DegAngleTemp = LogManager::FixAngle(Butcher->DegAngleTemp);
+	Butcher->DegAngle = (int)Butcher->DegAngleTemp;
+	sf::Mouse::setPosition(sf::Vector2i(WSize.x / 2, WSize.y / 2),*Window);
 
 }
 
@@ -291,6 +291,7 @@ void State_Gameplay::CastRays3DWalls()
 		double DistanceCorrect = disH;
 
 		double ca = LogManager::FixAngle((float)Butcher->DegAngle - ra); disH = disH * cos(LogManager::DegtoRad(ca));    //fix fisheye
+		if (disH < 1)disH = 1;
 		int lineH = int((160 * winSizeY / 2) / (disH));
 
 		if (lineH > winSizeY * 50) { lineH = winSizeY * 50; }//line height and limit

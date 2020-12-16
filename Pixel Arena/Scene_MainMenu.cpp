@@ -12,8 +12,14 @@ Scene_MainMenu::Scene_MainMenu()
 	Button Start(&Resources.m_sFontLanger,"Enter Catacombs",25,Resources.getTex(20),Resources.getTex(22),Resources.getTex(23));
 	Buttons.insert(std::pair<std::string, Button>("Start", Start));
 
+	Button Editor(&Resources.m_sFontLanger, "Editor", 25, Resources.getTex(21), Resources.getTex(22), Resources.getTex(23));
+	Buttons.insert(std::pair<std::string, Button>("Editor", Editor));
+
 	Button Options(&Resources.m_sFontLanger, "Options", 25, Resources.getTex(21), Resources.getTex(22), Resources.getTex(23));
 	Buttons.insert(std::pair<std::string, Button>("Options", Options));
+
+	Button Controls(&Resources.m_sFontLanger, "Controls", 25, Resources.getTex(21), Resources.getTex(22), Resources.getTex(23));
+	Buttons.insert(std::pair<std::string, Button>("Controls", Controls));
 
 	Button Help(&Resources.m_sFontLanger, "Help", 25, Resources.getTex(21), Resources.getTex(22), Resources.getTex(23));
 	Buttons.insert(std::pair<std::string, Button>("Help", Help));
@@ -55,12 +61,28 @@ void Scene_MainMenu::drawScene(sf::RenderTarget& _target, sf::RenderStates _stat
 	Buttons.at("Start").m_ssText.setFillColor(sf::Color(235, 183, 52, 200));
 	Buttons.at("Start").m_ssText.setOutlineColor(sf::Color(0, 0, 0, 200));
 	Buttons.at("Start").m_ssText.setOutlineThickness(1.5f);
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Editor Button
+	Buttons.at("Editor").m_sButton.setSize(sf::Vector2f(Backgrounds.at("Tablica").getSize().x / 1.5f, Backgrounds.at("Tablica").getSize().y / 10.f));
+	Buttons.at("Editor").m_sButton.setOrigin(Buttons.at("Editor").m_sButton.getSize().x / 2.f, 0.f);
+	Buttons.at("Editor").m_sButton.setPosition(sf::Vector2f(Backgrounds.at("Tablica").getPosition().x,
+		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Editor").m_sButton.getSize().y * 1.25f));
+
+	Buttons.at("Editor").m_ssText.setPosition(
+		Buttons.at("Editor").m_sButton.getPosition().x - Buttons.at("Editor").m_ssText.getGlobalBounds().width / 2.f,
+		Buttons.at("Editor").m_sButton.getPosition().y + Buttons.at("Editor").m_ssText.getGlobalBounds().height / 2.f
+	);
+
+	Buttons.at("Editor").m_ssText.setFillColor(sf::Color(235, 183, 52, 200));
+	Buttons.at("Editor").m_ssText.setOutlineColor(sf::Color(0, 0, 0, 200));
+	Buttons.at("Editor").m_ssText.setOutlineThickness(1.5f);
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Options Button
 	Buttons.at("Options").m_sButton.setSize(sf::Vector2f(Backgrounds.at("Tablica").getSize().x / 1.5f, Backgrounds.at("Tablica").getSize().y / 10.f));
 	Buttons.at("Options").m_sButton.setOrigin(Buttons.at("Options").m_sButton.getSize().x / 2.f, 0.f);
 	Buttons.at("Options").m_sButton.setPosition(sf::Vector2f(Backgrounds.at("Tablica").getPosition().x,
-		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Options").m_sButton.getSize().y * 2.f));
+		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Options").m_sButton.getSize().y * 2.5f));
 
 	Buttons.at("Options").m_ssText.setPosition(
 		Buttons.at("Options").m_sButton.getPosition().x - Buttons.at("Options").m_ssText.getGlobalBounds().width / 2.f,
@@ -71,11 +93,26 @@ void Scene_MainMenu::drawScene(sf::RenderTarget& _target, sf::RenderStates _stat
 	Buttons.at("Options").m_ssText.setOutlineColor(sf::Color(0, 0, 0, 200));
 	Buttons.at("Options").m_ssText.setOutlineThickness(1.5f);
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Controls Button
+	Buttons.at("Controls").m_sButton.setSize(sf::Vector2f(Backgrounds.at("Tablica").getSize().x / 1.5f, Backgrounds.at("Tablica").getSize().y / 10.f));
+	Buttons.at("Controls").m_sButton.setOrigin(Buttons.at("Controls").m_sButton.getSize().x / 2.f, 0.f);
+	Buttons.at("Controls").m_sButton.setPosition(sf::Vector2f(Backgrounds.at("Tablica").getPosition().x,
+		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Controls").m_sButton.getSize().y * 3.75f));
+
+	Buttons.at("Controls").m_ssText.setPosition(
+		Buttons.at("Controls").m_sButton.getPosition().x - Buttons.at("Controls").m_ssText.getGlobalBounds().width / 2.f,
+		Buttons.at("Controls").m_sButton.getPosition().y + Buttons.at("Controls").m_ssText.getGlobalBounds().height / 2.f
+	);
+
+	Buttons.at("Controls").m_ssText.setFillColor(sf::Color(235, 183, 52, 200));
+	Buttons.at("Controls").m_ssText.setOutlineColor(sf::Color(0, 0, 0, 200));
+	Buttons.at("Controls").m_ssText.setOutlineThickness(1.5f);
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Help Button
 	Buttons.at("Help").m_sButton.setSize(sf::Vector2f(Backgrounds.at("Tablica").getSize().x / 1.5f, Backgrounds.at("Tablica").getSize().y / 10.f));
 	Buttons.at("Help").m_sButton.setOrigin(Buttons.at("Help").m_sButton.getSize().x / 2.f, 0.f);
 	Buttons.at("Help").m_sButton.setPosition(sf::Vector2f(Backgrounds.at("Tablica").getPosition().x,
-		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Help").m_sButton.getSize().y * 4.f));
+		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Help").m_sButton.getSize().y * 5.f));
 
 	Buttons.at("Help").m_ssText.setPosition(
 		Buttons.at("Help").m_sButton.getPosition().x - Buttons.at("Help").m_ssText.getGlobalBounds().width / 2.f,
@@ -90,7 +127,7 @@ void Scene_MainMenu::drawScene(sf::RenderTarget& _target, sf::RenderStates _stat
 	Buttons.at("Quit").m_sButton.setSize(sf::Vector2f(Backgrounds.at("Tablica").getSize().x / 1.5f, Backgrounds.at("Tablica").getSize().y / 10.f));
 	Buttons.at("Quit").m_sButton.setOrigin(Buttons.at("Quit").m_sButton.getSize().x / 2.f, 0.f);
 	Buttons.at("Quit").m_sButton.setPosition(sf::Vector2f(Backgrounds.at("Tablica").getPosition().x,
-		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Quit").m_sButton.getSize().y * 6.f));
+		Backgrounds.at("Tablica").getPosition().y + Backgrounds.at("Tablica").getSize().x / 3.5f + Buttons.at("Quit").m_sButton.getSize().y * 6.25f));
 
 	Buttons.at("Quit").m_ssText.setPosition(
 		Buttons.at("Quit").m_sButton.getPosition().x - Buttons.at("Quit").m_ssText.getGlobalBounds().width / 2.f,

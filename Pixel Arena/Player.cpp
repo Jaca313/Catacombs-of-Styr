@@ -52,7 +52,7 @@ float Player::getHealth()
 
 void Player::UpdatePosition()
 {
-	//CapSpeed();
+
 	float dx = vx * (MaxSpeed + SprintSpeed * m_bSprint);
 	float dy = vy * (MaxSpeed + SprintSpeed * m_bSprint);
 
