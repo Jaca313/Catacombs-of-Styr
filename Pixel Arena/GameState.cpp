@@ -1,5 +1,9 @@
 #include "GameState.h"
 
+GameState::~GameState()
+{
+}
+
 bool GameState::quitState() const
 {
 	return m_bWantsQuit;
@@ -16,6 +20,11 @@ int GameState::requestState()
 void GameState::resumeState()
 {
 	m_bResume = false;
+}
+
+int GameState::forceState() const
+{
+	return m_bForceState;
 }
 
 void GameState::endState()

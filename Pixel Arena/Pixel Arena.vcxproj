@@ -191,6 +191,8 @@
     <ClCompile Include="Scene_Help.cpp" />
     <ClCompile Include="Scene_MainMenu.cpp" />
     <ClCompile Include="Scene_Options.cpp" />
+    <ClCompile Include="Scene_Pause.cpp" />
+    <ClCompile Include="State_Editor.cpp" />
     <ClCompile Include="State_Gameplay.cpp" />
     <ClCompile Include="State_MainMenu.cpp" />
     <ClCompile Include="State_Pause.cpp" />
@@ -221,6 +223,8 @@
     <ClInclude Include="Scene_Help.h" />
     <ClInclude Include="Scene_MainMenu.h" />
     <ClInclude Include="Scene_Options.h" />
+    <ClInclude Include="Scene_Pause.h" />
+    <ClInclude Include="State_Editor.h" />
     <ClInclude Include="State_Gameplay.h" />
     <ClInclude Include="State_MainMenu.h" />
     <ClInclude Include="State_Pause.h" />
@@ -240,6 +244,7 @@
     <None Include="Levels\M3.jac" />
     <None Include="Shaders\ClipEntity.frag" />
     <None Include="Shaders\FlipScreen.frag" />
+    <None Include="Shaders\FlipScreenBlur.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

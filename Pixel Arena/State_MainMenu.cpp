@@ -29,7 +29,7 @@ State_MainMenu::State_MainMenu(sf::RenderWindow* _Window, ResourceManager* _Reso
 State_MainMenu::~State_MainMenu()
 {
 	//Cleanup
-	for (auto Sc : Scenes) {
+	for (auto&Sc : Scenes) {
 		delete Sc.second;
 	}
 
@@ -57,7 +57,7 @@ void State_MainMenu::eventLoop()
 void State_MainMenu::input(float _fTime)
 {
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N)) {
-	//	m_iRequestState = eGameplay;;
+	//	m_iRequestState = eGameplay;
 	//}
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
 	//	m_bWantsQuit = true;

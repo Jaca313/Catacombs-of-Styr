@@ -78,9 +78,15 @@ void PixelArena::MainLoop()
 		//GameState Controller
 		if (m_executionStack.top()->m_iRequestState != 0)PushState(m_executionStack.top()->requestState());//Check if push state
 		if (m_executionStack.top()->quitState())PopState();//Check if pop State
+		if (m_executionStack.size() && m_executionStack.top()->forceState() != -1) {
+			int WantedState = m_executionStack.top()->forceState();
+
+			while (m_executionStack.size() && m_executionStack.top()->ID != WantedState) {
+				m_executionStack.top()->quitState();
+				PopState();
+			}
+		}
 	}
-
-
 	ExitGame();
 }
 
@@ -99,6 +105,9 @@ void PixelArena::PushState(int _requestedState)
 		break;
 	case eMenu:
 		m_executionStack.push(new State_Gameplay(m_window, &Resources));
+		break;
+	case ePause:
+		m_executionStack.push(new State_Pause(m_window, &Resources));
 		break;
 	default:
 		break;

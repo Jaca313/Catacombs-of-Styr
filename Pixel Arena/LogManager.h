@@ -7,10 +7,7 @@
 
 #define C_PI 3.1415923565f
 
-enum States {
-	eGameplay = 100,
-	eMenu = 200
-};
+
 
 const float c_Fov = 90.f;
 

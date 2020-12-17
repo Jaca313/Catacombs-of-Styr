@@ -26,6 +26,7 @@ public:
 
 	sf::Shader ClipEntity;
 	sf::Shader m_sFlipScreen;
+	sf::Shader m_sFlipScreenBlur;
 	sf::Image Z_BufferImage;
 	sf::Texture Z_BufferTex;
 

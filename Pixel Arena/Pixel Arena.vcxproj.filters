@@ -105,7 +105,13 @@
       <Filter>GUI\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="State_Pause.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Pause.cpp">
+      <Filter>GUI\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="State_Editor.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,7 +182,13 @@
       <Filter>GUI\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="State_Pause.h">
-      <Filter>Header Files</Filter>
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Pause.h">
+      <Filter>GUI\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Editor.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +215,9 @@
     </None>
     <None Include="Levels\M3.jac">
       <Filter>External\Levels</Filter>
+    </None>
+    <None Include="Shaders\FlipScreenBlur.frag">
+      <Filter>External\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

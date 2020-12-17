@@ -1,8 +1,14 @@
 #pragma once
-
+enum States {
+	eGameplay = 100,
+	eMenu = 200,
+	ePause = 300
+};
 class GameState
 {
 public:
+	virtual ~GameState();
+
 	int ID = 0;///< Id of State
 	virtual void eventLoop() = 0;///< Overwrite SFML event Loop
 	virtual void input(float fTime) = 0;///< Overwrite User Input
@@ -15,6 +21,8 @@ public:
 	int m_iRequestState = 0;///< requested state
 	virtual void resumeState();///< operation when resuming state
 	bool m_bResume = 0;///< bool if state is to be resumed
+	virtual int forceState() const;///< operation when resuming state
+	int m_bForceState = -1;///< bool if state is to be resumed
 
 	virtual void endState();///< Final saving / operations when exiting from state
 

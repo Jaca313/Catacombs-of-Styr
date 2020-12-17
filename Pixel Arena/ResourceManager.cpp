@@ -189,6 +189,10 @@ void ResourceManager::LoadShaders()
 		std::string Error = "Shader Shaders/FlipScreen.frag failed to load";
 		InfoTool.ERR(4, Error);
 	}
+	if (!m_sFlipScreenBlur.loadFromFile("Shaders/FlipScreenBlur.frag", sf::Shader::Fragment)) {
+		std::string Error = "Shader Shaders/FlipScreenBlur.frag failed to load";
+		InfoTool.ERR(4, Error);
+	}
 
 }
 

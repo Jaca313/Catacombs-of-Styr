@@ -5,7 +5,8 @@
 enum Scenes {
 	Main_Menu,
 	Help,
-	Options
+	Options,
+	Pause
 };
 class Scene
 {
