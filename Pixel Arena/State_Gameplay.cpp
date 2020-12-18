@@ -42,8 +42,6 @@ void State_Gameplay::eventLoop()
 			m_iRequestState = 300;
 		}
 
-			//m_bWantsQuit = true;
-
 	}
 }
 

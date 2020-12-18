@@ -52,13 +52,16 @@ float Player::getHealth()
 
 void Player::UpdatePosition()
 {
+	float HeadingVector = atan2f(vy, vx);
+	float Ox = 2.f*cos(HeadingVector);
+	float Oy = 2.f*sin(HeadingVector);
 
 	float dx = vx * (MaxSpeed + SprintSpeed * m_bSprint);
 	float dy = vy * (MaxSpeed + SprintSpeed * m_bSprint);
 
 	//Enables Collision and Wall sliding
-	int TileX = int((x + dx) / (float)Level->getTileSize());//Player Will be there if we move
-	int TileY = int((y + dy) / (float)Level->getTileSize());
+	int TileX = int((x + dx + Ox) / (float)Level->getTileSize());//Player Will be there if we move
+	int TileY = int((y + dy + Oy) / (float)Level->getTileSize());
 
 	int TileX2 = int((x) / (float)Level->getTileSize());//Player Is now there
 	int TileY2 = int((y) / (float)Level->getTileSize());
