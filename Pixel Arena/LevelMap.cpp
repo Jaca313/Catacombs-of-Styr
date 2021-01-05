@@ -105,6 +105,7 @@ char LevelMap::getTile(int _X, int _Y) const
 	if (_X < 0 || _Y < 0)return '.';
 	if (_X < MapX && _Y < MapY)return Tiles[_Y * MapX + _X];
 	else return '.';
+
 }
 
 bool LevelMap::openDoor(int _X)
@@ -118,6 +119,7 @@ bool LevelMap::openDoor(int _X)
 		else return false;
 	}
 	else return false;
+
 }
 
 Cell& LevelMap::getCell(int _X)
@@ -139,4 +141,26 @@ Cell* LevelMap::editCell(int _X)
 	if (_X >= 0 && _X < MapX * MapY)
 		return &Cells[_X];
 	else return &NullCell;
+}
+
+void LevelMap::SaveFromCells(std::wstring _LevelName)
+{
+	std::wstring Path = L"Levels\\" + _LevelName;
+	std::ofstream ifs(Path);
+	std::string line;
+	if (ifs) {
+		ifs << MapX << " " << MapY  << " "<< TextureCeiling << " " << TextureFloor << "\n";
+
+		for (int i = 0; i < MapY; i++) {
+			for (int p = 0; p < MapX; p++) {
+				if (getCell(p, i).wall)
+					ifs << char(getCell(p, i).id[Face::North] + '0');
+				else ifs << '.';
+
+			}
+			ifs << "\n";
+		}
+
+	}
+	else InfoTool.ERR(4, "NO MAP");
 }

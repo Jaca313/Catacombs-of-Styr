@@ -52,5 +52,11 @@ private:
 	std::array<sf::Vector3f, 8> CreateCube(sf::Vector2i _Cell);
 	void CalculateVisibleFaces(std::array<sf::Vector3f, 8> & _Cube);
 	void GetFaceQuads(sf::Vector2i _Cell,sf::Texture* _overwriteTex = nullptr);
+
+	int CurrentTextureCursor = 1;
+
+	void SetWall();
+
+	void endState();
 };
 

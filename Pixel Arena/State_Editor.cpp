@@ -49,7 +49,7 @@ void State_Editor::eventLoop()
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) { vCursor.x -= cosWSAD; vCursor.y -= sinWSAD; }
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D) { vCursor.x += cosWSAD; vCursor.y += sinWSAD; }
 		//Place Wall
-		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)Level.getCell(vCursor.x, vCursor.y).wall = !Level.getCell(vCursor.x, vCursor.y).wall;
+		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)SetWall();
 	}
 }
 
@@ -61,6 +61,17 @@ void State_Editor::input(float _fTime)
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))vCamera.x -= 100.f * _fTime;
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))vCamera.x += 100.f * _fTime;
 
+	//PickTexture
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num0))CurrentTextureCursor = 0;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1))CurrentTextureCursor = 1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2))CurrentTextureCursor = 2;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3))CurrentTextureCursor = 3;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4))CurrentTextureCursor = 4;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5))CurrentTextureCursor = 5;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num6))CurrentTextureCursor = 6;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num7))CurrentTextureCursor = 7;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num8))CurrentTextureCursor = 8;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9))CurrentTextureCursor = 9;
 
 
 	//Camera Rotation
@@ -273,4 +284,21 @@ void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 	}
 
 
+}
+
+void State_Editor::SetWall()
+{
+	Level.getCell(vCursor.x, vCursor.y).wall = !Level.getCell(vCursor.x, vCursor.y).wall;
+	int t = CurrentTextureCursor;
+	Level.getCell(vCursor.x, vCursor.y).id[Face::Floor] = Level.getTexFloor();
+	Level.getCell(vCursor.x, vCursor.y).id[Face::Top] = Level.getTexCeil();
+	Level.getCell(vCursor.x, vCursor.y).id[Face::North] = t;
+	Level.getCell(vCursor.x, vCursor.y).id[Face::South] = t;
+	Level.getCell(vCursor.x, vCursor.y).id[Face::West] = t;
+	Level.getCell(vCursor.x, vCursor.y).id[Face::East] = t;
+}
+
+void State_Editor::endState()
+{
+	Level.SaveFromCells(L"M1.jac");
 }

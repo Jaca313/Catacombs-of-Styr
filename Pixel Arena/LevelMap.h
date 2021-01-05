@@ -51,6 +51,8 @@ public:
 	Cell& getCell(int _X);
 	Cell& getCell(int _X,int _Y);
 	Cell* editCell(int _X);
+
+	void SaveFromCells(std::wstring _LevelName);
 };
 
    
