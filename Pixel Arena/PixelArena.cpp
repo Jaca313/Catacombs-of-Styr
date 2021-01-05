@@ -104,7 +104,10 @@ void PixelArena::PushState(int _requestedState)
 		m_executionStack.push(new State_Gameplay(m_window, &Resources));
 		break;
 	case eMenu:
-		m_executionStack.push(new State_Gameplay(m_window, &Resources));
+		m_executionStack.push(new State_MainMenu(m_window, &Resources));
+		break;
+	case eEditor:
+		m_executionStack.push(new State_Editor(m_window, &Resources));
 		break;
 	case ePause:
 		m_executionStack.push(new State_Pause(m_window, &Resources));

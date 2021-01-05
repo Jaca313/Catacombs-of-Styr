@@ -70,6 +70,9 @@ void State_MainMenu::input(float _fTime)
 			if (Scenes.at("Main_Menu")->Buttons.at("Start").isReleased()) {
 				m_iRequestState = eGameplay;
 			}
+			if (Scenes.at("Main_Menu")->Buttons.at("Editor").isReleased()) {
+				m_iRequestState = eEditor;
+			}
 			if (Scenes.at("Main_Menu")->Buttons.at("Options").isReleased()) {
 				eCurrentScene = Scenes::Options;
 				pCurrentScene = Scenes.at("Options");

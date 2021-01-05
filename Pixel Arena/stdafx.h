@@ -7,4 +7,5 @@
 #include <algorithm> 
 #include <functional>
 #include <iostream>
+#include <array>
 #include "LogManager.h"

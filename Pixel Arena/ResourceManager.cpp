@@ -46,7 +46,7 @@ void ResourceManager::LoadTextures()
 	//16
 	LoadSingleTexture("");
 	//17
-	LoadSingleTexture("");
+	LoadSingleTexture("GUI/EditorCursor.png");
 	//18
 	LoadSingleTexture("GUI/Background.png");
 	//19

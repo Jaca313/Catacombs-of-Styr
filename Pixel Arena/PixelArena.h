@@ -2,6 +2,7 @@
 #include "State_Gameplay.h"
 #include "State_MainMenu.h"
 #include "State_Pause.h"
+#include "State_Editor.h"
 #include <iostream>
 #include <stack>
 #include <fstream>

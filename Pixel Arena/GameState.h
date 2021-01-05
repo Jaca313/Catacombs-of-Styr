@@ -2,7 +2,8 @@
 enum States {
 	eGameplay = 100,
 	eMenu = 200,
-	ePause = 300
+	ePause = 300,
+	eEditor = 400
 };
 class GameState
 {
