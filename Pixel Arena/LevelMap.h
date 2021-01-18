@@ -35,9 +35,11 @@ private:
 	char* Tiles;///< Direct pointer
 	const float TileSize = 64;///< Tile Size map to world pos
 
-	Cell* Cells;
-	Cell NullCell;
-	void CreateCells();
+	//TODO: Switch every system to Cells
+	//Prepare for multiface Walls and multitile Ceilings and floor
+	Cell* Cells;///<Used in Editor /equivalent of Tiles
+	Cell NullCell;///<Used in Editor /equivalent of Tiles
+	void CreateCells();///<Used in Editor /loads Cells from Tiles
 public:
 	const short getMapX() const;///< Returns Map X size
 	const short getMapY() const;///< Returns Map Y size
@@ -48,11 +50,11 @@ public:
 	char getTile(int _X,int _Y) const;///< Returns Tile at X
 	bool openDoor(int _X);///< removes door from map
 
-	Cell& getCell(int _X);
-	Cell& getCell(int _X,int _Y);
-	Cell* editCell(int _X);
+	Cell& getCell(int _X);///< Returns Cell at X position in array
+	Cell& getCell(int _X,int _Y);///< Returns Cell at XY position
+	Cell* editCell(int _X);///< Returns Cell pointer at X position in array (deprecated)
 
-	void SaveFromCells(std::wstring _LevelName);
+	void SaveFromCells(std::wstring _LevelName);///< Overwrites LevelData from Editor Cell Data
 };
 
    

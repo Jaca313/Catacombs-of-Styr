@@ -17,10 +17,10 @@ public:
 
 	void updateButtons(sf::Vector2f _mousePos);
 public://was protected
-	std::map<std::string, Button> Buttons;
-	std::map<std::string, sf::RectangleShape> Backgrounds;
+	std::map<std::string, Button> Buttons;///< Contains all buttons in a map
+	std::map<std::string, sf::RectangleShape> Backgrounds;///< Contains all backgrounds in a map
 protected:
-	ResourceManager& Resources = ResourceManager::getInstance();
+	ResourceManager& Resources = ResourceManager::getInstance();///< Access to Resources
 
 };
 

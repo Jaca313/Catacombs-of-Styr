@@ -16,7 +16,7 @@ public:
 	PixelArena();
 	~PixelArena();
 public:
-	void Run();
+	void Run();///< Main App Loop
 private:
 	//Drawing
 	void LoadSettings();///< Loads Window Height and Width from window.ini

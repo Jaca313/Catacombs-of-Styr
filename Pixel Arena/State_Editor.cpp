@@ -16,6 +16,7 @@ State_Editor::State_Editor(sf::RenderWindow* _pWindow, ResourceManager* _Resourc
 	//Load Level
 	Level.LoadLevel(L"M1.jac");
 	
+	vCursor = { Level.getMapX()/2,Level.getMapY()/2 };
 }
 
 State_Editor::~State_Editor()

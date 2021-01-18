@@ -6,14 +6,14 @@ class Timer
 	float TotalTime;
 	float loopTime;
 public:
-	Timer();
-	Timer(bool randomize);
-	float Count();
+	Timer();///<Start Timer
+	Timer(bool randomize);///< Start Timer with a random offset
+	float Count();///< Update Clocks
 
-	float rloopTime();
-	float rTotalTime();
-	float rClearTotalTime();
+	float rloopTime();///< Returns time from last iteration/frame
+	float rTotalTime();///< Returns total elapsed time
+	float rClearTotalTime();///< Resets total elapsed time
 private:
-	float ResetClock();
+	float ResetClock();///< Internal "Restart clock"/ returns last iter time
 };
 

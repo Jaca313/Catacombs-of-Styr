@@ -69,7 +69,10 @@ void State_Gameplay::input(float _fTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift))Butcher->setSprint(true);
 	else Butcher->setSprint(false);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+	//	Butcher->tryOpenDoor();
+	//}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 		Butcher->tryOpenDoor();
 	}
 
