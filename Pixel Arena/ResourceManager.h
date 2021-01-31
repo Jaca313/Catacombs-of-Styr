@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class ResourceManager
+class ResourceManager///< Manages Resources in App
 {
 private:
 	LogManager& InfoTool = LogManager::getInstance();///<Logging Tool and Global Helper

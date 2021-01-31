@@ -4,11 +4,11 @@
 #include "Scene_MainMenu.h"
 #include "Scene_Help.h"
 #include "Scene_Options.h"
-class State_MainMenu :	public GameState
+class State_MainMenu :	public GameState///< MainMenu GameState
 {
 public:
-	State_MainMenu(sf::RenderWindow* pWindow, ResourceManager* Resources);
-	~State_MainMenu();
+	State_MainMenu(sf::RenderWindow* pWindow, ResourceManager* Resources);///< Setup State and Scenes
+	~State_MainMenu();///< Cleanup Scenes
 private:
 	sf::RenderWindow* Window;///< Final Output
 	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use
@@ -21,18 +21,18 @@ public:
 	void resumeState();///< When a state is resumed
 
 private:
-	sf::RectangleShape m_sBackground;
+	sf::RectangleShape m_sBackground;///< MainMenu Background Image
 
 //Resources
 private:
 	ResourceManager* Resources;///< Pointer to Resources
 	LogManager& Info = LogManager::getInstance();///< Reference to Internal Messaging
 
-	void SetupBackground();
+	void SetupBackground();///<Loads Background from Resource Manager 
 
-	std::map<std::string, Scene*> Scenes;
-	Scene* pCurrentScene = nullptr;
-	int eCurrentScene = 0;
-	void SetupCursor();
+	std::map<std::string, Scene*> Scenes;///< Map of Available Scenes
+	Scene* pCurrentScene = nullptr;///< pointer to Current Scene
+	int eCurrentScene = 0;///< Enum of Current scene
+	void SetupCursor();///< Sets correct cursor for mouse 
 };
 

@@ -11,24 +11,22 @@ State_MainMenu::State_MainMenu(sf::RenderWindow* _Window, ResourceManager* _Reso
 	//Link Resources
 	this->Resources = _Resources;
 
-
-
-
-
+	//Setup Background Image
 	SetupBackground();
 
-
+	//Insert Scenes to be available
 	Scenes.insert(std::pair<std::string, Scene*>(std::string("Main_Menu"), (Scene*)new Scene_MainMenu()));
 	Scenes.insert(std::pair<std::string, Scene*>(std::string("Options"), (Scene*)new Scene_Options()));
 	Scenes.insert(std::pair<std::string, Scene*>(std::string("Help"), (Scene*)new Scene_Help()));
 
+	//Set Current Scene to Main Menu
 	pCurrentScene = Scenes.at("Main_Menu");
 	eCurrentScene = Scenes::Main_Menu;
 }
 
 State_MainMenu::~State_MainMenu()
 {
-	//Cleanup
+	//Cleanup Scenes
 	for (auto&Sc : Scenes) {
 		delete Sc.second;
 	}
@@ -38,6 +36,7 @@ State_MainMenu::~State_MainMenu()
 
 void State_MainMenu::eventLoop()
 {
+	//Resolve SFML events
 	sf::Event event;
 	while (this->Window->pollEvent(event))
 	{
@@ -46,7 +45,7 @@ void State_MainMenu::eventLoop()
 			this->Window->close();
 		//if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 		//	this->Window->close();
-
+		//Set Mouse Cursor when entering window
 		if (event.type == sf::Event::MouseEntered) {
 			SetupCursor();
 		}
@@ -65,6 +64,7 @@ void State_MainMenu::input(float _fTime)
 
 	//CHeck what scene it is switch or something then
 
+	//Resolve buttons in scenes
 	switch (eCurrentScene) {
 		case Scenes::Main_Menu: {
 			if (Scenes.at("Main_Menu")->Buttons.at("Start").isReleased()) {
@@ -110,32 +110,38 @@ void State_MainMenu::input(float _fTime)
 
 void State_MainMenu::update(float _fTime)
 {
-	updateMousePos(Window);
-	pCurrentScene->updateButtons(m_vMousePosView);
+	//Update State
+	updateMousePos(Window);//update mouse position
+	pCurrentScene->updateButtons(m_vMousePosView);//update all buttons in scene
 }
 
 void State_MainMenu::draw(sf::RenderTexture* _ScreenBuffer)
 {
+	//Set ScreenBuffer and clear it
 	this->ScreenBuffer = _ScreenBuffer;
-
 	this->ScreenBuffer->clear(sf::Color(120, 120, 120, 255));//Clear Buffer
 
+	//Draw Background
 	ScreenBuffer->draw(m_sBackground,m_sBackground.getTexture());
 
+	//Draw Current Scene
 	pCurrentScene->drawScene(*_ScreenBuffer);
 }
 
 void State_MainMenu::resumeState()
 {
-	m_bResume = false;
-	Window->setMouseCursorVisible(true);
+	//if resuming state
+	m_bResume = false;//set already resumed
+	Window->setMouseCursorVisible(true);//set mouse visible
 
+	//Set Mouse Cursor
 	//Cursor is copied
 	SetupCursor();
 }
 
 void State_MainMenu::SetupBackground()
 {
+	//Set Correct Background
 	m_sBackground.setPosition(0.f, 0.f);
 	m_sBackground.setSize(sf::Vector2f((float)Window->getSize().x, (float)Window->getSize().y));
 	m_sBackground.setTexture(Resources->getTex(29));//Main Menu Background
@@ -143,6 +149,7 @@ void State_MainMenu::SetupBackground()
 
 void State_MainMenu::SetupCursor()
 {
+	//Set Cursor
 	//Cursor is copied
 	sf::Image im_cursor;
 	im_cursor.loadFromFile("Textures/GUI/Cursor.png");;

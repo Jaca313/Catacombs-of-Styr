@@ -10,11 +10,11 @@
 
 
 class State_Gameplay :
-	public GameState
+	public GameState ///< GamePlay GameState
 {
 public:
-	State_Gameplay(sf::RenderWindow* _pWindow, ResourceManager* _Resources );
-	~State_Gameplay();
+	State_Gameplay(sf::RenderWindow* _pWindow, ResourceManager* _Resources );///< Setup State
+	~State_Gameplay();///< Destroy Player and Z_Buffer
 private:
 	sf::RenderWindow* Window;///< Final Output
 	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use

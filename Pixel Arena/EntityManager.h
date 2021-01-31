@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Orc.h"
 #include <vector>
-class EntityManager 
+class EntityManager ///< Manages Entites in App
 {
 private:
 	LogManager& InfoTool = LogManager::getInstance();

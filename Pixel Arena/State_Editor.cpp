@@ -3,7 +3,6 @@
 
 State_Editor::State_Editor(sf::RenderWindow* _pWindow, ResourceManager* _Resources)
 {
-
 	//Basic Setup
 	this->ID = 400;
 	this->Window = _pWindow;
@@ -16,6 +15,7 @@ State_Editor::State_Editor(sf::RenderWindow* _pWindow, ResourceManager* _Resourc
 	//Load Level
 	Level.LoadLevel(L"M1.jac");
 	
+	//Set Cursor to the middle of Map
 	vCursor = { Level.getMapX()/2,Level.getMapY()/2 };
 }
 
@@ -112,8 +112,6 @@ void State_Editor::input(float _fTime)
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))Level.editCell(Level.getMapX()*vCursor.y+vCursor.x)->wall = !Level.editCell(Level.getMapX() * vCursor.y + vCursor.x)->wall;
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))Level.getCell(vCursor.x, vCursor.y).wall = !Level.getCell(vCursor.x, vCursor.y).wall;
 
-	//30:00
-
 }
 
 void State_Editor::update(float _fTime)
@@ -123,6 +121,7 @@ void State_Editor::update(float _fTime)
 
 void State_Editor::draw(sf::RenderTexture* _ScreenBuffer)
 {
+	//Create a Cube to calculate which faces to cull(not render due to orthographic projection)
 	std::array<sf::Vector3f, 8> cullCube = CreateCube({ 0,0 });
 	CalculateVisibleFaces(cullCube);
 	//Get Quads to draw
@@ -152,6 +151,7 @@ void State_Editor::draw(sf::RenderTexture* _ScreenBuffer)
 
 void State_Editor::resumeState()
 {
+	//if resumed
 	m_bResume = false;
 }
 
@@ -211,6 +211,7 @@ std::array<sf::Vector3f, 8> State_Editor::CreateCube(sf::Vector2i _Cell)
 
 void State_Editor::CalculateVisibleFaces(std::array<sf::Vector3f, 8> & _Cube)
 {
+	//Check which faces are facing the right way (to the camera)
 	auto CheckNormal = [&](int v1, int v2, int v3) {
 		sf::Vector2f a = { _Cube[v1].x , _Cube[v1].y };
 		sf::Vector2f b = { _Cube[v2].x , _Cube[v2].y };
@@ -231,15 +232,17 @@ void State_Editor::CalculateVisibleFaces(std::array<sf::Vector3f, 8> & _Cube)
 
 void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 {
+	//Make quads to Cube from Cells
 	const float fAngle = fCameraAngle;
 	const float fPitch = fCameraPitch;
 	const float fScale = fCameraZoom;
 	const sf::Vector3f Camera = vCamera;
 
-
+	//Create Cube
 	std::array<sf::Vector3f, 8> projCube = CreateCube(_Cell);
 	auto& cell = Level.getCell(_Cell.y * Level.getMapX() + _Cell.x);
 
+	//Calculate Quad
 	auto MakeFace = [&](int v1, int v2, int v3, int v4, Face f) {
 		sRender.Decal.push_back(EditorQuad{});
 		if(_overwriteTex) sRender.Decal.back().tex = _overwriteTex;
@@ -273,6 +276,7 @@ void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 		sRender.Decal.back().vQuad = vP;
 	};
 
+	//Set Faces depending on visibility
 	if (!cell.wall) {
 		if (bVisible[Face::Floor])MakeFace(4, 0, 1, 5, Face::Floor);
 	}
@@ -289,6 +293,7 @@ void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 
 void State_Editor::SetWall()
 {
+	//Set Textures and Wall Bool when editing
 	Level.getCell(vCursor.x, vCursor.y).wall = !Level.getCell(vCursor.x, vCursor.y).wall;
 	int t = CurrentTextureCursor;
 	Level.getCell(vCursor.x, vCursor.y).id[Face::Floor] = Level.getTexFloor();
@@ -301,5 +306,6 @@ void State_Editor::SetWall()
 
 void State_Editor::endState()
 {
+	//Save Level Data when exiting
 	Level.SaveFromCells(L"M1.jac");
 }

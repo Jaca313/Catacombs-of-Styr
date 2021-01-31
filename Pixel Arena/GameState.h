@@ -1,14 +1,14 @@
 #pragma once
-enum States {
+enum States { ///<Enum containing State IDs
 	eGameplay = 100,
 	eMenu = 200,
 	ePause = 300,
 	eEditor = 400
 };
-class GameState
+class GameState///< Inheritable Base Class of GameStates
 {
 public:
-	virtual ~GameState();
+	virtual ~GameState();///< Game State Destructor to be overwritten
 
 	int ID = 0;///< Id of State
 	virtual void eventLoop() = 0;///< Overwrite SFML event Loop

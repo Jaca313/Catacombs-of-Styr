@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-class Button : public sf::Drawable
+class Button : public sf::Drawable ///< Interactive Button
 {
 public:
 	//Various Constructors depending on needs

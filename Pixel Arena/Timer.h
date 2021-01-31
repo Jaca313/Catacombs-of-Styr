@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/System.hpp>
-class Timer
+class Timer///< Timer Class
 {
 	sf::Clock* clock;///< SFML Clock for timekeeping
 	float TotalTime;///< Total Elapsed time since start of clock

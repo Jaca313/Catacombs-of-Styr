@@ -2,7 +2,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <string>
 #include "LogManager.h"
-struct Cell { ///< Cube with Face info (Editor)
+
+
+struct Cell ///< Cube with Face info (Editor)
+{ 
 	bool wall = false;///< Is it to be rendered as a wall
 	int id[6];///< Individual Face info (not currently used in full)
 };

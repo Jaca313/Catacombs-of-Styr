@@ -2,22 +2,24 @@
 #include "GameState.h"
 #include "LevelMap.h"
 #include "ResourceManager.h"
-struct EditorQuad {
+struct EditorQuad ///< Quad with Texture and Z-Buffer Info
+{ 
 	sf::VertexArray vQuad;///< Quad to be rendered
 	sf::Texture* tex;///< Texture of drawn Quad
 	float z[4];///< Z-Buffer Values of Quad
 };
 
-struct WorldRender {
+struct WorldRender ///< Containts Quads to be drawn
+{ 
 	std::vector<EditorQuad> Decal;///< Array of All Quads to be drawn (walls,floor,ceiling)
 };
 
-class State_Editor :
-	public GameState
+class State_Editor : 
+	public GameState ///< Editor GameState
 {
 public:
-	State_Editor(sf::RenderWindow* _pWindow, ResourceManager* _Resources);
-	~State_Editor();
+	State_Editor(sf::RenderWindow* _pWindow, ResourceManager* _Resources);///< Setup State
+	~State_Editor();///< Destructor (empty)
 private:
 	sf::RenderWindow* Window;///< Final Output
 	sf::RenderTexture* ScreenBuffer;///< Intermediary drawing target for shader use

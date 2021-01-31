@@ -10,7 +10,7 @@ const float c_Fov = 90.f;
 //HACK: Currently a mishmash for global access stuff and Output logs
 
 
-class LogManager
+class LogManager///< Manages Logging to files in App and serves as global var holder
 {
 	////////////////////////////////////////////////////////////////////////////////
 	//									Init/Core

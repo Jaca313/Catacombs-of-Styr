@@ -24,20 +24,23 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 
 State_Gameplay::~State_Gameplay()
 {
-	//Cleanup
+	//Cleanup Player
 	delete Butcher;
+	//Cleanup Z-Buffer
 	delete[] m_sZ_Buffer;
 }
 
 
 void State_Gameplay::eventLoop()
 {
+	//Handle SFML Events
 	sf::Event event;
 	while (this->Window->pollEvent(event))
 	{
 		//Close Window
 		if (event.type == sf::Event::Closed)
 			this->Window->close();
+		//Push Pause Menu
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
 			m_iRequestState = 300;
 		}
@@ -72,6 +75,7 @@ void State_Gameplay::input(float _fTime)
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
 	//	Butcher->tryOpenDoor();
 	//}
+	//Try to Open Door
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 		Butcher->tryOpenDoor();
 	}
@@ -123,14 +127,14 @@ void State_Gameplay::update(float _fTime)
 
 void State_Gameplay::draw(sf::RenderTexture* _ScreenBuffer)
 {
+	//Set and Clear ScreenBuffer
 	this->ScreenBuffer = _ScreenBuffer;
-
 	this->ScreenBuffer->clear(sf::Color(120, 120, 120, 255));//Clear Buffer
 
 	//Clear
 	//Draw Floor and Ceiling
 	//Draw Walls 
-	//Draw Sprites (sort them in order back to front)
+	//Draw Sprites (sort them in order, back to front)
 	//Draw Weapons
 	//Draw UI
 
@@ -138,18 +142,19 @@ void State_Gameplay::draw(sf::RenderTexture* _ScreenBuffer)
 
 	//CastRaysFloorCeil2();
 	//CastRays3DWalls();
-	CastRaysFloorCeil();
-	CastRays3DWalls();
-	Fill_Z_Buffer();
-	DrawEntities();
-	DrawUI();
+	CastRaysFloorCeil();//Render Floor and Ceiling
+	CastRays3DWalls();//Render Walls by Texture Type
+	Fill_Z_Buffer();//Copy from Data to Image(passthrough to GPU later)
+	DrawEntities();//Draw Entities
+	DrawUI();//Draw HUD
 }
 
 void State_Gameplay::resumeState()
 {
+	//if resuming
 	m_bResume = false;
 
-	Window->setMouseCursorVisible(false);
+	Window->setMouseCursorVisible(false);//make mouse invisible
 
 	//if Window size changes in meantime
 
@@ -163,7 +168,7 @@ void State_Gameplay::resumeState()
 
 void State_Gameplay::CastRays3DWalls()
 {
-	//Precision is needed double from now on
+	//Precision is needed (double from now on)
 
 	//Window size
 	int winSizeX = Window->getSize().x;
@@ -376,12 +381,13 @@ void State_Gameplay::CastRays3DWalls()
 
 void State_Gameplay::DrawUI()
 {
+	//Draw Player HUD
 	UI.drawUI(Butcher, *ScreenBuffer);
 }
 
 void State_Gameplay::DrawEntities()
 {
-	//draw only if in view
+	//draw Entites only if in view(on Screen)
 	for (auto E : *Entities.getEntities()) {
 		if (E->InView(sf::Vector2f(Butcher->x, Butcher->y), (float)Butcher->DegAngle, m_cFov))E->drawEntity(m_sZ_Buffer, *ScreenBuffer);
 	}
@@ -389,6 +395,7 @@ void State_Gameplay::DrawEntities()
 
 void State_Gameplay::Fill_Z_Buffer()
 {
+	//Convert float data to image (Z-Buffer) (GPU shader)
 	unsigned winSize_X = Window->getSize().x;
 	Resources->Z_BufferImage.create(winSize_X, 1, sf::Color(0, 0, 0, 255));
 	for (unsigned int i = 0; i < winSize_X; i++) {
@@ -405,6 +412,8 @@ void State_Gameplay::Fill_Z_Buffer()
 
 void State_Gameplay::CastRaysFloorCeil()
 {
+	//Cast Floor and Ceiling (Affine mapping)
+
 	//Get Window Size
 	float WinH = (float)Window->getSize().y;
 	float WinW = (float)Window->getSize().x;
@@ -503,6 +512,7 @@ void State_Gameplay::CastRaysFloorCeil()
 		HFloor[2].texCoords = sf::Vector2f(tx2, ty2 + 1.f / WinH);
 		HFloor[3].texCoords = sf::Vector2f(tx2, ty2);
 
+		// ceiling
 		sf::Vertex HCeil[4];
 
 		HCeil[0].position = sf::Vector2f(0, (float)y);
