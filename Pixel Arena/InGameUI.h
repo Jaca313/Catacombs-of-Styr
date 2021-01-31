@@ -1,17 +1,18 @@
 #pragma once
 #include "ResourceManager.h"
 #include "Player.h"
-class InGameUI : public sf::Drawable
+class InGameUI : public sf::Drawable ///< Ingame HUD
 {
 public:
-	InGameUI();
+	InGameUI();///< Default Constructor
 private:
 	//Screen Properties
 	float SizeX  = 0.f;///< Property of Screen
 	float SizeY = 0.f;///< Property of Screen
 
-	float PositionX = 0.f;///< Property of Screen
-	float PositionY = 0.f;///< Property of Screen
+	//Position of HUD
+	float PositionX = 0.f;///< Property of HUD
+	float PositionY = 0.f;///< Property of HUD
 
 	//Resources
 	ResourceManager& Resources = ResourceManager::getInstance();///<Access to Resource Manager

@@ -3,6 +3,8 @@
 
 Scene_MainMenu::Scene_MainMenu()
 {
+	//Constructs Buttons and Backgrounds
+
 	sf::RectangleShape Logo;
 	Backgrounds.insert(std::pair<std::string, sf::RectangleShape>("Logo", Logo));
 

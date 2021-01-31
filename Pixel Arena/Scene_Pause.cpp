@@ -3,6 +3,8 @@
 
 Scene_Pause::Scene_Pause()
 {
+	//Constructs Buttons and Backgrounds
+
 	sf::RectangleShape Logo;
 	Backgrounds.insert(std::pair<std::string, sf::RectangleShape>("Logo", Logo));
 

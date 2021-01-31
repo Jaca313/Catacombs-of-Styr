@@ -3,13 +3,13 @@
 
 Scene_Help::Scene_Help()
 {	
+	//Constructs Buttons and Backgrounds
+
 	sf::RectangleShape Logo;
 	Backgrounds.insert(std::pair<std::string, sf::RectangleShape>("Logo", Logo));
 
 	sf::RectangleShape Banner;
 	Backgrounds.insert(std::pair<std::string, sf::RectangleShape>("Banner", Banner));
-
-
 
 	Button Return(&Resources.m_sFontLanger, "Return", 30, Resources.getTex(21), Resources.getTex(22), Resources.getTex(23));
 	Buttons.insert(std::pair<std::string, Button>("Return", Return));
@@ -17,6 +17,7 @@ Scene_Help::Scene_Help()
 	std::string sHelpText =("Controls: \n W - Forward ::: S- Backwards \n A - Left ::: D - Right \n Q - Rotate Left ::: E - Rotate Right \n" +
 				std::string(" Mouse - Rotation Left-Right \n Left Mouse Button - Open Door/Activate \n Shift - Sprint \n Editor: \n ") +    
 				std::string(" WSAD - POS \t QE - ROT  \t RF - TILT \t ZX - ZOOM \n 1-9 - PICK \t\t\t\t\t\t\t\t\t\t\t\t\t SPACE - PLACE" ));
+	
 	Button Help_Text(&Resources.m_sFontLanger, sHelpText, 22, sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
 	Buttons.insert(std::pair<std::string, Button>("HelpText", Help_Text));
 }

@@ -3,6 +3,8 @@
 
 Scene_Options::Scene_Options()
 {
+	//Constructs Buttons and Backgrounds
+
 	sf::RectangleShape Rocks;
 	Backgrounds.insert(std::pair<std::string, sf::RectangleShape>("1_Rocks", Rocks));
 
