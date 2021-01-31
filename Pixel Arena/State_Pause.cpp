@@ -113,7 +113,7 @@ void State_Pause::SetupCursor()
 {
 	//Cursor is copied
 	sf::Image im_cursor;
-	im_cursor.loadFromFile("Textures/GUI/Cursor.png");;
+	im_cursor.loadFromFile("Textures/GUI/Cursor.png");
 	sf::Cursor Cursor;
 	Cursor.loadFromPixels(im_cursor.getPixelsPtr(), sf::Vector2u(im_cursor.getSize().x, im_cursor.getSize().y), sf::Vector2u(18, 15));
 	Window->setMouseCursor(Cursor);

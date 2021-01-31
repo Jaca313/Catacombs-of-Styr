@@ -1,10 +1,10 @@
 #pragma once
 #include "Entity.h"
 #include "LevelMap.h"
-class Player : public Entity
+class Player : public Entity ///< Player Character from which camera originates
 {
 public:
-	Player(float x,float y,LevelMap* level);
+	Player(float x,float y,LevelMap* level);///< Constructor with pos and access to level data
 
 	void update(float fTime);///< Updates Player position & other properties
 
@@ -13,7 +13,7 @@ public:
 	void setHealth(float _Health);///< Sets Player Health
 	float getHealth();///< Returns Player Health
 
-	void setSprint(bool _condition);///< sets bool (changes Player speed)
+	void setSprint(bool _condition);///< sets bool Sprint (changes Player speed)
 
 	void tryOpenDoor();///< Try to open door in front
 private:
@@ -24,6 +24,6 @@ private:
 
 	LevelMap* Level;///< access to level data
 
-	void UpdatePosition();
+	void UpdatePosition();///< Player movement and collision
 };
 

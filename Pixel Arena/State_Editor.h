@@ -3,13 +3,13 @@
 #include "LevelMap.h"
 #include "ResourceManager.h"
 struct EditorQuad {
-	sf::VertexArray vQuad;
-	sf::Texture* tex;
-	float z[4];
+	sf::VertexArray vQuad;///< Quad to be rendered
+	sf::Texture* tex;///< Texture of drawn Quad
+	float z[4];///< Z-Buffer Values of Quad
 };
 
 struct WorldRender {
-	std::vector<EditorQuad> Decal;
+	std::vector<EditorQuad> Decal;///< Array of All Quads to be drawn (walls,floor,ceiling)
 };
 
 class State_Editor :
@@ -31,7 +31,7 @@ public:
 //Resources
 private:
 
-	WorldRender sRender;
+	WorldRender sRender;///< Contains Quad Data
 
 	LevelMap Level;///< Contains Level Data
 
@@ -39,24 +39,24 @@ private:
 	LogManager& Info = LogManager::getInstance();///< Reference to Internal Messaging
 
 	//Camera Settings
-	sf::Vector3f vCamera = { 1,1,0 };
-	float fCameraAngle = 0.0f;
-	float fCameraPitch = 5.5f;
-	float fCameraZoom = 10.0f;
+	sf::Vector3f vCamera = { 1,1,0 };///< Camera Position in Space
+	float fCameraAngle = 0.0f;///< Angle of Camera
+	float fCameraPitch = 5.5f;///< Pitch of Camera
+	float fCameraZoom = 10.0f;///< Zoom of Camera
 
 	//Cursor
-	sf::Vector2i vCursor = { 0,0 };
+	sf::Vector2i vCursor = { 0,0 };///< Position of Highlight in Map Space
 
-	bool bVisible[6];
+	bool bVisible[6];///< Computed Visibility of Faces in a Cube(orthographic projection)
 	//Drawing
-	std::array<sf::Vector3f, 8> CreateCube(sf::Vector2i _Cell);
-	void CalculateVisibleFaces(std::array<sf::Vector3f, 8> & _Cube);
-	void GetFaceQuads(sf::Vector2i _Cell,sf::Texture* _overwriteTex = nullptr);
+	std::array<sf::Vector3f, 8> CreateCube(sf::Vector2i _Cell);///< Creates a Cube out of Quads with the projection applied
+	void CalculateVisibleFaces(std::array<sf::Vector3f, 8> & _Cube);///< Calculates which 3 faces of Cube are visible
+	void GetFaceQuads(sf::Vector2i _Cell,sf::Texture* _overwriteTex = nullptr);///< Calculates Quads to be drawn and textures them
 
-	int CurrentTextureCursor = 1;
+	int CurrentTextureCursor = 1;///< Current Selected Wall Texture
 
-	void SetWall();
+	void SetWall();///< Sets tile as wall or not wall with the chosen texture
 
-	void endState();
+	void endState();///< used to save cell data when exiting
 };
 

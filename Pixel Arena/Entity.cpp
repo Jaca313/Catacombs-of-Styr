@@ -2,31 +2,32 @@
 
 Entity::Entity()
 {
-
+	//Default Initialization
 	this->x = 0.f;
 	this->y = 0.f;
 	this->vx = 0.f;
 	this->vy = 0.f;
 	this->DegAngle = 0;
 	this->DegAngleTemp = (float)DegAngle;
-
-
 }
 
 bool Entity::InView(sf::Vector2f View, float ViewAngle, float fov)
 {
 	bool ReturnValue = 0;
 
-	//Calculate the Vector between View and 
+	//Calculate the Vector between View and Entity
 	float dX = this->x - View.x;
 	float dY = -(this->y - View.y);
 
+	//Get Angle of Vector between View and Entity
 	float AngletoEntity = LogManager::FixAngle(LogManager::RadtoDeg(std::atan2f(dY, dX)));
+
+	//Get Right and Left Bounds of View (in Deg)
 	float RightView = LogManager::FixAngle(ViewAngle - fov / 2.f);
 	float LeftView = LogManager::FixAngle(ViewAngle + fov / 2.f);
 
 
-	//Check if in View
+	//Check if Entity in View (on Screen)
 	if (RightView < LeftView) {
 		ReturnValue = RightView <= AngletoEntity && AngletoEntity <= LeftView;
 		AngletoScreen = 1.f - (AngletoEntity - RightView) / (LeftView - RightView);
@@ -53,12 +54,15 @@ bool Entity::InView(sf::Vector2f View, float ViewAngle, float fov)
 		//skip flipping due to -y in sfml
 		float degAngleBetween = LogManager::RadtoDeg(atan2f(sin(radRotToEntity),cos(radRotToEntity)));
 
+		//Angle of Entity compared to vector between it and View
 		int dPAVE = int(degAngleBetween + 180); // degPlayerAngleVsEntity
 
 
 		//switch ranges are a GCC extension :/
 		//will do ifs then
 
+
+		//Decide what angle the Entity is rotated compared to Screen
 		if (dPAVE > 45 && dPAVE < 135)//left
 			LookAngle = 1;
 		else if (dPAVE >= 135 && dPAVE <= 225)//back 
@@ -75,9 +79,9 @@ bool Entity::InView(sf::Vector2f View, float ViewAngle, float fov)
 
 void Entity::Update(float distance)
 {
-	InternalClock.Count();
-	this->distanceToPlayer = distance;
-	AnimationState = int(InternalClock.rTotalTime() / AnimationSpeed) % 3;
+	InternalClock.Count();//Get internal elapsed time
+	this->distanceToPlayer = distance;//update distance to player camera for scaling
+	AnimationState = int(InternalClock.rTotalTime() / AnimationSpeed) % 3;//update animations
 }
 
 sf::Vector2f Entity::getPosition() const

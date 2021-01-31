@@ -2,10 +2,10 @@
 #include <cmath>
 #include "ResourceManager.h"
 #include "Timer.h"
-class Entity 
+class Entity ///< Base Class to be inherited for Entities (Player is special but inherits)
 {
 public:
-	Entity();
+	Entity();///< Default Constructor
 public:
 	float x,y;///< Position of Entity
 	float vx,vy;///< Vector of Movement
@@ -27,16 +27,19 @@ public:
 
 	sf::Vector2f getPosition() const;///< Returns Position
 
-	virtual void drawEntity(float* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);///< Draws Entity
+	virtual void drawEntity(float* Z_Buffer,sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);///< Draws Entity(to be overwritten)
 
 
 	float distanceToPlayer = FLT_MAX;///< Current Distance to Plater
 	float AngletoScreen = 0.0;///< normalized is the measure of left to right screen span
-	float m_dDistanceToProj = 0.0;///< 
-	//0 forward looking orc
-	//1 left
-	//2 right
-	//3 back
+	float m_dDistanceToProj = 0.0;///< distance to screen
+
+	/**
+	* 0 forward looking orc
+	* 1 left
+	* 2 right
+	* 3 back
+	*/
 	int LookAngle = 0;///< Current Animation Rotation relative to player
 
 	bool m_bObscured;///< if obscured behind wall /CPU computation(currently not used)

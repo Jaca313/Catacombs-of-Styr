@@ -4,7 +4,7 @@
 class Button : public sf::Drawable
 {
 public:
-	//Various Constructors depending on needs
+	///<Various Constructors depending on needs
 	Button(sf::Font* _font, std::string _text, int _charSize,
 		sf::Texture* _idleTex, sf::Texture* _hoverTex, sf::Texture* _activeTex);
 
