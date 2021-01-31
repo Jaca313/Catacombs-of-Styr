@@ -2,25 +2,25 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <string>
 #include "LogManager.h"
-struct Cell {
-	bool wall = false;
-	int id[6];
+struct Cell { ///< Cube with Face info (Editor)
+	bool wall = false;///< Is it to be rendered as a wall
+	int id[6];///< Individual Face info (not currently used in full)
 };
 
-enum Face {
-	Floor = 0,
-	Top,
-	North,
-	South,
-	West,
-	East
+enum Face {///< Face enumerators for Cubes (editor)
+	Floor = 0,///<Floor
+	Top,///< Ceiling
+	North,///<-y
+	South,///<+y
+	West,///<+x
+	East///<-x
 };
 
-class LevelMap
+class LevelMap ///< LevelMap contains Level Data (Tile Map)
 {
 public:
-	LevelMap();
-	~LevelMap();
+	LevelMap();///<Default Constructor
+	~LevelMap();///< Destructor - Cleans up Tiles and Cells pointers
 private:
 	LogManager& InfoTool = LogManager::getInstance();///< Access to Internal Messages
 public:

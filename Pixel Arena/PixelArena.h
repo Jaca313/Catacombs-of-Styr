@@ -10,13 +10,13 @@
 
 #include "ResourceManager.h"
 
-class PixelArena
+class PixelArena///< Main App Class
 {
 public:
-	PixelArena();
-	~PixelArena();
+	PixelArena();///< Default Constructor with Setup
+	~PixelArena();///<Destructor (cleans up window and exits execution stack in order)
 public:
-	void Run();///< Main App Loop
+	void Run();///< Main App Entry Point with Setup and Loop
 private:
 	//Drawing
 	void LoadSettings();///< Loads Window Height and Width from window.ini

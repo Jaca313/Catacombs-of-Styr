@@ -32,16 +32,19 @@ void LevelMap::CreateCells()
 
 const short LevelMap::getMapX() const
 {
-	return MapX;
+	//Returns Map Size (X)
+	return MapX; 
 }
 
 const short LevelMap::getMapY() const
 {
+	//Returns Map Size (Y)
 	return MapY;
 }
 
 const float LevelMap::getTileSize() const
 {
+	//Returns constant TileSize (64)
 	return TileSize;
 }
 
@@ -57,7 +60,7 @@ LevelMap::LevelMap()
 
 LevelMap::~LevelMap()
 {
-	//Cleanup
+	//Cleanup Tiles and Cells pointers to 2D arrays
 	if(Tiles)free(Tiles);
 	if (Cells)delete[] Cells;
 }
@@ -65,11 +68,15 @@ LevelMap::~LevelMap()
 void LevelMap::LoadLevel(std::wstring _LevelName)
 {
 	if (Tiles)free(Tiles);//Make sure we let go of the current memory
+	
+	//Get Path to Level File
 	std::wstring Path = L"Levels\\" + _LevelName;
 	std::ifstream ifs(Path);
-	std::string line;
+
+
+	//Load Map from file
 	if (ifs){
-		ifs >> MapX >> MapY >> TextureCeiling >> TextureFloor;
+		ifs >> MapX >> MapY >> TextureCeiling >> TextureFloor; //Load Size of Map and Textures of Floor and Ceiling
 		Tiles = (char*)calloc((MapX * MapY + 1), sizeof(char));
 		if (Tiles) {
 			for (int i = 0; i < MapY; ++i)
@@ -80,28 +87,32 @@ void LevelMap::LoadLevel(std::wstring _LevelName)
 	}
 	else InfoTool.ERR(4, "NO MAP");
 
+	//Init Cells for Editor
 	CreateCells();
-
 }
 
 const int LevelMap::getTexCeil() const
 {
+	//Return Currently Used Ceiling Texture
 	return this->TextureCeiling;
 }
 
 const int LevelMap::getTexFloor() const
 {
+	//Return Currently Used Floor Texture
 	return this->TextureFloor;
 }
 
 char LevelMap::getTile(int _X) const
 {
+	//Get Tile Char Bound by Map Size (X position in 1D array)
 	if(_X < (MapX * MapY) && _X >= 0)return Tiles[_X];
 	else return '.';
 }
 
 char LevelMap::getTile(int _X, int _Y) const
 {
+	//Get Tile Char Bound by Map Size (XY position in 2D array)
 	if (_X < 0 || _Y < 0)return '.';
 	if (_X < MapX && _Y < MapY)return Tiles[_Y * MapX + _X];
 	else return '.';
@@ -124,6 +135,7 @@ bool LevelMap::openDoor(int _X)
 
 Cell& LevelMap::getCell(int _X)
 {
+	//Get Cell Bound by Map Size (X position in 1D array)
 	if (_X >= 0 && _X < MapX * MapY)
 		return Cells[_X];
 	else return NullCell;
@@ -131,6 +143,7 @@ Cell& LevelMap::getCell(int _X)
 
 Cell& LevelMap::getCell(int _X, int _Y)
 {
+	//Get Cell Bound by Map Size (XY position in 2D array)
 	if (_X >= 0 && _X < MapX * MapY)
 		return Cells[_Y * MapX + _X];
 	else return NullCell;
@@ -138,6 +151,7 @@ Cell& LevelMap::getCell(int _X, int _Y)
 
 Cell* LevelMap::editCell(int _X)
 {
+	//Get Cell pointer Bound by Map Size (X position in 1D array)
 	if (_X >= 0 && _X < MapX * MapY)
 		return &Cells[_X];
 	else return &NullCell;
@@ -145,9 +159,11 @@ Cell* LevelMap::editCell(int _X)
 
 void LevelMap::SaveFromCells(std::wstring _LevelName)
 {
+	//Get Level Path from fileName
 	std::wstring Path = L"Levels\\" + _LevelName;
 	std::ofstream ifs(Path);
-	std::string line;
+
+	//Write Level Data to File
 	if (ifs) {
 		ifs << MapX << " " << MapY  << " "<< TextureCeiling << " " << TextureFloor << "\n";
 

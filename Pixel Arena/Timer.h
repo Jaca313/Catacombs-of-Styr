@@ -2,9 +2,9 @@
 #include <SFML/System.hpp>
 class Timer
 {
-	sf::Clock* clock;
-	float TotalTime;
-	float loopTime;
+	sf::Clock* clock;///< SFML Clock for timekeeping
+	float TotalTime;///< Total Elapsed time since start of clock
+	float loopTime;///< Time since last Frame
 public:
 	Timer();///<Start Timer
 	Timer(bool randomize);///< Start Timer with a random offset

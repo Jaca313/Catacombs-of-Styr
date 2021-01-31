@@ -2,7 +2,8 @@
 #include "PixelArena.h"
 int WinMain()
 {
+	//Init Game-Engine
 	PixelArena GameInstance;
-	GameInstance.Run();
+	GameInstance.Run();//Enter Game Loop
 	return 0;
 }
