@@ -6,12 +6,12 @@ class ResourceManager
 private:
 	LogManager& InfoTool = LogManager::getInstance();///<Logging Tool and Global Helper
 
-	ResourceManager(){
-		LoadTextures();
-		LoadShaders();
-		LoadFonts();
+	ResourceManager(){///<Inline Constructor (Loads Resources)
+		LoadTextures();//Load Textures
+		LoadShaders();//Load Shaders
+		LoadFonts();//Load Fonts
 	}
-	~ResourceManager() {
+	~ResourceManager() {///< Empty Destructor
 
 	}
 public:

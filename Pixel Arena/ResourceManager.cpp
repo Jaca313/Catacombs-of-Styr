@@ -2,12 +2,15 @@
 
 sf::Texture* ResourceManager::getTex(int nr)
 {
+	//Returns a pointer to Texture in array
 	if (Textures.size() > nr) return &Textures.at(nr);
 	else return nullptr;
 }
 
 void ResourceManager::LoadTextures()
 {
+	//Loads Textures filling the array
+
 	//0 - 9 Reserved for Walls
 	//0
 	LoadSingleTexture("Walls/Wall Door.bmp");//Reserved for some kind of door?
@@ -181,14 +184,17 @@ void ResourceManager::LoadTextures()
 
 void ResourceManager::LoadShaders()
 {
+	//Load Shader used in GameState to flip screen and clip entites behind walls
 	if (!ClipEntity.loadFromFile("Shaders/ClipEntity.frag", sf::Shader::Fragment)) {
 		std::string Error = "Shader Shaders/ClipEntity.frag failed to load";
 		InfoTool.ERR(4, Error);
 	}
+	//Load Shader that flips screen
 	if (!m_sFlipScreen.loadFromFile("Shaders/FlipScreen.frag", sf::Shader::Fragment)) {
 		std::string Error = "Shader Shaders/FlipScreen.frag failed to load";
 		InfoTool.ERR(4, Error);
 	}
+	//Load Shader used in PauseState, blurs and flips screen
 	if (!m_sFlipScreenBlur.loadFromFile("Shaders/FlipScreenBlur.frag", sf::Shader::Fragment)) {
 		std::string Error = "Shader Shaders/FlipScreenBlur.frag failed to load";
 		InfoTool.ERR(4, Error);
@@ -198,6 +204,7 @@ void ResourceManager::LoadShaders()
 
 void ResourceManager::LoadFonts()
 {
+	//Load Font used in Buttons
 	std::string path = "Fonts/" + std::string("Langar.ttf");
 	if (!m_sFontLanger.loadFromFile(path)) {
 		std::string Error = "Font " + std::string("Langar.ttf") + " failed to load";
@@ -207,6 +214,7 @@ void ResourceManager::LoadFonts()
 
 void ResourceManager::LoadSingleTexture(std::string _filename)
 {
+	//Loads Single Texture from file
 	Textures.push_back(sf::Texture());
 	if (_filename != "") {
 		std::string path = "Textures/" + _filename;

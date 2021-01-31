@@ -16,15 +16,15 @@ class LogManager
 	//									Init/Core
 	////////////////////////////////////////////////////////////////////////////////
 private:
-	LogManager() {
+	LogManager() {///<Inline Constructor (opens files for logging)
 
-		INFO.open("Log/Log.txt", std::ofstream::app);
-		ERROR.open("Log/Error.txt", std::ofstream::app);
+		INFO.open("Log/Log.txt", std::ofstream::app);// Open LOG file
+		ERROR.open("Log/Error.txt", std::ofstream::app);// Open ERROR file
 	}
-	~LogManager() {
+	~LogManager() {///< Inline Destructor (closes files used for logging)
 
-		INFO.close();
-		ERROR.close();
+		INFO.close();// Open LOG file
+		ERROR.close();// Open ERROR file
 
 	}
 public:
