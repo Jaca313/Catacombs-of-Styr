@@ -295,6 +295,7 @@ void State_Editor::SetWall()
 	//Set Textures and Wall Bool when editing
 	Level.getMapCell(vCursor.x, vCursor.y).wall = !Level.getMapCell(vCursor.x, vCursor.y).wall;
 	int t = CurrentTextureCursor;
+	if (t == 0)Level.getMapCell(vCursor.x, vCursor.y).door = true;
 	Level.getMapCell(vCursor.x, vCursor.y).id[Face::Floor] = Level.getTexFloor();
 	Level.getMapCell(vCursor.x, vCursor.y).id[Face::Top] = Level.getTexCeil();
 	Level.getMapCell(vCursor.x, vCursor.y).id[Face::North] = t;

@@ -40,10 +40,10 @@ void Player::tryOpenDoor()
 	int realY = int(y / 64.0);
 
 	//Check which tile(Door next to player) Player is trying to Open and try it
-	if (DegAngle < 45 && DegAngle >= 0 || DegAngle < 360 && DegAngle >= 315)Level->openDoor(realX + 1 + realY * Level->getMapX());//right
-	else if (DegAngle >= 45 && DegAngle < 135)Level->openDoor(realX + (realY - 1) * Level->getMapX());//up
-	else if (DegAngle >= 135 && DegAngle < 225)Level->openDoor(realX - 1 + realY * Level->getMapX());//left
-	else if (DegAngle >= 225 && DegAngle < 315)Level->openDoor(realX + (realY + 1) * Level->getMapX());//down
+	if (DegAngle < 45 && DegAngle >= 0 || DegAngle < 360 && DegAngle >= 315)Level->openDoor(realX + 1,realY);//right
+	else if (DegAngle >= 45 && DegAngle < 135)Level->openDoor(realX,realY - 1);//up
+	else if (DegAngle >= 135 && DegAngle < 225)Level->openDoor(realX - 1,realY);//left
+	else if (DegAngle >= 225 && DegAngle < 315)Level->openDoor(realX,realY + 1);//down
 }
 
 void Player::setHealth(float _Health)

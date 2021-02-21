@@ -121,12 +121,28 @@ char LevelMap::getTile(int _X, int _Y) const
 
 }
 
-bool LevelMap::openDoor(int _X)
+bool LevelMap::openDoor(int x)
 {
-	//Check if on map and if door('0') if then remove the door
- 	if (_X < (MapX * MapY)) {
-		if (Tiles[_X] == '0') {
-			Tiles[_X] = '.';
+	//Check if on map and if door if then remove the door
+ 	if (x < getMapX() * getMapY() && x >= 0 ) {
+		auto& Cell = this->getMapCell(x);
+		if (Cell.door) {
+			Cell.wall = !Cell.wall;
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+
+}
+
+bool LevelMap::openDoor(int x, int y)
+{
+	//Check if on map and if door if then remove the door
+	if (x < getMapX() && x >=0 && y >= 0 && y <= getMapY()) {
+		auto& Cell = this->getMapCell(x,y);
+		if (Cell.door) {
+			Cell.wall = !Cell.wall;
 			return true;
 		}
 		else return false;

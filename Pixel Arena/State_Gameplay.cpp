@@ -46,6 +46,9 @@ void State_Gameplay::eventLoop()
 		if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
 			m_iRequestState = 300;
 		}
+		if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right) {
+			Butcher->tryOpenDoor();
+		}
 
 	}
 }
@@ -77,10 +80,13 @@ void State_Gameplay::input(float _fTime)
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
 	//	Butcher->tryOpenDoor();
 	//}
+
+	/*
 	//Try to Open Door
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 		Butcher->tryOpenDoor();
 	}
+	*/
 
 	//Rotation
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {

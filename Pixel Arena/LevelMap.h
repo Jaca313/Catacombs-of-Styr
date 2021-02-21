@@ -59,7 +59,6 @@ public:
 	const int getTexFloor() const;///< Returns Floor Texture number
 	char getTile(int _X) const;///< Returns Tile at X
 	char getTile(int _X,int _Y) const;///< Returns Tile at X
-	bool openDoor(int _X);///< removes door from map
 
 	Cell& getCell(int _X);///< Returns Cell at X position in array
 	Cell& getCell(int _X,int _Y);///< Returns Cell at XY position
@@ -105,6 +104,25 @@ public:
 	* @return Reference to MapCell
 	*/
 	MapCell& getMapCell(int x);
+
+	/**
+	 * Try to open Door on Map
+	 * 
+	 * @param x X position in 1D Array of Map
+	 * @return if opened door
+	 */
+	bool openDoor(int x);
+
+	/**
+	 * Try to open Door on Map
+	 * 
+	 * @param x X position in 2D Array of Map
+	 * @param y Y position in 2D Array of Map
+	 * @return if opened door
+	 */
+	bool openDoor(int x, int y);
+
+
 };
 
    
