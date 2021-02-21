@@ -3,7 +3,13 @@
 #include <string>
 #include "LogManager.h"
 
+/** Binary Map Cell */
+struct MapCell {
+	bool wall = false; ///< is it to be rendered as a wall
+	int id[6];///< Wall Texture index for faces
+	bool door = false; // isDoor
 
+};
 struct Cell ///< Cube with Face info (Editor)
 { 
 	bool wall = false;///< Is it to be rendered as a wall
@@ -38,6 +44,8 @@ private:
 	char* Tiles;///< Direct pointer
 	const float TileSize = 64;///< Tile Size map to world pos
 
+	MapCell* MapData;
+	MapCell	NullMapCell;
 	//TODO: Switch every system to Cells
 	//Prepare for multiface Walls and multitile Ceilings and floor
 	Cell* Cells;///<Used in Editor /equivalent of Tiles
@@ -58,6 +66,45 @@ public:
 	Cell* editCell(int _X);///< Returns Cell pointer at X position in array (deprecated)
 
 	void SaveFromCells(std::wstring _LevelName);///< Overwrites LevelData from Editor Cell Data
+
+	/**
+	 * Saves Map Data (MapCells) to File.
+	 * 
+	 * @param levelName File to be saved to
+	 */
+	void BinarySaveData(std::wstring levelName);
+
+	/**
+	 * Loads Map Data (MapCells) from File
+	 * 
+	 * @param levelName File to be loaded from
+	 */
+	void BinaryLoadData(std::wstring levelName);
+
+	/**
+	 * Create Empty Map 
+	 * 
+	 * @param sizeY SizeY of new Empty Map
+	 * @param sizeX SizeX of new Empty Map
+	 */
+	void CreateEmptyMap(short sizeY, short sizeX);
+
+	/**
+	 * Return Reference to MapCell (2D Array)
+	 * 
+	 * @param x X position of MapCell to be retrieved
+	 * @param y XY position of MapCell to be retrieved
+	 * @return Reference to MapCell
+	 */
+	MapCell& getMapCell(int x, int y);
+
+	/**
+	* Return Reference to MapCell (1D Array)
+	*
+	* @param x X position in 1D Array of MapCell to be retrieved
+	* @return Reference to MapCell
+	*/
+	MapCell& getMapCell(int x);
 };
 
    

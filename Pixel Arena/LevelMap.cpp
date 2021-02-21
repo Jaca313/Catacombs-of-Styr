@@ -54,6 +54,8 @@ LevelMap::LevelMap()
 	MapX = 1;
 	MapY = 1;
 	Tiles = NULL;
+	Cells = NULL;
+	MapData = NULL;
 	TextureCeiling = 0;
 	TextureFloor = 0;
 }
@@ -179,4 +181,114 @@ void LevelMap::SaveFromCells(std::wstring _LevelName)
 
 	}
 	else InfoTool.ERR(4, "NO MAP");
+}
+
+void LevelMap::BinarySaveData(std::wstring levelName)
+{
+	//Get Correct Level Path
+	std::wstring path = LR"(Levels\)" + levelName;
+	std::ofstream ofs(path, std::ios::out | std::ios::binary);
+
+
+	if (ofs) {
+
+		//Write Map Size
+		short lSizeY = getMapY();
+		short lSizeX = getMapX();
+		ofs.write((char*)&lSizeY, sizeof(short));
+		ofs.write((char*)&lSizeX, sizeof(short));
+
+		/*
+		//Write Level Data to File
+		for (size_t it = 0; it < getMapY(); it++) {
+			for (size_t it2 = 0; it2 < getMapX(); it2++) {
+				ofs.write((char*)&MapData[it * getMapY() + it2], sizeof(MapCell));
+			}
+		}
+
+		*/
+		//Write Level Data to File
+		ofs.write((char*)&MapData[0], sizeof(MapCell) * getMapY() * getMapX());
+
+
+		//Check if writing was error free
+		if (!ofs.good()) {
+			InfoTool.ERR(4, "Error writing map data!");
+		}
+
+		ofs.close();
+	}
+	else {
+		InfoTool.ERR(4, "Error opening(write) map data!");
+	}
+
+}
+
+void LevelMap::BinaryLoadData(std::wstring levelName)
+{
+	//Get Correct Level Path
+	std::wstring path = LR"(Levels\)" + levelName;
+	std::ifstream ifs(path, std::ios::in | std::ios::binary);
+
+	if (ifs) {
+
+		//Read Map Size
+		ifs.read((char*)&MapX, sizeof(short));
+		ifs.read((char*)&MapY, sizeof(short));
+
+		//Allocate space for MapData
+		MapData = new MapCell[(size_t)getMapY() * (size_t)getMapX()];
+
+		//Read Map Data
+		ifs.read((char*)&MapData[0], sizeof(MapCell) * getMapY() * getMapX());
+
+		//Check if reading was error free
+		if (!ifs.good()) {
+			InfoTool.ERR(4, "Error reading map data!");
+		}
+
+		ifs.close();
+	}
+	else {
+		InfoTool.ERR(4, "Error opening(load) map data!");
+	}
+
+}
+
+void LevelMap::CreateEmptyMap(short sizeY, short sizeX)
+{
+	//Delete Old Data
+	if (MapData)delete[] MapData;
+
+	MapY = sizeY;
+	MapX = sizeX;
+	MapData = new MapCell[(size_t)sizeY * (size_t)sizeX];
+
+	for (size_t it = 0; it < (size_t)getMapX() * (size_t)getMapY(); it++) {
+		MapData[it].door = false;
+		MapData[it].id[Face::East] = 1;
+		MapData[it].id[Face::North] = 1;
+		MapData[it].id[Face::South] = 1;
+		MapData[it].id[Face::West] = 1;
+		MapData[it].id[Face::Top] = 1;
+		MapData[it].id[Face::Floor] = 1;
+		MapData[it].wall = false;
+	}
+
+}
+
+MapCell& LevelMap::getMapCell(int x, int y)
+{
+	//Get MapCell Bound by Map Size (XY position in 2D array)
+	if (x >= 0 && y >= 0 && x < getMapX() && y < getMapY())
+		return MapData[y * getMapX() + x];
+	else return NullMapCell;
+}
+
+MapCell& LevelMap::getMapCell(int x)
+{
+	//Get MapCell Bound by Map Size (XY position in 2D array)
+	if (x >= 0 && x < getMapY() * getMapX())
+		return MapData[x];
+	else return NullMapCell;
 }

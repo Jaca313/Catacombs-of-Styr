@@ -82,13 +82,13 @@ void Player::UpdatePosition()
 	int TileY2 = int((y) / (float)Level->getTileSize());
 
 	//Get tiles to be moved to
-	int C1 = Level->getTile(TileX + Level->getMapX() * TileY2);
-	int C2 = Level->getTile(TileX2 + Level->getMapX() * TileY);
+	auto& C1 = Level->getMapCell(TileX,TileY2);
+	auto& C2 = Level->getMapCell(TileX2,TileY);
 
 	//Check if future tiles are walls
-	if (C1 < '0' || C1 >'9')
+	if (!C1.wall)
 		this->x += dx;
-	if (C2 < '0' || C2 > '9')
+	if (!C2.wall)
 		this->y += dy;
 
 	//Slows down player (fps dependent / fps are clamped)

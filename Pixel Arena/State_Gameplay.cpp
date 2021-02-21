@@ -8,7 +8,9 @@ State_Gameplay::State_Gameplay(sf::RenderWindow* _Window, ResourceManager* _Reso
 	Window->setMouseCursorVisible(false);
 	Window->setVerticalSyncEnabled(true);
 	//Load Level
-	Level.LoadLevel(L"M1.jac");
+	//TODO: LOAD BIN
+	//Level.LoadLevel(L"M1.jac");
+	Level.BinaryLoadData(L"Level1.Jaca");
 	//Create player
 	Butcher = new Player(128.f, 128.f,&Level);
 	//Link Resources
@@ -196,6 +198,7 @@ void State_Gameplay::CastRays3DWalls()
 	double py = Butcher->y;
 
 	//Made to group Vertices By Wall Type (drawing is done by wall type)
+	//TODO: CHANGE IT
 	sf::VertexArray TexturedWall[10];
 
 	//To compensate for angle discrepancies when projecting to flat screen from a camera behind it
@@ -237,7 +240,8 @@ void State_Gameplay::CastRays3DWalls()
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
 			mp = my * Level.getMapX() + mx;
-			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getTile(mp) >= '0' && Level.getTile(mp) <= '9') {//hit 
+			//TODO: REMOVE LIMITS below
+			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getMapCell(mp).wall && Level.getMapCell(mp).wall) {//hit 
 				dof = maxdof;
 				disV = cos(LogManager::DegtoRad(ra)) * (rx - px) - sin(LogManager::DegtoRad(ra)) * (ry - py);
 			}
@@ -276,7 +280,7 @@ void State_Gameplay::CastRays3DWalls()
 			mx = (int)(rx) >> 6;
 			my = (int)(ry) >> 6;
 			mp = my * Level.getMapX() + mx;
-			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getTile(mp) >= '0' && Level.getTile(mp) <= '9') { //hit
+			if (mp > 0 && mp < Level.getMapX() * Level.getMapY() && Level.getMapCell(mp).wall && Level.getMapCell(mp).wall) { //hit
 				dof = maxdof;
 				disH = cos(LogManager::DegtoRad(ra)) * (rx - px) - sin(LogManager::DegtoRad(ra)) * (ry - py);
 			}
@@ -323,7 +327,7 @@ void State_Gameplay::CastRays3DWalls()
 		//Line[2].color = Kolor;
 		//Line[3].color = Kolor;
 		int HitCell = (int)(ry / 64.f) * Level.getMapX() + (int)(rx / 64.f);
-		int TexCall = Level.getTile(HitCell) - '0';
+		int TexCall = Level.getMapCell(HitCell).id[Face::North];//TODO:ADD FACES
 		TexCall = TexCall < 0 ? 1 : TexCall;
 		TexCall = TexCall > 9 ? 1 : TexCall;
 		float TexSizeX = (float)Resources->Textures.at(TexCall).getSize().x;

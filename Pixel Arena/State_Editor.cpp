@@ -13,7 +13,7 @@ State_Editor::State_Editor(sf::RenderWindow* _pWindow, ResourceManager* _Resourc
 	Window->setVerticalSyncEnabled(true);
 
 	//Load Level
-	Level.LoadLevel(L"M1.jac");
+	Level.BinaryLoadData(L"Level1.Jaca");
 	
 	//Set Cursor to the middle of Map
 	vCursor = { Level.getMapX()/2,Level.getMapY()/2 };
@@ -78,7 +78,6 @@ void State_Editor::input(float _fTime)
 	//Camera Rotation
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))fCameraAngle += 1.f * _fTime;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))fCameraAngle -= 1.f * _fTime;
-	std::cout << fCameraAngle << std::endl;
 
 	//Camera Tilt
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))fCameraPitch -= 1.f * _fTime;
@@ -240,13 +239,13 @@ void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 
 	//Create Cube
 	std::array<sf::Vector3f, 8> projCube = CreateCube(_Cell);
-	auto& cell = Level.getCell(_Cell.y * Level.getMapX() + _Cell.x);
+	auto& mapCell = Level.getMapCell(_Cell.x, _Cell.y);
 
 	//Calculate Quad
 	auto MakeFace = [&](int v1, int v2, int v3, int v4, Face f) {
 		sRender.Decal.push_back(EditorQuad{});
 		if(_overwriteTex) sRender.Decal.back().tex = _overwriteTex;
-		else sRender.Decal.back().tex = Resources->getTex(cell.id[f]);
+		else sRender.Decal.back().tex = Resources->getTex(mapCell.id[f]);
 
 		sf::Vector2u texSize = sRender.Decal.back().tex->getSize();
 		
@@ -277,7 +276,7 @@ void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 	};
 
 	//Set Faces depending on visibility
-	if (!cell.wall) {
+	if (!mapCell.wall) {
 		if (bVisible[Face::Floor])MakeFace(4, 0, 1, 5, Face::Floor);
 	}
 	else {
@@ -294,18 +293,18 @@ void State_Editor::GetFaceQuads(sf::Vector2i _Cell, sf::Texture* _overwriteTex)
 void State_Editor::SetWall()
 {
 	//Set Textures and Wall Bool when editing
-	Level.getCell(vCursor.x, vCursor.y).wall = !Level.getCell(vCursor.x, vCursor.y).wall;
+	Level.getMapCell(vCursor.x, vCursor.y).wall = !Level.getMapCell(vCursor.x, vCursor.y).wall;
 	int t = CurrentTextureCursor;
-	Level.getCell(vCursor.x, vCursor.y).id[Face::Floor] = Level.getTexFloor();
-	Level.getCell(vCursor.x, vCursor.y).id[Face::Top] = Level.getTexCeil();
-	Level.getCell(vCursor.x, vCursor.y).id[Face::North] = t;
-	Level.getCell(vCursor.x, vCursor.y).id[Face::South] = t;
-	Level.getCell(vCursor.x, vCursor.y).id[Face::West] = t;
-	Level.getCell(vCursor.x, vCursor.y).id[Face::East] = t;
+	Level.getMapCell(vCursor.x, vCursor.y).id[Face::Floor] = Level.getTexFloor();
+	Level.getMapCell(vCursor.x, vCursor.y).id[Face::Top] = Level.getTexCeil();
+	Level.getMapCell(vCursor.x, vCursor.y).id[Face::North] = t;
+	Level.getMapCell(vCursor.x, vCursor.y).id[Face::South] = t;
+	Level.getMapCell(vCursor.x, vCursor.y).id[Face::West] = t;
+	Level.getMapCell(vCursor.x, vCursor.y).id[Face::East] = t;
 }
 
 void State_Editor::endState()
 {
 	//Save Level Data when exiting
-	Level.SaveFromCells(L"M1.jac");
+	Level.BinarySaveData(L"Level1.Jaca");
 }
